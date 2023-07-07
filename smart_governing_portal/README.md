@@ -16,4 +16,4 @@ For help getting started with Flutter development, view the
 samples, guidance on mobile development, and a full API reference.
 
 
-You can see three dd=ifferent dart files in responsive folder as desktop, mobile, and tablet. each one is dedicated for the develop web site according to the respective device/display sizes 
+You can see three dd=ifferent dart files in responsive folder as desktop, mobile, and tablet. each one is dedicated for the develop web site according to the respective device/display sizes.
