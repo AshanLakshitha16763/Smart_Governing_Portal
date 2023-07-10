@@ -7,7 +7,7 @@ var navbar1 = AppBar(
   title: SizedBox(
     width: 150,
     child: Image.asset(
-      'lib/Assets/Picture1.png',
+      'lib/Assets/logo.png',
       fit: BoxFit.cover,
     ),
   ),
