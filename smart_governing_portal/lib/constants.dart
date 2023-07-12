@@ -103,5 +103,163 @@ var navbar1 = AppBar(
     ),
   ],
   backgroundColor: const Color.fromARGB(255, 115, 185, 250),
-  //flexibleSpace: FlexibleSpaceBar(),
 );
+
+//This is the Footer
+var footer = Container(
+  color: const Color.fromARGB(255, 248, 247, 247),
+  child: Padding(
+    padding: const EdgeInsets.all(20.0),
+    child: Column(
+      children: [
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          children: [
+            Column(
+              children: [
+                Image.asset(
+                  'lib/Assets/logo.png',
+                  width: 150,
+                ),
+                const Text(
+                  'A centralized platform for citizens',
+                  style: TextStyle(
+                    fontSize: 15,
+                  ),
+                ),
+                const SizedBox(
+                  height: 10,
+                ),
+                const Text(
+                  'Lorem ipsum dolor sit amet,\nin vim orum, vim et postea \nphilosophia mediocritatem. \nEu sit postea adolescens intellegam.',
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                    fontSize: 15,
+                  ),
+                ),
+              ],
+            ),
+            Column(
+              children: [
+                const SizedBox(
+                  height: 50,
+                ),
+                const Text(
+                  'Discover',
+                  style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                ),
+                TextButton(
+                    onPressed: () {},
+                    child: const Text(
+                      'Country Overview',
+                      style: TextStyle(fontSize: 15),
+                    )),
+                TextButton(
+                    onPressed: () {},
+                    child: const Text(
+                      'Government',
+                      style: TextStyle(fontSize: 15),
+                    )),
+                TextButton(
+                    onPressed: () {},
+                    child: const Text(
+                      'Costitution',
+                      style: TextStyle(fontSize: 15),
+                    )),
+                TextButton(
+                    onPressed: () {},
+                    child: const Text(
+                      'Legal System',
+                      style: TextStyle(fontSize: 15),
+                    )),
+              ],
+            ),
+            Column(
+              children: [
+                const SizedBox(
+                  height: 50,
+                ),
+                const Text(
+                  'Quick Links',
+                  style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                ),
+                TextButton(
+                    onPressed: () {},
+                    child: const Text(
+                      'Ministry Websites',
+                      style: TextStyle(fontSize: 15),
+                    )),
+                TextButton(
+                    onPressed: () {},
+                    child: const Text(
+                      'Departments Websites',
+                      style: TextStyle(fontSize: 15),
+                    )),
+                TextButton(
+                    onPressed: () {},
+                    child: const Text(
+                      'Statutory Boards',
+                      style: TextStyle(fontSize: 15),
+                    )),
+                TextButton(
+                    onPressed: () {},
+                    child: const Text(
+                      'Authorization Websites',
+                      style: TextStyle(fontSize: 15),
+                    )),
+              ],
+            ),
+            Column(
+              children: [
+                const SizedBox(
+                  height: 50,
+                ),
+                const Text(
+                  'Easy Navigate To',
+                  style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                ),
+                TextButton(
+                    onPressed: () {},
+                    child: const Text(
+                      'Home',
+                      style: TextStyle(fontSize: 15),
+                    )),
+                TextButton(
+                    onPressed: () {},
+                    child: const Text(
+                      'Services',
+                      style: TextStyle(fontSize: 15),
+                    )),
+                TextButton(
+                    onPressed: () {},
+                    child: const Text(
+                      'About Us',
+                      style: TextStyle(fontSize: 15),
+                    )),
+                TextButton(
+                    onPressed: () {},
+                    child: const Text(
+                      'Register',
+                      style: TextStyle(fontSize: 15),
+                    )),
+              ],
+            ),
+          ],
+        ),
+        const SizedBox(
+          height: 20,
+        ),
+        const Text(
+          'Copyright 2023, Let’s Gov, government service. All right reserved.',
+          style: TextStyle(
+            color: Color.fromARGB(255, 100, 100, 100),
+            fontSize: 15,
+            fontFamily: 'Inter',
+          ),
+        )
+      ],
+    ),
+  ),
+);
+
+//
