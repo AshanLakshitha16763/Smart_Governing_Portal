@@ -4,6 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:smart_governing_portal/Responsive/MobileSite/RegistorMobile.dart';
 
 
+import 'package:smart_governing_portal/Responsive/DesktopSite/home_page.dart';
+
 class MobileDesign extends StatefulWidget {
   const MobileDesign({super.key});
 
@@ -14,7 +16,9 @@ class MobileDesign extends StatefulWidget {
 class _MobileDesignState extends State<MobileDesign> {
   @override
   Widget build(BuildContext context) {
+
     return RegistorMobile();
-  }
+
 }
 
+}

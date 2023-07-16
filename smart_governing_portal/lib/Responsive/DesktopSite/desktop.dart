@@ -14,6 +14,8 @@ class DesktopDesign extends StatefulWidget {
 class _DesktopDesignState extends State<DesktopDesign> {
   @override
   Widget build(BuildContext context) {
+
     return RegistorDesktop();
-  }
+
+}
 }
