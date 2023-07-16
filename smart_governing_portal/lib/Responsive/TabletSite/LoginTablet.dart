@@ -20,7 +20,7 @@ class _LoginTabletState extends State<LoginTablet> {
         child: Column(
           children: [
 
-            navbar1, // navigation bar
+            navbar, // navigation bar
 
             const SizedBox(
               height: 20,

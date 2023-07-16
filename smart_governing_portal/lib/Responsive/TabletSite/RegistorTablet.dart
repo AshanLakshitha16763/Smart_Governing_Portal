@@ -20,7 +20,7 @@ class _RegistorTabletState extends State<RegistorTablet> {
         child: Column(
           children: [
 
-            navbar1, // navigation bar
+            navbar, // navigation bar
 
            const SizedBox(
               height: 20,

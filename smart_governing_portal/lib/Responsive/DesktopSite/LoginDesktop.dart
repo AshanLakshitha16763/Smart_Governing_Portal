@@ -18,7 +18,7 @@ class _LoginDesktopState extends State<LoginDesktop> {
       body: Center(
         child: Column(
           children: [
-            navbar1, // navigation bar
+            navbar, // navigation bar
 
             const SizedBox(
               height: 20,
