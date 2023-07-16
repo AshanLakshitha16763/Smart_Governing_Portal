@@ -23,8 +23,8 @@ class MyApp extends StatelessWidget {
       ),
       home: const ResponsiveLayout(
         mobileDesign: MobileDesign(), 
-        tabletDesign: TabletDesign(), 
-        desktopDesign: DesktopDesign()),
+         tabletDesign: TabletDesign(), 
+         desktopDesign: DesktopDesign()),
     );
   }
 }
