@@ -1,6 +1,8 @@
 // ignore_for_file: non_constant_identifier_names
 
 import 'package:flutter/material.dart';
+import 'package:smart_governing_portal/Responsive/DesktopSite/LoginDesktop.dart';
+import 'package:smart_governing_portal/Responsive/DesktopSite/RegistorDesktop.dart';
 import 'package:smart_governing_portal/Responsive/DesktopSite/admin_home_page.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -82,7 +84,8 @@ class _HomePageState extends State<HomePage> {
                               Navigator.push(
                                 context,
                                 MaterialPageRoute<void>(
-                                  builder: (BuildContext context) => const AdminHomePage(),
+                                  builder: (BuildContext context) =>
+                                      const AdminHomePage(),
                                 ),
                               );
                             },
@@ -103,7 +106,14 @@ class _HomePageState extends State<HomePage> {
                     Row(
                       children: [
                         ElevatedButton(
-                          onPressed: () {},
+                          onPressed: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute<void>(
+                                builder: (BuildContext context) =>LoginDesktop(),
+                              ),
+                            );
+                          },
                           style: const ButtonStyle(
                               backgroundColor: MaterialStatePropertyAll(
                                   Color.fromARGB(255, 255, 255, 255))),
@@ -117,7 +127,14 @@ class _HomePageState extends State<HomePage> {
                           width: 15,
                         ),
                         ElevatedButton(
-                          onPressed: () {},
+                          onPressed: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute<void>(
+                                builder: (BuildContext context) =>const RegistorDesktop(),
+                              ),
+                            );
+                          },
                           style: const ButtonStyle(
                               backgroundColor: MaterialStatePropertyAll(
                                   Color.fromARGB(255, 10, 4, 70))),

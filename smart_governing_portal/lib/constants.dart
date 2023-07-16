@@ -4,8 +4,10 @@ import 'package:flutter/material.dart';
 button for desktop and tablet versions*/
 
 var navbar = AppBar(
+  automaticallyImplyLeading: false,
   toolbarHeight: 120,
-  title: SizedBox(
+  leadingWidth: 180,
+  leading: SizedBox(
     width: 150,
     child: Image.asset(
       'lib/Assets/logo.png',

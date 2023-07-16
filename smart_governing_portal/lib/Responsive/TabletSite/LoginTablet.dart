@@ -31,7 +31,7 @@ class _LoginTabletState extends State<LoginTablet> {
                 child: Container(
                   decoration: BoxDecoration(
                     border: Border.all(
-                      color: Color.fromARGB(255, 243, 236, 236), // Border color
+                      color: const Color.fromARGB(255, 243, 236, 236), // Border color
                       width: 3.0, // Border width
                     ),
                     borderRadius: BorderRadius.circular(15), // Border radius
@@ -103,12 +103,12 @@ class _LoginTabletState extends State<LoginTablet> {
                                       decoration: InputDecoration(
                                         labelText: 'Email',
                                         hintText: 'Enter your email',
-                                        prefixIcon: Icon(Icons.email),
+                                        prefixIcon: const Icon(Icons.email),
                                         border: OutlineInputBorder(
                                           borderRadius: BorderRadius.circular(10),
                                         ),
                                         focusedBorder: OutlineInputBorder(
-                                          borderSide: BorderSide(color: Colors.blue, width: 2.0),
+                                          borderSide: const BorderSide(color: Colors.blue, width: 2.0),
                                           borderRadius: BorderRadius.circular(10),
                                         ),
                                       ),
@@ -138,12 +138,12 @@ class _LoginTabletState extends State<LoginTablet> {
                                       decoration: InputDecoration(
                                         labelText: 'Password',
                                         hintText: 'Enter your password',
-                                        prefixIcon: Icon(Icons.lock_open),
+                                        prefixIcon: const Icon(Icons.lock_open),
                                         border: OutlineInputBorder(
                                           borderRadius: BorderRadius.circular(10),
                                         ),
                                         focusedBorder: OutlineInputBorder(
-                                          borderSide: BorderSide(color: Colors.blue, width: 2.0),
+                                          borderSide: const BorderSide(color: Colors.blue, width: 2.0),
                                           borderRadius: BorderRadius.circular(10),
                                         ),
                                       ),
@@ -160,7 +160,7 @@ class _LoginTabletState extends State<LoginTablet> {
                                           onPressed: () {},
                                           style: ElevatedButton.styleFrom(
                                             foregroundColor: const Color.fromARGB(255, 243, 242, 234),
-                                            backgroundColor: Color.fromARGB(255, 10, 4, 70),
+                                            backgroundColor: const Color.fromARGB(255, 10, 4, 70),
                                             padding: const EdgeInsets.all(20),
                                             fixedSize: const Size(800, 50),
                                             textStyle: const TextStyle(

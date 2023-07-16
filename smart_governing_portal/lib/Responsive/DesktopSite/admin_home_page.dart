@@ -10,6 +10,7 @@ class AdminHomePage extends StatefulWidget {
 }
 
 class _AdminHomePageState extends State<AdminHomePage> {
+
   @override
   Widget build(BuildContext context) {
     double w = MediaQuery.of(context).size.width;
@@ -21,13 +22,14 @@ class _AdminHomePageState extends State<AdminHomePage> {
             automaticallyImplyLeading: false,
             toolbarHeight: 120,
             centerTitle: true,
-            title: const Text('Government Admins Only',
-            style: TextStyle(
-              color: Colors.white,
-              fontSize: 24,
-              fontFamily: 'poppins',
-              fontWeight: FontWeight.bold
-            ),),
+            title: const Text(
+              'Government Admins Only',
+              style: TextStyle(
+                  color: Colors.white,
+                  fontSize: 24,
+                  fontFamily: 'poppins',
+                  fontWeight: FontWeight.bold),
+            ),
             leadingWidth: 180,
             leading: SizedBox(
               width: 150,
@@ -112,11 +114,11 @@ class _AdminHomePageState extends State<AdminHomePage> {
             ],
             backgroundColor: const Color.fromARGB(255, 115, 185, 250),
           ),
-          
-          //first section 
+
+          //first section
           SizedBox(
             child: Padding(
-              padding:  const EdgeInsets.only(left: 20, right: 20, top: 50),
+              padding: const EdgeInsets.only(left: 20, right: 20, top: 50),
               child: Column(
                 children: [
                   Row(
@@ -146,36 +148,45 @@ class _AdminHomePageState extends State<AdminHomePage> {
                       ), // chatbot here
                     ],
                   ),
-                
                   FittedBox(
                     child: Column(
                       children: [
-                        const Text('You need to use your Grama Niladhari ID number as the username for register / login.',
-                        textAlign: TextAlign.center,
-                        style: TextStyle(
-                          fontSize: 20,
+                        const Text(
+                          'You need to use your Grama Niladhari ID number as the username for register / login.',
+                          textAlign: TextAlign.center,
+                          style: TextStyle(
+                            fontSize: 20,
+                          ),
                         ),
+                        const SizedBox(
+                          height: 15,
                         ),
-                        const SizedBox(height: 15,),
-                        const Text('Create Your Admin Profile',
-                        textAlign: TextAlign.center,
-                        style: TextStyle(
-                          fontFamily: 'Inter',
-                          fontSize: 20,
-                          fontWeight: FontWeight.bold
+                        const Text(
+                          'Create Your Admin Profile',
+                          textAlign: TextAlign.center,
+                          style: TextStyle(
+                              fontFamily: 'Inter',
+                              fontSize: 20,
+                              fontWeight: FontWeight.bold),
                         ),
+                        const SizedBox(
+                          height: 15,
                         ),
-                        const SizedBox(height: 15,),
-                        Image.asset('lib/Assets/belowicon.png',width: 32,height: 40,)
+                        Image.asset(
+                          'lib/Assets/belowicon.png',
+                          width: 32,
+                          height: 40,
+                        )
                       ],
                     ),
-                  
-            
                   )
                 ],
               ),
             ),
           ),
+
+          //form
+          Form(child: Column()),
 
           //footer
           Container(
