@@ -2,7 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:smart_governing_portal/Responsive/DesktopSite/home_page.dart';
-import 'RegistorDesktop.dart';
+
 
 class DesktopDesign extends StatefulWidget {
   const DesktopDesign({super.key});
@@ -14,6 +14,6 @@ class DesktopDesign extends StatefulWidget {
 class _DesktopDesignState extends State<DesktopDesign> {
   @override
   Widget build(BuildContext context) {
-    return HomePage();
+    return const HomePage();
   }
 }
