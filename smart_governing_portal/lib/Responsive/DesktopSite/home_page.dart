@@ -1,6 +1,7 @@
 // ignore_for_file: non_constant_identifier_names
 
 import 'package:flutter/material.dart';
+import 'package:smart_governing_portal/Responsive/DesktopSite/admin_home_page.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class HomePage extends StatefulWidget {
@@ -22,8 +23,10 @@ class _HomePageState extends State<HomePage> {
         children: [
           //navbar
           AppBar(
+            automaticallyImplyLeading: false,
             toolbarHeight: 120,
-            title: SizedBox(
+            leadingWidth: 180,
+            leading: SizedBox(
               width: 150,
               child: Image.asset(
                 'lib/Assets/logo.png',
@@ -75,7 +78,14 @@ class _HomePageState extends State<HomePage> {
                           width: 20,
                         ),
                         TextButton(
-                            onPressed: () {},
+                            onPressed: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute<void>(
+                                  builder: (BuildContext context) => const AdminHomePage(),
+                                ),
+                              );
+                            },
                             child: const Text(
                               'Admin',
                               style: TextStyle(
@@ -365,7 +375,8 @@ class _HomePageState extends State<HomePage> {
                                 )),
                             TextButton(
                                 onPressed: () {
-                                  _launchURL('https://www.gov.lk/webdirectory/departments?');
+                                  _launchURL(
+                                      'https://www.gov.lk/webdirectory/departments?');
                                 },
                                 child: const Text(
                                   'Departments Websites',
@@ -373,7 +384,8 @@ class _HomePageState extends State<HomePage> {
                                 )),
                             TextButton(
                                 onPressed: () {
-                                  _launchURL('https://www.gov.lk/webdirectory/statutoryboards?');
+                                  _launchURL(
+                                      'https://www.gov.lk/webdirectory/statutoryboards?');
                                 },
                                 child: const Text(
                                   'Statutory Boards',
@@ -381,7 +393,7 @@ class _HomePageState extends State<HomePage> {
                                 )),
                             TextButton(
                                 onPressed: () {
-                                 /* _launchURL('');*/
+                                  /* _launchURL('');*/
                                 },
                                 child: const Text(
                                   'Authorization Websites',
@@ -389,7 +401,7 @@ class _HomePageState extends State<HomePage> {
                                 )),
                           ],
                         ),
-                        
+
                         //Easy Navigate To
                         Column(
                           children: [
@@ -699,6 +711,7 @@ class _HomePageState extends State<HomePage> {
   }
 }
 
+//url launcher
 void _launchURL(String url) async {
   if (await canLaunch(url)) {
     await launch(url);
