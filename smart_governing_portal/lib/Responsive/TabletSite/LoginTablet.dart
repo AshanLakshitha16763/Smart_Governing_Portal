@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:smart_governing_portal/Responsive/DesktopSite/RegistorDesktop.dart';
 import 'package:smart_governing_portal/constants.dart';
 import 'RegistorTablet.dart';
 

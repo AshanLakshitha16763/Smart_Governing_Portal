@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:smart_governing_portal/Responsive/DesktopSite/home_page.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -10,6 +12,48 @@ class AdminHomePage extends StatefulWidget {
 }
 
 class _AdminHomePageState extends State<AdminHomePage> {
+  final _adminRegistrationformKey = GlobalKey<FormState>();
+  String _fullName = '';
+  String _nic = '';
+  String _gramaNiladhariID = '';
+  String _mobile = '';
+  String _personalAddress = '';
+  String _gramaniladariDivision = '';
+  String _areaCode = '';
+  String selectedProvince = '';
+  String selectedDistrict = '';
+
+  final Map<String, List<String>> districtsByProvince = {
+    'SOUTHERN PROVINCE': ['Galle', 'Matara', 'Hambanthota'],
+    'WESTERN PROVINCE': ['Gampaha', 'Colombo', 'Kaluthara'],
+    'CENTRAL PROVINCE': ['Kandy', 'Matale', 'Nuwara Eliya'],
+    'SABARAGAMUWA PROVINCE': ['Kegalle', 'Rathnapura'],
+    'EASTERN PROVINCE': ['Ampara', 'Batticaloa', 'Trincomalee'],
+    'UVA PROVINCE': ['Badulla', 'Monaragala'],
+    'NORTH WESTERN  PROVINCE': ['Kurunegala', 'Puttalam'],
+    'NORTH CENTRAL PROVINCE': ['Anuradhapura', 'Polonnaruwa'],
+    'NORTHERN PROVINCE': [
+      'Jaffna',
+      'Kilinochchi',
+      'Mullaitivu',
+      'Vavuniya',
+      'Mannar'
+    ],
+  };
+
+  List<String> getDistrictsByProvince(String province) {
+    return districtsByProvince[province]!;
+  }
+
+  Future<void> _getImage() async {
+    final imagePicker = ImagePicker();
+    final image = await imagePicker.pickImage(source: ImageSource.gallery);
+
+    if (image != null) {
+      // Handle the image, you can save it or use it as needed.
+      // For this example, we will not store the image in this code snippet.
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -186,7 +230,123 @@ class _AdminHomePageState extends State<AdminHomePage> {
           ),
 
           //form
-          Form(child: Column()),
+          Padding(
+            padding: const EdgeInsets.only(left: 80,right: 80,top: 30,bottom: 30),
+            child: Container(
+              decoration: BoxDecoration(
+                      border: Border.all(
+                        color: const Color.fromARGB(255, 243, 236, 236), // Border color
+                        width: 3.0, // Border width
+                      ),
+                      borderRadius: BorderRadius.circular(15), // Border radius
+                    ),
+              child: Padding(
+                padding: const EdgeInsets.all(50),
+                child: Form(
+                    key: _adminRegistrationformKey,
+                    child: Column(
+                      children: <Widget>[
+                        //Full Name
+                        TextFormField(
+                            validator: (value) {
+                              if (value!.isEmpty) {
+                                return 'Please enter your full Name';
+                              }
+                              return null;
+                            },
+                            onSaved: (value) {
+                              _fullName = value!;
+                            },
+                            decoration: decorations('Full Name')),
+                        const SizedBox(height: 10,),
+                        //NIC
+                        TextFormField(
+                            validator: (value) {
+                              if (value!.isEmpty) {
+                                return 'Please enter your NIC number';
+                              }
+                              return null;
+                            },
+                            onSaved: (value) {
+                              _nic = value!;
+                            },
+                            decoration: decorations('NIC')),
+                        const SizedBox(height: 10,),
+                        //grama niladhari ID
+                        TextFormField(
+                            validator: (value) {
+                              if (value!.isEmpty) {
+                                return 'Please enter your Grama Niladhari ID';
+                              }
+                              return null;
+                            },
+                            onSaved: (value) {
+                              _gramaNiladhariID = value!;
+                            },
+                            decoration: decorations('Grama Niladhari ID')),
+                        const SizedBox(height: 10,),
+                        //MObile no
+                        TextFormField(
+                            validator: (value) {
+                              if (value!.isEmpty) {
+                                return 'Please enter your Mobile No';
+                              }
+                              return null;
+                            },
+                            onSaved: (value) {
+                              _mobile = value!;
+                            },
+                            decoration: decorations('Mobile No')),
+                        const SizedBox(height: 10,),
+                        //personal address
+                        TextFormField(
+                            validator: (value) {
+                              if (value!.isEmpty) {
+                                return 'Please enter your Personal Address';
+                              }
+                              return null;
+                            },
+                            onSaved: (value) {
+                              _personalAddress = value!;
+                            },
+                            decoration: decorations('Personal Address')),
+                        const SizedBox(height: 10,),
+                        //Province
+                        
+                        //district
+              
+                        //grama niladari division (work)
+                        TextFormField(
+                            validator: (value) {
+                              if (value!.isEmpty) {
+                                return 'Please enter your Grama Niladari Division (work)';
+                              }
+                              return null;
+                            },
+                            onSaved: (value) {
+                              _gramaniladariDivision = value!;
+                            },
+                            decoration:
+                                decorations('Grama Niladari Division (work)')),
+                        const SizedBox(height: 10,),
+                        //area code
+                        TextFormField(
+                            validator: (value) {
+                              if (value!.isEmpty) {
+                                return 'Please enter your Area (work)';
+                              }
+                              return null;
+                            },
+                            onSaved: (value) {
+                              _areaCode = value!;
+                            },
+                            decoration: decorations('Area (work)')),
+                        const SizedBox(height: 10,),
+                      ],
+                    )),
+              ),
+            ),
+          ),
 
           //footer
           Container(
@@ -390,4 +550,18 @@ void _launchURL(String url) async {
   } else {
     throw 'Could not launch $url';
   }
+}
+
+//input decoration for the form fields
+InputDecoration decorations(String _formfieldName) {
+  return InputDecoration(
+    labelText: _formfieldName,
+    border: OutlineInputBorder(
+      borderRadius: BorderRadius.circular(10),
+    ),
+    focusedBorder: OutlineInputBorder(
+      borderSide: const BorderSide(color: Colors.blue, width: 2.0),
+      borderRadius: BorderRadius.circular(10),
+    ),
+  );
 }
