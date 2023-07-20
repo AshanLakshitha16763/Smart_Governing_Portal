@@ -41,7 +41,7 @@ class _LoginMobileState extends State<LoginMobile> {
         ],
       ),
 
-      //drawer: MobileDrawer, // Mobile Drawer
+      drawer: MobileDrawer, // Mobile Drawer
 
       body: SingleChildScrollView(
         child: Column(

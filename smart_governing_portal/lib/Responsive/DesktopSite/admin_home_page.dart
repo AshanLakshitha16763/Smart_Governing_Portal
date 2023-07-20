@@ -1,5 +1,4 @@
 import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:smart_governing_portal/Responsive/DesktopSite/home_page.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -45,7 +44,8 @@ class _AdminHomePageState extends State<AdminHomePage> {
     'Hambanthota',
     'Gampaha',
     'Colombo',
-    'Kaluthara' 'Kandy',
+    'Kaluthara',
+    'Kandy',
     'Matale',
     'Nuwara Eliya',
     'Kegalle',
@@ -542,7 +542,7 @@ class _AdminHomePageState extends State<AdminHomePage> {
                                 color: Colors.grey,
                                 child: _imageFile != null
                                     ? Image.file(_imageFile!, fit: BoxFit.cover)
-                                    : Icon(Icons.add_a_photo),
+                                    : const Icon(Icons.add_a_photo),
                               ),
                             )
                           ],
