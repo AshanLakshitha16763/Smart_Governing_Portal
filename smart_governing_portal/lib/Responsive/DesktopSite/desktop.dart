@@ -2,8 +2,6 @@
 
 import 'package:flutter/material.dart';
 import 'package:smart_governing_portal/Responsive/DesktopSite/home_page.dart';
-
-
 class DesktopDesign extends StatefulWidget {
   const DesktopDesign({super.key});
 

@@ -2,12 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:smart_governing_portal/constants.dart';
 import 'LoginTablet.dart';
 
-class RegistorTablet extends StatefulWidget {
+class RegisterTablet extends StatefulWidget {
   @override
-  _RegistorTabletState createState() => _RegistorTabletState();
+  _RegisterTabletState createState() => _RegisterTabletState();
 }
 
-class _RegistorTabletState extends State<RegistorTablet> {
+class _RegisterTabletState extends State<RegisterTablet> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>(); // GlobalKey for the form
   final TextEditingController _nameController = TextEditingController(); // Controller for name input
   final TextEditingController _emailController = TextEditingController(); // Controller for email input
@@ -56,7 +56,7 @@ class _RegistorTabletState extends State<RegistorTablet> {
                                         children: [
                                           Center(
                                             child: Text(
-                                              'Registor',
+                                              'Register',
                                               style: TextStyle(
                                                 fontSize: 30,
                                                 fontWeight: FontWeight.bold,
