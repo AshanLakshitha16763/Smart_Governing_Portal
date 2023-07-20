@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:smart_governing_portal/Responsive/DesktopSite/RegistorDesktop.dart';
+import 'package:smart_governing_portal/Responsive/DesktopSite/RegisterDesktop.dart';
 import 'package:smart_governing_portal/constants.dart';
 import 'LoginDesktop.dart';
 
@@ -215,7 +215,7 @@ class _RegistorDesktopState extends State<RegistorDesktop> {
                                             ),
                                           ),
                                           child: const Text(
-                                            'Registor Now',
+                                            'Register Now',
                                             style: TextStyle(fontSize: 20),
                                           ),
                                         ),

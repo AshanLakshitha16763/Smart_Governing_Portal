@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:smart_governing_portal/Responsive/DesktopSite/RegistorDesktop.dart';
+import 'package:smart_governing_portal/Responsive/DesktopSite/RegisterDesktop.dart';
 import 'package:smart_governing_portal/constants.dart';
-import 'RegistorTablet.dart';
+import 'RegisterTablet.dart';
 
 class LoginTablet extends StatefulWidget {
   @override
@@ -189,7 +189,7 @@ class _LoginTabletState extends State<LoginTablet> {
                                     ),
 
                                     TextButton( //Go to the Register page 
-                                      onPressed: () => Navigator.of(context).push(MaterialPageRoute(builder: (context) => RegistorTablet())),
+                                      onPressed: () => Navigator.of(context).push(MaterialPageRoute(builder: (context) => RegisterTablet())),
                                       child: const Text(
                                         'Don\'t have an account? Sign Up',
                                         textAlign: TextAlign.center,
