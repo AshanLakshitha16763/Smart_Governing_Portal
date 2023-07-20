@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:smart_governing_portal/constants.dart';
 import 'LoginMobile.dart';
 
 class RegistorMobile extends StatefulWidget {
@@ -8,45 +7,14 @@ class RegistorMobile extends StatefulWidget {
 }
 
 class _RegistorMobileState extends State<RegistorMobile> {
-  final GlobalKey<FormState> _formKey =
-      GlobalKey<FormState>(); // GlobalKey for the form
-  final TextEditingController _nameController =
-      TextEditingController(); // Controller for name input
-  final TextEditingController _emailController =
-      TextEditingController(); // Controller for email input
-  final TextEditingController _passwordController =
-      TextEditingController(); // Controller for password input
+  final GlobalKey<FormState> _formKey = GlobalKey<FormState>(); // GlobalKey for the form
+  final TextEditingController _nameController = TextEditingController(); // Controller for name input
+  final TextEditingController _emailController = TextEditingController(); // Controller for email input
+  final TextEditingController _passwordController = TextEditingController(); // Controller for password input
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        //Mobile AppBar
-        title: const Center(
-            child: Expanded(
-                child: Text(
-          'Registor',
-          textAlign: TextAlign.center,
-          style: TextStyle(fontSize: 32, fontWeight: FontWeight.bold),
-        ))),
-        toolbarHeight: 80, // Change the AppBar height
-        actions: <Widget>[
-          Padding(
-            padding: const EdgeInsets.all(
-                8.0), // Add padding to adjust the size of the image
-            child: SizedBox(
-              child: Image.asset(
-                'lib/Assets/logo.png',
-                width: 80,
-                height: 80,
-              ),
-            ),
-          ),
-        ],
-      ),
-
-      drawer: MobileDrawer, // Mobile Drawer
-
       body: Center(
         child: Container(
           width: MediaQuery.of(context).size.width - 50,
@@ -59,11 +27,30 @@ class _RegistorMobileState extends State<RegistorMobile> {
                   key: _formKey, // Assigning the GlobalKey to the form
                   child: Column(
                     children: [
-                      const SizedBox(height: 5),
-                      Padding(
-                        //User image
-                        padding:
-                            const EdgeInsetsDirectional.fromSTEB(7, 0, 7, 0),
+
+                     const Center(
+                        child: Column(
+                          children: [
+                            Center(
+                              child: Text(
+                                'Registor',
+                                style: TextStyle(
+                                  fontSize: 46,
+                                  fontWeight: FontWeight.bold,
+                                  color: Color.fromARGB(255, 30, 31, 30),
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+
+                      const SizedBox(
+                        height: 5
+                        ),
+
+                      Padding( //User image
+                        padding: const EdgeInsetsDirectional.fromSTEB(7, 0, 7, 0),
                         child: Image.asset(
                           'lib/Assets/RegisterPages/user.png',
                           width: double.infinity,
@@ -71,10 +58,13 @@ class _RegistorMobileState extends State<RegistorMobile> {
                           fit: BoxFit.contain,
                         ),
                       ),
-                      const SizedBox(height: 15),
+
+                     const SizedBox(
+                      height: 15
+                      ),
+
                       TextFormField(
-                        controller:
-                            _nameController, // Assigning the name controller
+                        controller: _nameController, // Assigning the name controller
                         validator: (String? value) {
                           // Name validation logic
                           if (value == null || value.isEmpty) {
@@ -91,16 +81,18 @@ class _RegistorMobileState extends State<RegistorMobile> {
                             borderRadius: BorderRadius.circular(10),
                           ),
                           focusedBorder: OutlineInputBorder(
-                            borderSide:
-                                BorderSide(color: Colors.blue, width: 2.0),
+                            borderSide: BorderSide(color: Colors.blue, width: 2.0),
                             borderRadius: BorderRadius.circular(10),
                           ),
                         ),
                       ),
-                      const SizedBox(height: 15),
+
+                     const SizedBox(
+                      height: 15
+                      ),
+
                       TextFormField(
-                        controller:
-                            _emailController, // Assigning the email controller
+                        controller: _emailController, // Assigning the email controller
                         validator: (String? value) {
                           // Email validation logic
                           if (value == null || value.isEmpty) {
@@ -120,16 +112,18 @@ class _RegistorMobileState extends State<RegistorMobile> {
                             borderRadius: BorderRadius.circular(10),
                           ),
                           focusedBorder: OutlineInputBorder(
-                            borderSide:
-                                BorderSide(color: Colors.blue, width: 2.0),
+                            borderSide: BorderSide(color: Colors.blue, width: 2.0),
                             borderRadius: BorderRadius.circular(10),
                           ),
                         ),
                       ),
-                      const SizedBox(height: 20.0),
+
+                      const SizedBox(
+                        height: 20.0
+                        ),
+
                       TextFormField(
-                        controller:
-                            _passwordController, // Assigning the password controller
+                        controller: _passwordController, // Assigning the password controller
                         validator: (value) {
                           // Password validation logic
                           if (value == null || value.isEmpty) {
@@ -153,24 +147,24 @@ class _RegistorMobileState extends State<RegistorMobile> {
                             borderRadius: BorderRadius.circular(10),
                           ),
                           focusedBorder: OutlineInputBorder(
-                            borderSide: const BorderSide(
-                                color: Colors.blue, width: 2.0),
+                            borderSide: const BorderSide(color: Colors.blue, width: 2.0),
                             borderRadius: BorderRadius.circular(10),
                           ),
                         ),
                       ),
-                      const SizedBox(height: 14.0),
-                      Center(
-                        // Register button
+
+                      const SizedBox(
+                        height: 14.0
+                        ),
+
+                      Center( // Register button
                         child: Padding(
                           padding: const EdgeInsetsDirectional.all(15),
                           child: ElevatedButton(
                             onPressed: () {},
                             style: ElevatedButton.styleFrom(
-                              foregroundColor:
-                                  const Color.fromARGB(255, 243, 242, 234),
-                              backgroundColor:
-                                  const Color.fromARGB(255, 10, 4, 70),
+                              foregroundColor: const Color.fromARGB(255, 243, 242, 234),
+                              backgroundColor: const Color.fromARGB(255, 10, 4, 70),
                               padding: const EdgeInsets.all(20),
                               fixedSize: const Size(800, 65),
                               textStyle: const TextStyle(
@@ -194,12 +188,14 @@ class _RegistorMobileState extends State<RegistorMobile> {
                           ),
                         ),
                       ),
-                      const SizedBox(height: 1.0),
-                      TextButton(
-                        // Go to the Login page
+
+                      const SizedBox(
+                        height: 1.0
+                        ),
+
+                      TextButton( // Go to the Login page
                         onPressed: () => Navigator.of(context).push(
-                            MaterialPageRoute(
-                                builder: (context) => LoginMobile())),
+                            MaterialPageRoute(builder: (context) => LoginMobile())),
                         child: const Text(
                           'Already have an account?',
                           style: TextStyle(
@@ -209,59 +205,65 @@ class _RegistorMobileState extends State<RegistorMobile> {
                           ),
                         ),
                       ),
-                      const SizedBox(height: 8.0),
-                      Center(
-                        // Google,Apple,Facebook logo
-                        child: Expanded(
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              GestureDetector(
-                                onTap: () {
-                                  // Handle Google button tap
-                                },
-                                child: Image.asset(
-                                  'lib/Assets/RegisterPages/google.png',
-                                  width: 30,
-                                  height: 30,
-                                  fit: BoxFit.contain,
-                                ),
-                              ),
-                              const SizedBox(
-                                width: 3,
-                              ),
-                              GestureDetector(
-                                onTap: () {
-                                  // Handle Facebook button tap
-                                },
-                                child: Image.asset(
-                                  'lib/Assets/RegisterPages/facebook.png',
-                                  width: 60,
-                                  height: 60,
-                                  fit: BoxFit.contain,
-                                ),
-                              ),
-                              const SizedBox(
-                                width: 1,
-                              ),
-                              GestureDetector(
-                                onTap: () {
-                                  // Handle Apple button tap
-                                },
-                                child: Image.asset(
-                                  'lib/Assets/RegisterPages/apple.png',
-                                  width: 40,
-                                  height: 40,
-                                  fit: BoxFit.contain,
-                                ),
-                              ),
-                            ],
-                          ),
+
+                      const SizedBox(
+                        height: 8.0
                         ),
-                      ),
+
+                       Center( // Google,Apple,Facebook logo 
+                                      child: Expanded(
+                                        child: Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.center,
+                                          children: [
+                                            GestureDetector(
+                                              onTap: () {
+                                                // Handle Google button tap
+                                              },
+                                              child: Image.asset(
+                                                'lib/Assets/RegisterPages/google.png',
+                                                width: 30,
+                                                height: 30,
+                                                fit: BoxFit.contain,
+                                              ),
+                                            ),
+                                            const SizedBox(
+                                              width: 3,
+                                            ),
+                                            GestureDetector(
+                                              onTap: () {
+                                                // Handle Facebook button tap
+                                              },
+                                              child: Image.asset(
+                                                'lib/Assets/RegisterPages/facebook.png',
+                                                width: 60,
+                                                height: 60,
+                                                fit: BoxFit.contain,
+                                              ),
+                                            ),
+                                            const SizedBox(
+                                              width: 1,
+                                            ),
+                                            GestureDetector(
+                                              onTap: () {
+                                                // Handle Apple button tap
+                                              },
+                                              child: Image.asset(
+                                                'lib/Assets/RegisterPages/apple.png',
+                                                width: 40,
+                                                height: 40,
+                                                fit: BoxFit.contain,
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+                                    ),
+
                       const SizedBox(
                         height: 25,
                       ),
+
                       const Center(
                         child: Expanded(
                           child: Row(
@@ -283,6 +285,7 @@ class _RegistorMobileState extends State<RegistorMobile> {
                           ),
                         ),
                       ),
+
                     ],
                   ),
                 ),

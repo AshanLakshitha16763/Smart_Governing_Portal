@@ -28,7 +28,7 @@ class _LoginDesktopState extends State<LoginDesktop> {
                 child: Container( 
                   decoration: BoxDecoration(
                     border: Border.all(
-                      color: Color.fromARGB(255, 243, 236, 236), // Border color
+                      color: const Color.fromARGB(255, 243, 236, 236), // Border color
                       width: 3.0, // Border width
                     ),
                     borderRadius: BorderRadius.circular(15), // Border radius
@@ -102,7 +102,7 @@ class _LoginDesktopState extends State<LoginDesktop> {
                                       decoration: InputDecoration(
                                         labelText: 'Email',
                                         hintText: 'Enter your email',
-                                        prefixIcon: Icon(Icons.email),
+                                        prefixIcon: const Icon(Icons.email),
                                         border: OutlineInputBorder(
                                         borderRadius: BorderRadius.circular(10),    
                                         ),
@@ -136,7 +136,7 @@ class _LoginDesktopState extends State<LoginDesktop> {
                                       decoration: InputDecoration(
                                         labelText: 'Password',
                                         hintText: 'Enter your password',
-                                        prefixIcon: Icon(Icons.lock_open),
+                                        prefixIcon: const Icon(Icons.lock_open),
                                         border: OutlineInputBorder(
                                           borderRadius: BorderRadius.circular(10),     
                                         ),

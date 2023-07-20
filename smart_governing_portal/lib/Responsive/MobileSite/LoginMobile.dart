@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:smart_governing_portal/Responsive/MobileSite/RegisterMobile.dart';
 import 'package:smart_governing_portal/constants.dart';
+
+import 'RegisterMobile.dart';
 
 class LoginMobile extends StatefulWidget {
   @override
@@ -46,7 +47,7 @@ class _LoginMobileState extends State<LoginMobile> {
         child: Column(
           children: [
             Center(
-              child: Container(
+              child: SizedBox(
                 width: MediaQuery.of(context).size.width - 50,
                 height: MediaQuery.of(context).size.height - 50,
                 child: Container(
