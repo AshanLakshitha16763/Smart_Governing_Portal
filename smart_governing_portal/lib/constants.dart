@@ -271,6 +271,84 @@ var footer = Container(
   ),
 );
 
-
-
 //
+var MobileDrawer = Drawer(
+  child: ListView(
+    padding: EdgeInsets.zero,
+    children: [
+      const DrawerHeader(
+        decoration: BoxDecoration(
+          color: Color.fromARGB(255, 115, 185, 250),
+          image: DecorationImage(
+            image: AssetImage(
+              'lib/Assets/logo.png',
+            ),
+            fit: BoxFit.contain,
+          ),
+        ),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            SizedBox(height: 10.0),
+          ],
+        ),
+      ),
+      ListTile(
+        leading: const Icon(
+          Icons.home,
+          color: Colors.brown,
+        ),
+        title: const Text(
+          "Home",
+          style: TextStyle(
+            fontWeight: FontWeight.bold,
+            fontSize: 16,
+          ),
+        ),
+        onTap: () {},
+      ),
+      ListTile(
+        leading: const Icon(
+          Icons.search,
+          color: Colors.brown,
+        ),
+        title: const Text(
+          "Services",
+          style: TextStyle(
+            fontWeight: FontWeight.bold,
+            fontSize: 16,
+          ),
+        ),
+        onTap: () {},
+      ),
+      ListTile(
+        leading: const Icon(
+          Icons.groups,
+          color: Colors.brown,
+        ),
+        title: const Text(
+          "About us",
+          style: TextStyle(
+            fontWeight: FontWeight.bold,
+            fontSize: 16,
+          ),
+        ),
+        onTap: () {},
+      ),
+      ListTile(
+        leading: const Icon(
+          Icons.admin_panel_settings,
+          color: Colors.brown,
+        ),
+        title: const Text(
+          "Admin",
+          style: TextStyle(
+            fontWeight: FontWeight.bold,
+            fontSize: 16,
+          ),
+        ),
+        onTap: () {},
+      ),
+    ],
+  ),
+);

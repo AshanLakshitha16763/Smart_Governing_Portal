@@ -16,7 +16,7 @@ class _RegistorMobileState extends State<RegistorMobile> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Center(
-        child: Container(
+        child: SizedBox(
           width: MediaQuery.of(context).size.width - 50,
           height: MediaQuery.of(context).size.height - 50,
           child: Container(

@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:smart_governing_portal/Responsive/DesktopSite/RegistorDesktop.dart';
+import 'package:smart_governing_portal/Responsive/DesktopSite/RegisterDesktop.dart';
 import 'package:smart_governing_portal/constants.dart';
 
-class LoginDesktop extends StatefulWidget {
+class LoginDesktop extends StatefulWidget{
   @override
   _LoginDesktopState createState() => _LoginDesktopState();
 }
@@ -19,7 +19,6 @@ class _LoginDesktopState extends State<LoginDesktop> {
         child: Column(
           children: [
             navbar, // navigation bar
-
             const SizedBox(
               height: 20,
             ),

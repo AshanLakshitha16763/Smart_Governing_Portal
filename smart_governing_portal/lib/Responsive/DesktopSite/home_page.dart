@@ -2,7 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:smart_governing_portal/Responsive/DesktopSite/LoginDesktop.dart';
-import 'package:smart_governing_portal/Responsive/DesktopSite/RegistorDesktop.dart';
+import 'package:smart_governing_portal/Responsive/DesktopSite/RegisterDesktop.dart';
 import 'package:smart_governing_portal/Responsive/DesktopSite/admin_home_page.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -131,7 +131,7 @@ class _HomePageState extends State<HomePage> {
                             Navigator.push(
                               context,
                               MaterialPageRoute<void>(
-                                builder: (BuildContext context) =>const RegistorDesktop(),
+                                builder: (BuildContext context) =>RegistorDesktop(),
                               ),
                             );
                           },

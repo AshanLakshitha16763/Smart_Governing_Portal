@@ -1,20 +1,17 @@
 import 'package:flutter/material.dart';
-import 'package:smart_governing_portal/Responsive/DesktopSite/RegistorDesktop.dart';
 import 'package:smart_governing_portal/constants.dart';
-import 'LoginDesktop.dart';
+import 'LoginTablet.dart';
 
-class RegistorDesktop extends StatefulWidget {
-  const RegistorDesktop({super.key});
-
+class RegisterTablet extends StatefulWidget {
   @override
-  _RegistorDesktopState createState() => _RegistorDesktopState();
+  _RegisterTabletState createState() => _RegisterTabletState();
 }
 
-class _RegistorDesktopState extends State<RegistorDesktop> {
-  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
-  final TextEditingController _nameController = TextEditingController();
-  final TextEditingController _emailController = TextEditingController();
-  final TextEditingController _passwordController = TextEditingController();
+class _RegisterTabletState extends State<RegisterTablet> {
+  final GlobalKey<FormState> _formKey = GlobalKey<FormState>(); // GlobalKey for the form
+  final TextEditingController _nameController = TextEditingController(); // Controller for name input
+  final TextEditingController _emailController = TextEditingController(); // Controller for email input
+  final TextEditingController _passwordController = TextEditingController(); // Controller for password input
 
   @override
   Widget build(BuildContext context) {
@@ -25,7 +22,7 @@ class _RegistorDesktopState extends State<RegistorDesktop> {
 
             navbar, // navigation bar
 
-            const SizedBox(
+           const SizedBox(
               height: 20,
             ),
 
@@ -35,36 +32,35 @@ class _RegistorDesktopState extends State<RegistorDesktop> {
                   decoration: BoxDecoration(
                     border: Border.all(
                       color: const Color.fromARGB(255, 243, 236, 236), // Border color
-                       width: 3.0, // Border width
+                      width: 3.0, // Border width
                     ),
                     borderRadius: BorderRadius.circular(15), // Border radius
                   ),
-                  width: MediaQuery.of(context).size.width - 100,
-                  height: MediaQuery.of(context).size.height - 100,
+                  width: MediaQuery.of(context).size.width - 50,
+                  height: MediaQuery.of(context).size.height - 50,
                   child: Row(
                     children: [
-
-                      Expanded( // RIGHT SIDE PROPERTIES
+                      Expanded(
                         flex: 1,
                         child: SingleChildScrollView(
                           child: Container(
                             child: Padding(
                               padding: const EdgeInsets.all(16.0),
                               child: Form(
-                                key: _formKey,
+                                key: _formKey, // Assigning the GlobalKey to the form
                                 child: Column(
                                   children: [
+
                                     const Center(
                                       child: Column(
                                         children: [
-                                          Center( // Register
+                                          Center(
                                             child: Text(
                                               'Register',
                                               style: TextStyle(
                                                 fontSize: 30,
                                                 fontWeight: FontWeight.bold,
-                                                color: Color.fromARGB(
-                                                    255, 30, 31, 30),
+                                                color: Color.fromARGB(255, 30, 31, 30),
                                               ),
                                             ),
                                           ),
@@ -76,10 +72,8 @@ class _RegistorDesktopState extends State<RegistorDesktop> {
                                       height: 3
                                       ),
 
-                                    Padding( // user image
-                                      padding:
-                                          const EdgeInsetsDirectional.fromSTEB(
-                                              7, 0, 7, 0),
+                                    Padding( // User image
+                                      padding: const EdgeInsetsDirectional.fromSTEB(7, 0, 7, 0),
                                       child: Image.asset(
                                         'lib/Assets/RegisterPages/user.png',
                                         width: double.infinity,
@@ -88,16 +82,18 @@ class _RegistorDesktopState extends State<RegistorDesktop> {
                                       ),
                                     ),
 
-                                    const SizedBox(
-                                      height: 15
-                                      ),
+                                   const SizedBox(
+                                    height: 15
+                                    ),
 
-                                    TextFormField( // name field
-                                      controller: _nameController,
+                                    TextFormField(
+                                      controller: _nameController, // Assigning the name controller
                                       validator: (String? value) {
+                                        // Name validation logic
                                         if (value == null || value.isEmpty) {
                                           return 'Please enter your name';
                                         }
+                                        // Return null if the entered name is valid
                                         return null;
                                       },
                                       decoration: InputDecoration(
@@ -105,14 +101,11 @@ class _RegistorDesktopState extends State<RegistorDesktop> {
                                         hintText: 'Enter your Name',
                                         prefixIcon: const Icon(Icons.account_circle),
                                         border: OutlineInputBorder(
-                                          borderRadius:
-                                              BorderRadius.circular(10),
+                                          borderRadius: BorderRadius.circular(10),
                                         ),
                                         focusedBorder: OutlineInputBorder(
-                                          borderSide: const BorderSide(
-                                              color:Colors.blue, width: 2.0),
-                                          borderRadius:
-                                              BorderRadius.circular(10),
+                                          borderSide: const BorderSide(color: Colors.blue, width: 2.0),
+                                          borderRadius: BorderRadius.circular(10),
                                         ),
                                       ),
                                     ),
@@ -121,16 +114,17 @@ class _RegistorDesktopState extends State<RegistorDesktop> {
                                       height: 15
                                       ),
 
-                                    TextFormField( // email Textfield
-                                      controller: _emailController,
+                                    TextFormField(
+                                      controller: _emailController, // Assigning the email controller
                                       validator: (String? value) {
+                                        // Email validation logic
                                         if (value == null || value.isEmpty) {
                                           return 'Please enter your email address';
                                         }
-                                        if (!RegExp(r'\S+@\S+\.\S+')
-                                            .hasMatch(value)) {
+                                        if (!RegExp(r'\S+@\S+\.\S+').hasMatch(value)) {
                                           return 'Please enter a valid email address';
                                         }
+                                        // Return null if the entered email is valid
                                         return null;
                                       },
                                       decoration: InputDecoration(
@@ -138,24 +132,23 @@ class _RegistorDesktopState extends State<RegistorDesktop> {
                                         hintText: 'Enter your email',
                                         prefixIcon: const Icon(Icons.email),
                                         border: OutlineInputBorder(
-                                          borderRadius:
-                                              BorderRadius.circular(10),
+                                          borderRadius: BorderRadius.circular(10),
                                         ),
                                         focusedBorder: OutlineInputBorder(
-                                          borderSide: const BorderSide(
-                                              color: Colors.blue, width: 2.0),
-                                          borderRadius:
-                                              BorderRadius.circular(10),
+                                          borderSide: const BorderSide(color: Colors.blue, width: 2.0),
+                                          borderRadius: BorderRadius.circular(10),
                                         ),
                                       ),
                                     ),
+                                    
                                     const SizedBox(
                                       height: 15
                                       ),
 
-                                    TextFormField( //password field
-                                      controller: _passwordController,
+                                    TextFormField(
+                                      controller: _passwordController, // Assigning the password controller
                                       validator: (value) {
+                                        // Password validation logic
                                         if (value == null || value.isEmpty) {
                                           return 'Please enter your password';
                                         }
@@ -165,6 +158,7 @@ class _RegistorDesktopState extends State<RegistorDesktop> {
                                         if (value != _passwordController.text) {
                                           return 'Confirm password doesn\'t match the password';
                                         }
+                                        // Return null if the entered password is valid
                                         return null;
                                       },
                                       obscureText: true,
@@ -173,32 +167,27 @@ class _RegistorDesktopState extends State<RegistorDesktop> {
                                         hintText: 'Enter your password',
                                         prefixIcon: const Icon(Icons.lock_open),
                                         border: OutlineInputBorder(
-                                          borderRadius:
-                                              BorderRadius.circular(10),
+                                          borderRadius: BorderRadius.circular(10),
                                         ),
                                         focusedBorder: OutlineInputBorder(
-                                          borderSide: const BorderSide(
-                                              color: Colors.blue, width: 2.0),
-                                          borderRadius:
-                                              BorderRadius.circular(10),
+                                          borderSide: const BorderSide(color: Colors.blue, width: 2.0),
+                                          borderRadius: BorderRadius.circular(10),
                                         ),
                                       ),
                                     ),
+
                                     const SizedBox(
                                       height: 6.0
                                       ),
 
-                                    Center( //Register button
+                                    Center( // Register button
                                       child: Padding(
-                                        padding:
-                                            const EdgeInsetsDirectional.all(15),
+                                        padding: const EdgeInsetsDirectional.all(15),
                                         child: ElevatedButton(
                                           onPressed: () {},
                                           style: ElevatedButton.styleFrom(
-                                            foregroundColor:
-                                                const Color.fromARGB(
-                                                    255, 243, 242, 234),
-                                            backgroundColor:const Color.fromARGB(255, 10, 4, 70),   
+                                            foregroundColor: const Color.fromARGB(255, 243, 242, 234),
+                                            backgroundColor:const Color.fromARGB(255, 10, 4, 70),
                                             padding: const EdgeInsets.all(20),
                                             fixedSize: const Size(800, 50),
                                             textStyle: const TextStyle(
@@ -207,19 +196,21 @@ class _RegistorDesktopState extends State<RegistorDesktop> {
                                             ),
                                             elevation: 5,
                                             side: const BorderSide(
-                                              color: Color.fromARGB(
-                                                  255, 249, 252, 251),
+                                              color: Color.fromARGB(255, 249, 252, 251),
                                               width: 4,
                                             ),
                                             shape: RoundedRectangleBorder(
-                                              borderRadius:
-                                                  BorderRadius.circular(20),
+                                              borderRadius: BorderRadius.circular(20),
                                             ),
                                           ),
-                                          child: const Text(
-                                            'Registor Now',
-                                            style: TextStyle(fontSize: 20),
+                                          child: const Center(
+                                            child: Text(
+                                              'Register Now',
+                                              textAlign: TextAlign.center,
+                                              style: TextStyle(fontSize: 20),
+                                            ),
                                           ),
+
                                         ),
                                       ),
                                     ),
@@ -228,13 +219,11 @@ class _RegistorDesktopState extends State<RegistorDesktop> {
                                       height: 1.0
                                       ),
 
-                                    TextButton(
-                                      onPressed: () => Navigator.of(context)
-                                          .push(MaterialPageRoute(
-                                              builder: (context) =>
-                                                  LoginDesktop())),
+                                    TextButton( //Go to Login page
+                                      onPressed: () => Navigator.of(context).push(MaterialPageRoute(builder: (context) => LoginTablet())),
                                       child: const Text(
                                         'Already have an Account?',
+                                        textAlign: TextAlign.center,
                                         style: TextStyle(
                                           fontSize: 15,
                                           color: Color.fromARGB(255, 10, 4, 70),
@@ -243,9 +232,9 @@ class _RegistorDesktopState extends State<RegistorDesktop> {
                                       ),
                                     ),
 
-                                    const SizedBox(
-                                      height: 2.0
-                                      ),
+                                   const SizedBox(
+                                    height: 2.0
+                                    ),
 
                                       Center( // Google,Apple,Facebook logo 
                                       child: Expanded(
@@ -301,22 +290,23 @@ class _RegistorDesktopState extends State<RegistorDesktop> {
                                       width: 5,
                                     ),
 
-                                   const Center(
+                                    const Center(
                                       child: Expanded(
                                         child: Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.center,
+                                          mainAxisAlignment: MainAxisAlignment.center,
                                           children: [
                                             Expanded(
-                                                child: Text(
-                                              'Privacy Policy',
-                                              textAlign: TextAlign.center,
-                                            )),
+                                              child: Text(
+                                                'Privacy Policy',
+                                                textAlign: TextAlign.center,
+                                              ),
+                                            ),
                                             Expanded(
-                                                child: Text(
-                                              'Copyright 2023',
-                                              textAlign: TextAlign.center,
-                                            )),
+                                              child: Text(
+                                                'Copyright 2023',
+                                                textAlign: TextAlign.center,
+                                              ),
+                                            ),
                                           ],
                                         ),
                                       ),
@@ -330,24 +320,22 @@ class _RegistorDesktopState extends State<RegistorDesktop> {
                         ),
                       ),
 
-                      Expanded( // RIGHT SIDE IMAGE
+                      Expanded(
                         flex: 1,
                         child: Container(
                           child: Image.asset(
                             'lib/Assets/signup.png',
                             width: MediaQuery.of(context).size.width - 50,
                             height: MediaQuery.of(context).size.height - 50,
-                            fit: BoxFit.contain,
+                            //fit: BoxFit.contain,
                           ),
                         ),
                       ),
+
                     ],
                   ),
                 ),
               ),
-            ),
-            const SizedBox(
-              height: 20,
             ),
           ],
         ),
