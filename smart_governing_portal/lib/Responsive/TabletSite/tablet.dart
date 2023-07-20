@@ -1,9 +1,8 @@
 //This is the place for develop the web site according to the desktop sizes
 
 import 'package:flutter/material.dart';
+import 'package:smart_governing_portal/Responsive/TabletSite/RegisterTablet.dart';
 
-
-import 'package:smart_governing_portal/Responsive/TabletSite/RegistorTablet.dart';
 
 
 
@@ -20,7 +19,7 @@ class _TabletDesignState extends State<TabletDesign> {
 
    
 
-    return RegistorTablet();
+    return RegisterTablet();
 
   }
 }
