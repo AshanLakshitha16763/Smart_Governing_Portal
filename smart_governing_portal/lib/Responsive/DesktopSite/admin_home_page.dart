@@ -1,8 +1,9 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
-import 'package:image_picker/image_picker.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import 'package:smart_governing_portal/Responsive/DesktopSite/home_page.dart';
 import 'package:url_launcher/url_launcher.dart';
+import 'package:file_picker/file_picker.dart';
 
 class AdminHomePage extends StatefulWidget {
   const AdminHomePage({super.key});
@@ -16,42 +17,88 @@ class _AdminHomePageState extends State<AdminHomePage> {
   String _fullName = '';
   String _nic = '';
   String _gramaNiladhariID = '';
-  String _mobile = '';
+  var _mobile = '';
   String _personalAddress = '';
   String _gramaniladariDivision = '';
   String _areaCode = '';
-  String selectedProvince = '';
-  String selectedDistrict = '';
+  File? _imageFile;
 
-  final Map<String, List<String>> districtsByProvince = {
-    'SOUTHERN PROVINCE': ['Galle', 'Matara', 'Hambanthota'],
-    'WESTERN PROVINCE': ['Gampaha', 'Colombo', 'Kaluthara'],
-    'CENTRAL PROVINCE': ['Kandy', 'Matale', 'Nuwara Eliya'],
-    'SABARAGAMUWA PROVINCE': ['Kegalle', 'Rathnapura'],
-    'EASTERN PROVINCE': ['Ampara', 'Batticaloa', 'Trincomalee'],
-    'UVA PROVINCE': ['Badulla', 'Monaragala'],
-    'NORTH WESTERN  PROVINCE': ['Kurunegala', 'Puttalam'],
-    'NORTH CENTRAL PROVINCE': ['Anuradhapura', 'Polonnaruwa'],
-    'NORTHERN PROVINCE': [
-      'Jaffna',
-      'Kilinochchi',
-      'Mullaitivu',
-      'Vavuniya',
-      'Mannar'
-    ],
-  };
+  String _province = '-Choose your Province-';
+  String _district = '-Choose your District-';
 
-  List<String> getDistrictsByProvince(String province) {
-    return districtsByProvince[province]!;
+  final List<String> _provinceList = [
+    '-Choose your Province-',
+    'WESTERN',
+    'CENTRAL',
+    'SOUTHERN',
+    'SABARAGAMUWA',
+    'EASTERN',
+    'UVA',
+    'NORTH WESTERN',
+    'NORTH CENTRAL',
+    'NORTHERN'
+  ];
+  List<String> _districtList = [
+    '-Choose your District-',
+    'Galle',
+    'Matara',
+    'Hambanthota',
+    'Gampaha',
+    'Colombo',
+    'Kaluthara' 'Kandy',
+    'Matale',
+    'Nuwara Eliya',
+    'Kegalle',
+    'Rathnapura',
+    'Ampara',
+    'Batticaloa',
+    'Trincomalee',
+    'Badulla',
+    'Monaragala',
+    'Kurunegala',
+    'Puttalam',
+    'Anuradhapura',
+    'Polonnaruwa',
+    'Jaffna',
+    'Kilinochchi',
+    'Mullaitivu',
+    'Vavuniya',
+    'Mannar',
+  ];
+
+  //form submission method
+  void _submitForm() {
+    if (_adminRegistrationformKey.currentState!.validate()) {
+      // All fields are valid, proceed with form submission
+      // Clear the form after successful submission (if needed)
+      _adminRegistrationformKey.currentState!.reset();
+    } else {
+      // There are invalid fields, show an error message
+      showDialog(
+        context: context,
+        builder: (context) => AlertDialog(
+          title: const Text('Form Error'),
+          content: const Text('Please fill in all the required fields.'),
+          actions: [
+            TextButton(
+              onPressed: () => Navigator.pop(context),
+              child: const Text('OK'),
+            ),
+          ],
+        ),
+      );
+    }
   }
 
+  //choose image function
   Future<void> _getImage() async {
-    final imagePicker = ImagePicker();
-    final image = await imagePicker.pickImage(source: ImageSource.gallery);
+    FilePickerResult? result =
+        await FilePicker.platform.pickFiles(type: FileType.image);
 
-    if (image != null) {
-      // Handle the image, you can save it or use it as needed.
-      // For this example, we will not store the image in this code snippet.
+    if (result != null && result.files.single.path != null) {
+      setState(() {
+        _imageFile = File(result.files.single.path!);
+      });
     }
   }
 
@@ -231,15 +278,17 @@ class _AdminHomePageState extends State<AdminHomePage> {
 
           //form
           Padding(
-            padding: const EdgeInsets.only(left: 80,right: 80,top: 30,bottom: 30),
+            padding:
+                const EdgeInsets.only(left: 80, right: 80, top: 30, bottom: 30),
             child: Container(
               decoration: BoxDecoration(
-                      border: Border.all(
-                        color: const Color.fromARGB(255, 243, 236, 236), // Border color
-                        width: 3.0, // Border width
-                      ),
-                      borderRadius: BorderRadius.circular(15), // Border radius
-                    ),
+                border: Border.all(
+                  color:
+                      const Color.fromARGB(255, 243, 236, 236), // Border color
+                  width: 3.0, // Border width
+                ),
+                borderRadius: BorderRadius.circular(15), // Border radius
+              ),
               child: Padding(
                 padding: const EdgeInsets.all(50),
                 child: Form(
@@ -258,20 +307,27 @@ class _AdminHomePageState extends State<AdminHomePage> {
                               _fullName = value!;
                             },
                             decoration: decorations('Full Name')),
-                        const SizedBox(height: 10,),
+                        const SizedBox(
+                          height: 10,
+                        ),
                         //NIC
                         TextFormField(
                             validator: (value) {
                               if (value!.isEmpty) {
                                 return 'Please enter your NIC number';
                               }
+                              // Check if the NIC number has either 10 characters with the last character being 'v' or 'V',
+                              // or it consists of 12 consecutive numbers.
+                              if (!(RegExp(r'^\d{9}[vV]$').hasMatch(value) ||
+                                  RegExp(r'^\d{12}$').hasMatch(value))) {
+                                return 'Please enter a valid NIC number. It should either have 10 characters with the last character as "v" or "V", or consist of 12 consecutive numbers.';
+                              }
                               return null;
                             },
-                            onSaved: (value) {
-                              _nic = value!;
-                            },
                             decoration: decorations('NIC')),
-                        const SizedBox(height: 10,),
+                        const SizedBox(
+                          height: 10,
+                        ),
                         //grama niladhari ID
                         TextFormField(
                             validator: (value) {
@@ -284,12 +340,19 @@ class _AdminHomePageState extends State<AdminHomePage> {
                               _gramaNiladhariID = value!;
                             },
                             decoration: decorations('Grama Niladhari ID')),
-                        const SizedBox(height: 10,),
-                        //MObile no
+                        const SizedBox(
+                          height: 10,
+                        ),
+                        //Mobile no
                         TextFormField(
                             validator: (value) {
                               if (value!.isEmpty) {
                                 return 'Please enter your Mobile No';
+                              }
+                              // Check if the mobile number has exactly 10 digits and starts with '07'
+                              if (value.length != 10 ||
+                                  !value.startsWith('07')) {
+                                return 'Please enter a valid mobile number starting with "07" and having 10 digits.';
                               }
                               return null;
                             },
@@ -297,7 +360,9 @@ class _AdminHomePageState extends State<AdminHomePage> {
                               _mobile = value!;
                             },
                             decoration: decorations('Mobile No')),
-                        const SizedBox(height: 10,),
+                        const SizedBox(
+                          height: 10,
+                        ),
                         //personal address
                         TextFormField(
                             validator: (value) {
@@ -310,11 +375,131 @@ class _AdminHomePageState extends State<AdminHomePage> {
                               _personalAddress = value!;
                             },
                             decoration: decorations('Personal Address')),
-                        const SizedBox(height: 10,),
+                        const SizedBox(
+                          height: 10,
+                        ),
                         //Province
-                        
-                        //district
-              
+                        DropdownButtonFormField(
+                          decoration: decorations('Province'),
+                          value: _province,
+                          items: _provinceList
+                              .map((String province) => DropdownMenuItem(
+                                    value: province,
+                                    child: Text(province),
+                                  ))
+                              .toList(),
+                          validator: (value) {
+                            if (value == '-Choose your Province-') {
+                              return 'Please choose your Province';
+                            }
+                            return null;
+                          },
+                          onChanged: (String? newValue) {
+                            setState(() {
+                              _province = newValue!;
+
+                              // Update the items in the district dropdown based on the selected province
+                              if (_province == 'WESTERN') {
+                                _districtList = [
+                                  '-Choose your District-',
+                                  'Gampaha',
+                                  'Colombo',
+                                  'Kaluthara'
+                                ];
+                              } else if (_province == 'CENTRAL') {
+                                _districtList = [
+                                  '-Choose your District-',
+                                  'Kandy',
+                                  'Matale',
+                                  'Nuwara Eliya'
+                                ];
+                              } else if (_province == 'SOUTHERN') {
+                                _districtList = [
+                                  '-Choose your District-',
+                                  'Galle',
+                                  'Matara',
+                                  'Hambanthota'
+                                ];
+                              } else if (_province == 'SABARAGAMUWA') {
+                                _districtList = [
+                                  '-Choose your District-',
+                                  'Kegalle',
+                                  'Rathnapura'
+                                ];
+                              } else if (_province == 'EASTERN') {
+                                _districtList = [
+                                  '-Choose your District-',
+                                  'Ampara',
+                                  'Batticaloa',
+                                  'Trincomalee'
+                                ];
+                              } else if (_province == 'UVA') {
+                                _districtList = [
+                                  '-Choose your District-',
+                                  'Badulla',
+                                  'Monaragala'
+                                ];
+                              } else if (_province == 'NORTH WESTERN') {
+                                _districtList = [
+                                  '-Choose your District-',
+                                  'Kurunegala',
+                                  'Puttalam'
+                                ];
+                              } else if (_province == 'NORTH CENTRAL') {
+                                _districtList = [
+                                  '-Choose your District-',
+                                  'Anuradhapura',
+                                  'Polonnaruwa'
+                                ];
+                              } else if (_province == 'NORTHERN') {
+                                _districtList = [
+                                  '-Choose your District-',
+                                  'Jaffna',
+                                  'Kilinochchi',
+                                  'Mullaitivu',
+                                  'Vavuniya',
+                                  'Mannar'
+                                ];
+                              } else {
+                                _districtList = [
+                                  '-Choose your District-'
+                                ]; // Default value when '-Num-' is selected
+                              }
+                              // Reset the selected district to '-Choose your District-' when changing the province
+                              _district = '-Choose your District-';
+                            });
+                          },
+                        ),
+                        const SizedBox(
+                          height: 10,
+                        ),
+
+                        // District Dropdown
+                        DropdownButtonFormField(
+                          decoration: decorations('District'),
+                          value: _district,
+                          items: _districtList
+                              .map((String district) => DropdownMenuItem(
+                                    value: district,
+                                    child: Text(district),
+                                  ))
+                              .toList(),
+                          validator: (value) {
+                            if (value == '-Choose your District-') {
+                              return 'Please choose your District';
+                            }
+                            return null;
+                          },
+                          onChanged: (String? newDistrict) {
+                            setState(() {
+                              _district = newDistrict!;
+                            });
+                          },
+                        ),
+                        const SizedBox(
+                          height: 10,
+                        ),
+
                         //grama niladari division (work)
                         TextFormField(
                             validator: (value) {
@@ -328,7 +513,9 @@ class _AdminHomePageState extends State<AdminHomePage> {
                             },
                             decoration:
                                 decorations('Grama Niladari Division (work)')),
-                        const SizedBox(height: 10,),
+                        const SizedBox(
+                          height: 10,
+                        ),
                         //area code
                         TextFormField(
                             validator: (value) {
@@ -341,7 +528,52 @@ class _AdminHomePageState extends State<AdminHomePage> {
                               _areaCode = value!;
                             },
                             decoration: decorations('Area (work)')),
-                        const SizedBox(height: 10,),
+                        const SizedBox(
+                          height: 45,
+                        ),
+
+                        Row(
+                          children: [
+                            InkWell(
+                              onTap: _getImage,
+                              child: Container(
+                                width: 100,
+                                height: 100,
+                                color: Colors.grey,
+                                child: _imageFile != null
+                                    ? Image.file(_imageFile!, fit: BoxFit.cover)
+                                    : Icon(Icons.add_a_photo),
+                              ),
+                            )
+                          ],
+                        ),
+
+                        ElevatedButton(
+                            onPressed: _submitForm,
+                            style: ElevatedButton.styleFrom(
+                              maximumSize: Size.fromWidth(w / 3),
+                              foregroundColor:
+                                  const Color.fromARGB(255, 243, 242, 234),
+                              backgroundColor:
+                                  const Color.fromARGB(255, 10, 4, 70),
+                              fixedSize: const Size(800, 50),
+                              textStyle: const TextStyle(
+                                fontSize: 25,
+                                fontWeight: FontWeight.bold,
+                              ),
+                              elevation: 5,
+                              side: const BorderSide(
+                                color: Color.fromARGB(255, 249, 252, 251),
+                                width: 4,
+                              ),
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(20),
+                              ),
+                            ),
+                            child: const Text(
+                              'Submit',
+                              style: TextStyle(fontSize: 20),
+                            ))
                       ],
                     )),
               ),
