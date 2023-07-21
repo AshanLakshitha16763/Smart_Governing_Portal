@@ -19,7 +19,6 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     double w = MediaQuery.of(context).size.width;
-    double h = MediaQuery.of(context).size.height;
     return Scaffold(
       body: ListView(
         children: [
@@ -190,7 +189,7 @@ class _HomePageState extends State<HomePage> {
           ),
           const SizedBox(height: 180),
 
-          //second section on the web
+          //second section on the web(GOV Services)
           SizedBox(
             child: Padding(
               padding: const EdgeInsets.only(left: 120, right: 120, top: 20),
@@ -232,7 +231,7 @@ class _HomePageState extends State<HomePage> {
             ),
           ),
 
-          //third section of the web
+          //third section of the web(Our Services)
           SizedBox(
             child: Padding(
               padding: const EdgeInsets.only(left: 120, right: 120, top: 100),
@@ -479,7 +478,7 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
-// functions for the government services
+  // functions for the government services
 
   List<Widget> _GOVserviceTiles(double tileSize) {
     return [
@@ -630,7 +629,7 @@ class _HomePageState extends State<HomePage> {
     return crossAxisCount;
   }
 
-//functions for Our service tiles
+  //functions for Our service tiles
 
   List<Widget> _OURserviceTiles(double tileSize) {
     return [

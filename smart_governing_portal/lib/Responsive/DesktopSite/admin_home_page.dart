@@ -1,5 +1,6 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
+import 'package:smart_governing_portal/Responsive/DesktopSite/admin_dashboard_page.dart';
 import 'package:smart_governing_portal/Responsive/DesktopSite/home_page.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:file_picker/file_picker.dart';
@@ -131,61 +132,67 @@ class _AdminHomePageState extends State<AdminHomePage> {
             ),
             actions: [
               FittedBox(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.end,
+                child: Row(
                   children: [
+                    TextButton(
+                        onPressed: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute<void>(
+                              builder: (BuildContext context) =>
+                                  const HomePage(),
+                            ),
+                          );
+                        },
+                        child: const Text(
+                          'Home',
+                          style: TextStyle(
+                            color: Colors.black,
+                          ),
+                        )),
                     const SizedBox(
-                      height: 15,
+                      width: 20,
+                    ),
+                    TextButton(
+                        onPressed: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute<void>(
+                              builder: (BuildContext context) =>
+                                  const AdminDashboardPage(),
+                            ),
+                          );
+                        },
+                        child: const Text(
+                          'Dashboard',
+                          style: TextStyle(
+                            color: Colors.black,
+                          ),
+                        )),
+                    const SizedBox(
+                      width: 20,
+                    ),
+                    TextButton(
+                        onPressed: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute<void>(
+                              builder: (BuildContext context) =>
+                                  const HomePage(),
+                            ),
+                          );
+                        },
+                        child: const Text(
+                          'User',
+                          style: TextStyle(
+                            color: Colors.black,
+                          ),
+                        )),
+                    const SizedBox(
+                      width: 20,
                     ),
 
-                    //Quick links in navbar
-                    Row(
-                      children: [
-                        TextButton(
-                            onPressed: () {},
-                            child: const Text(
-                              'Home',
-                              style: TextStyle(
-                                color: Colors.black,
-                              ),
-                            )),
-                        const SizedBox(
-                          width: 20,
-                        ),
-                        TextButton(
-                            onPressed: () {},
-                            child: const Text(
-                              'Dashboard',
-                              style: TextStyle(
-                                color: Colors.black,
-                              ),
-                            )),
-                        const SizedBox(
-                          width: 20,
-                        ),
-                        TextButton(
-                            onPressed: () {
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute<void>(
-                                  builder: (BuildContext context) =>
-                                      const HomePage(),
-                                ),
-                              );
-                            },
-                            child: const Text(
-                              'User',
-                              style: TextStyle(
-                                color: Colors.black,
-                              ),
-                            )),
-                        const SizedBox(
-                          width: 20,
-                        ),
-                      ],
-                    ),
-
-                    //login and register buttons
+                    //User profile image
                     Padding(
                       padding: const EdgeInsets.only(
                         right: 20,
@@ -651,7 +658,7 @@ class _AdminHomePageState extends State<AdminHomePage> {
                                       'https://www.gov.lk/sri-lanka/constitution?');
                                 },
                                 child: const Text(
-                                  'Costitution',
+                                  'Constitution',
                                   style: TextStyle(fontSize: 15),
                                 )),
                             TextButton(
