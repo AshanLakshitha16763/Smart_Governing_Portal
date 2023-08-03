@@ -2,6 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:smart_governing_portal/Responsive/TabletSite/RegisterTablet.dart';
+import 'package:smart_governing_portal/Responsive/TabletSite/adminLoginTablet.dart';
 
 
 
@@ -19,7 +20,7 @@ class _TabletDesignState extends State<TabletDesign> {
 
    
 
-    return const RegisterTablet();
+    return adminLoginTablet();
 
   }
 }

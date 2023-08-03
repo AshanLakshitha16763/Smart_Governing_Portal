@@ -85,6 +85,9 @@ flutter:
      - lib/Assets/RegisterPages/user.png
      - lib/Assets/RegisterPages/apple.png
      - lib/Assets/RegisterPages/facebook.png
+     - lib/Assets/RegisterPages/google.png 
+     - lib/Assets/RegisterPages/adminLogin.jpg  
+     - lib/Assets/RegisterPages/adminRegister.png  
      - lib/Assets/RegisterPages/google.png
      - lib/Assets/lists.png
 
