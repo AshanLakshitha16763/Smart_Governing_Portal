@@ -16,7 +16,7 @@ class _RegistorMobileState extends State<RegistorMobile> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Center(
-        child: Container(
+        child: SizedBox(
           width: MediaQuery.of(context).size.width - 50,
           height: MediaQuery.of(context).size.height - 50,
           child: Container(
@@ -76,12 +76,12 @@ class _RegistorMobileState extends State<RegistorMobile> {
                         decoration: InputDecoration(
                           labelText: 'Name',
                           hintText: 'Enter your Name',
-                          prefixIcon: Icon(Icons.account_circle),
+                          prefixIcon: const Icon(Icons.account_circle),
                           border: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(10),
                           ),
                           focusedBorder: OutlineInputBorder(
-                            borderSide: BorderSide(color: Colors.blue, width: 2.0),
+                            borderSide: const BorderSide(color: Colors.blue, width: 2.0),
                             borderRadius: BorderRadius.circular(10),
                           ),
                         ),
@@ -107,12 +107,12 @@ class _RegistorMobileState extends State<RegistorMobile> {
                         decoration: InputDecoration(
                           labelText: 'Email',
                           hintText: 'Enter your email',
-                          prefixIcon: Icon(Icons.email),
+                          prefixIcon: const Icon(Icons.email),
                           border: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(10),
                           ),
                           focusedBorder: OutlineInputBorder(
-                            borderSide: BorderSide(color: Colors.blue, width: 2.0),
+                            borderSide: const BorderSide(color: Colors.blue, width: 2.0),
                             borderRadius: BorderRadius.circular(10),
                           ),
                         ),

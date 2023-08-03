@@ -1,10 +1,9 @@
 //This is the place for develop the web site according to the desktop sizes
 
 import 'package:flutter/material.dart';
-
-
 import 'package:smart_governing_portal/Responsive/TabletSite/RegisterTablet.dart';
 import 'package:smart_governing_portal/Responsive/TabletSite/adminLoginTablet.dart';
+
 
 
 

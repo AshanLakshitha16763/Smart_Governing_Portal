@@ -18,7 +18,7 @@ class _MobileDesignState extends State<MobileDesign> {
   @override
   Widget build(BuildContext context) {
 
-    return adminLoginMobile();
+    return RegistorMobile();
 
 }
 
