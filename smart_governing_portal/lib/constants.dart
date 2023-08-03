@@ -1,7 +1,11 @@
+
+
+
 import 'package:flutter/material.dart';
 
 /*This navbar1 contains the login and register 
 button for desktop and tablet versions*/
+
 
 var navbar = AppBar(
   automaticallyImplyLeading: false,
@@ -25,7 +29,14 @@ var navbar = AppBar(
           Row(
             children: [
               TextButton(
-                  onPressed: () {},
+                  onPressed: () {/*
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute<void>(
+                        builder: (BuildContext context) => const HomePage(),
+                      ),
+                    );
+                  */},
                   child: const Text(
                     'Home',
                     style: TextStyle(
@@ -272,7 +283,7 @@ var footer = Container(
 );
 
 //
-var MobileDrawer = Drawer(
+var mobileDrawer = Drawer(
   child: ListView(
     padding: EdgeInsets.zero,
     children: [

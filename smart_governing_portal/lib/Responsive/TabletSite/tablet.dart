@@ -19,7 +19,7 @@ class _TabletDesignState extends State<TabletDesign> {
 
    
 
-    return RegisterTablet();
+    return const RegisterTablet();
 
   }
 }

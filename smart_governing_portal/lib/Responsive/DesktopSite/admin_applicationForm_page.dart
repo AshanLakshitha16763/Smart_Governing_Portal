@@ -13,15 +13,15 @@ class AdminHomePage extends StatefulWidget {
 }
 
 class _AdminHomePageState extends State<AdminHomePage> {
-  final _adminRegistrationformKey = GlobalKey<FormState>();
-  String _fullName = '';
-  String _nic = '';
-  String _gramaNiladhariID = '';
-  var _mobile = '';
-  String _personalAddress = '';
-  String _gramaniladariDivision = '';
-  String _areaCode = '';
-  File? _imageFile;
+  final adminRegistrationformKey = GlobalKey<FormState>();
+  String fullName = '';
+  String nic = '';
+  String gramaNiladhariID = '';
+  var mobile = '';
+  String personalAddress = '';
+  String gramaniladariDivision = '';
+  String areaCode = '';
+  File? imageFile;
 
   String _province = '-Choose your Province-';
   String _district = '-Choose your District-';
@@ -69,10 +69,10 @@ class _AdminHomePageState extends State<AdminHomePage> {
 
   //form submission method
   void _submitForm() {
-    if (_adminRegistrationformKey.currentState!.validate()) {
+    if (adminRegistrationformKey.currentState!.validate()) {
       // All fields are valid, proceed with form submission
       // Clear the form after successful submission (if needed)
-      _adminRegistrationformKey.currentState!.reset();
+      adminRegistrationformKey.currentState!.reset();
     } else {
       // There are invalid fields, show an error message
       showDialog(
@@ -98,7 +98,7 @@ class _AdminHomePageState extends State<AdminHomePage> {
 
     if (result != null && result.files.single.path != null) {
       setState(() {
-        _imageFile = File(result.files.single.path!);
+        imageFile = File(result.files.single.path!);
       });
     }
   }
@@ -299,7 +299,7 @@ class _AdminHomePageState extends State<AdminHomePage> {
               child: Padding(
                 padding: const EdgeInsets.all(50),
                 child: Form(
-                    key: _adminRegistrationformKey,
+                    key: adminRegistrationformKey,
                     child: Column(
                       children: <Widget>[
                         //Full Name
@@ -311,7 +311,7 @@ class _AdminHomePageState extends State<AdminHomePage> {
                               return null;
                             },
                             onSaved: (value) {
-                              _fullName = value!;
+                              fullName = value!;
                             },
                             decoration: decorations('Full Name')),
                         const SizedBox(
@@ -331,6 +331,9 @@ class _AdminHomePageState extends State<AdminHomePage> {
                               }
                               return null;
                             },
+                            onSaved: (value) {
+                              nic = value!;
+                            },
                             decoration: decorations('NIC')),
                         const SizedBox(
                           height: 10,
@@ -344,7 +347,7 @@ class _AdminHomePageState extends State<AdminHomePage> {
                               return null;
                             },
                             onSaved: (value) {
-                              _gramaNiladhariID = value!;
+                              gramaNiladhariID = value!;
                             },
                             decoration: decorations('Grama Niladhari ID')),
                         const SizedBox(
@@ -364,7 +367,7 @@ class _AdminHomePageState extends State<AdminHomePage> {
                               return null;
                             },
                             onSaved: (value) {
-                              _mobile = value!;
+                              mobile = value!;
                             },
                             decoration: decorations('Mobile No')),
                         const SizedBox(
@@ -379,7 +382,7 @@ class _AdminHomePageState extends State<AdminHomePage> {
                               return null;
                             },
                             onSaved: (value) {
-                              _personalAddress = value!;
+                              personalAddress = value!;
                             },
                             decoration: decorations('Personal Address')),
                         const SizedBox(
@@ -516,7 +519,7 @@ class _AdminHomePageState extends State<AdminHomePage> {
                               return null;
                             },
                             onSaved: (value) {
-                              _gramaniladariDivision = value!;
+                              gramaniladariDivision = value!;
                             },
                             decoration:
                                 decorations('Grama Niladari Division (work)')),
@@ -532,7 +535,7 @@ class _AdminHomePageState extends State<AdminHomePage> {
                               return null;
                             },
                             onSaved: (value) {
-                              _areaCode = value!;
+                              areaCode = value!;
                             },
                             decoration: decorations('Area (work)')),
                         const SizedBox(
@@ -547,8 +550,8 @@ class _AdminHomePageState extends State<AdminHomePage> {
                                 width: 100,
                                 height: 100,
                                 color: Colors.grey,
-                                child: _imageFile != null
-                                    ? Image.file(_imageFile!, fit: BoxFit.cover)
+                                child: imageFile != null
+                                    ? Image.file(imageFile!, fit: BoxFit.cover)
                                     : const Icon(Icons.add_a_photo),
                               ),
                             )
@@ -792,9 +795,9 @@ void _launchURL(String url) async {
 }
 
 //input decoration for the form fields
-InputDecoration decorations(String _formfieldName) {
+InputDecoration decorations(String formfieldName) {
   return InputDecoration(
-    labelText: _formfieldName,
+    labelText: formfieldName,
     border: OutlineInputBorder(
       borderRadius: BorderRadius.circular(10),
     ),

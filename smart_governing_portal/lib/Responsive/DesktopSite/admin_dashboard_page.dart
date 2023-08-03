@@ -169,7 +169,6 @@ class _AdminDashboardPageState extends State<AdminDashboardPage> {
             ),
           ),
 
-
           //footer
           Container(
             color: const Color.fromARGB(255, 248, 247, 247),

@@ -3,7 +3,9 @@
 import 'package:flutter/material.dart';
 import 'package:smart_governing_portal/Responsive/DesktopSite/LoginDesktop.dart';
 import 'package:smart_governing_portal/Responsive/DesktopSite/RegisterDesktop.dart';
-import 'package:smart_governing_portal/Responsive/DesktopSite/admin_home_page.dart';
+import 'package:smart_governing_portal/Responsive/DesktopSite/SmartDL_applying_form.dart';
+import 'package:smart_governing_portal/Responsive/DesktopSite/SmartNIC_applyingForm.dart';
+import 'package:smart_governing_portal/Responsive/DesktopSite/admin_applicationForm_page.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class HomePage extends StatefulWidget {
@@ -45,7 +47,15 @@ class _HomePageState extends State<HomePage> {
                     Row(
                       children: [
                         TextButton(
-                            onPressed: () {},
+                            onPressed: () {/*
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute<void>(
+                                  builder: (BuildContext context) =>
+                                       FileUploadPage(),
+                                ),
+                              );
+                            */},
                             child: const Text(
                               'Home',
                               style: TextStyle(
@@ -109,7 +119,8 @@ class _HomePageState extends State<HomePage> {
                             Navigator.push(
                               context,
                               MaterialPageRoute<void>(
-                                builder: (BuildContext context) =>LoginDesktop(),
+                                builder: (BuildContext context) =>
+                                    const LoginDesktop(),
                               ),
                             );
                           },
@@ -130,7 +141,8 @@ class _HomePageState extends State<HomePage> {
                             Navigator.push(
                               context,
                               MaterialPageRoute<void>(
-                                builder: (BuildContext context) =>RegistorDesktop(),
+                                builder: (BuildContext context) =>
+                                    const RegistorDesktop(),
                               ),
                             );
                           },
@@ -638,25 +650,29 @@ class _HomePageState extends State<HomePage> {
           height: 180,
           tileSize: tileSize,
           index: 0,
-          imagePath: 'lib/Assets/ID.png'),
+          imagePath: 'lib/Assets/ID.png',
+          pageName: const NICApplicationForm()),
       _OURserviceTile(' Smart Driving License Verification System',
           width: 360,
           height: 180,
           tileSize: tileSize,
           index: 1,
-          imagePath: 'lib/Assets/DL.png'),
+          imagePath: 'lib/Assets/DL.png',
+          pageName: const DLApplicationForm()),
       _OURserviceTile(' Inquiry Tracking System',
           width: 360,
           height: 180,
           tileSize: tileSize,
           index: 2,
-          imagePath: 'lib/Assets/Inquiry.png'),
+          imagePath: 'lib/Assets/Inquiry.png',
+          pageName: null),
       _OURserviceTile(' Smart Passport Verification System',
           width: 360,
           height: 180,
           tileSize: tileSize,
           index: 3,
-          imagePath: 'lib/Assets/Passport.png'),
+          imagePath: 'lib/Assets/Passport.png',
+          pageName: null),
     ];
   }
 
@@ -666,12 +682,20 @@ class _HomePageState extends State<HomePage> {
       required double height,
       required double tileSize,
       required int index,
+      required pageName,
       required imagePath}) {
     return SizedBox(
       width: tileSize,
       height: tileSize * (height / width),
       child: InkWell(
-        onTap: () {},
+        onTap: () {
+          Navigator.push(
+            context,
+            MaterialPageRoute<void>(
+              builder: (BuildContext context) => pageName,
+            ),
+          );
+        },
         child: Container(
           alignment: Alignment.center,
           decoration: BoxDecoration(

@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'LoginMobile.dart';
 
 class RegistorMobile extends StatefulWidget {
+  const RegistorMobile({super.key});
+
   @override
   _RegistorMobileState createState() => _RegistorMobileState();
 }
@@ -195,7 +197,7 @@ class _RegistorMobileState extends State<RegistorMobile> {
 
                       TextButton( // Go to the Login page
                         onPressed: () => Navigator.of(context).push(
-                            MaterialPageRoute(builder: (context) => LoginMobile())),
+                            MaterialPageRoute(builder: (context) => const LoginMobile())),
                         child: const Text(
                           'Already have an account?',
                           style: TextStyle(

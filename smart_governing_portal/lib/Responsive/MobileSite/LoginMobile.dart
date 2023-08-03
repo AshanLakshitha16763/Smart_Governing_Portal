@@ -4,6 +4,8 @@ import 'package:smart_governing_portal/constants.dart';
 import 'RegisterMobile.dart';
 
 class LoginMobile extends StatefulWidget {
+  const LoginMobile({super.key});
+
   @override
   _LoginMobileState createState() => _LoginMobileState();
 }
@@ -41,7 +43,7 @@ class _LoginMobileState extends State<LoginMobile> {
         ],
       ),
 
-      drawer: MobileDrawer, // Mobile Drawer
+      drawer: mobileDrawer, // Mobile Drawer
 
       body: SingleChildScrollView(
         child: Column(
@@ -162,7 +164,7 @@ class _LoginMobileState extends State<LoginMobile> {
                             TextButton(
                               onPressed: () => Navigator.of(context).push(
                                   MaterialPageRoute(
-                                      builder: (context) => RegistorMobile())),
+                                      builder: (context) => const RegistorMobile())),
                               child: const Text(
                                 'Don\'t have an account? Sign Up',
                                 textAlign: TextAlign.center,
