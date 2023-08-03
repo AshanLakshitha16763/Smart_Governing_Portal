@@ -77,7 +77,9 @@ flutter:
      - lib/Assets/RegisterPages/user.png
      - lib/Assets/RegisterPages/apple.png
      - lib/Assets/RegisterPages/facebook.png
-     - lib/Assets/RegisterPages/google.png
+     - lib/Assets/RegisterPages/google.png 
+     - lib/Assets/RegisterPages/adminLogin.jpg  
+     - lib/Assets/RegisterPages/adminRegister.png  
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware
