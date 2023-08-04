@@ -5,7 +5,7 @@ import 'package:smart_governing_portal/Responsive/DesktopSite/LoginDesktop.dart'
 import 'package:smart_governing_portal/Responsive/DesktopSite/RegisterDesktop.dart';
 import 'package:smart_governing_portal/Responsive/DesktopSite/SmartDL_applying_form.dart';
 import 'package:smart_governing_portal/Responsive/DesktopSite/SmartNIC_applyingForm.dart';
-import 'package:smart_governing_portal/Responsive/DesktopSite/admin_applicationForm_page.dart';
+import 'package:smart_governing_portal/Responsive/DesktopSite/adminLoginDesktop.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class HomePage extends StatefulWidget {
@@ -94,7 +94,7 @@ class _HomePageState extends State<HomePage> {
                                 context,
                                 MaterialPageRoute<void>(
                                   builder: (BuildContext context) =>
-                                      const AdminHomePage(),
+                                       const AdminLoginDesktop(),
                                 ),
                               );
                             },
