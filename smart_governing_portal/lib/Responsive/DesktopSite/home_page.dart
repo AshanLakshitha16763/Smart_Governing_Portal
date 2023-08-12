@@ -1,7 +1,7 @@
 // ignore_for_file: non_constant_identifier_names
 
 import 'package:flutter/material.dart';
-import 'package:smart_governing_portal/Responsive/DesktopSite/LoginDesktop.dart';
+import 'package:smart_governing_portal/Responsive/DesktopSite/login_desktop.dart';
 import 'package:smart_governing_portal/Responsive/DesktopSite/RegisterDesktop.dart';
 import 'package:smart_governing_portal/Responsive/DesktopSite/SmartDL_applying_form.dart';
 import 'package:smart_governing_portal/Responsive/DesktopSite/SmartNIC_applyingForm.dart';

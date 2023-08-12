@@ -1,7 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:smart_governing_portal/Responsive/DesktopSite/RegisterDesktop.dart';
-import 'package:smart_governing_portal/Responsive/DesktopSite/admin_applicationForm_page.dart';
+import 'package:smart_governing_portal/Responsive/DesktopSite/admin_application_form_page.dart';
 import 'package:smart_governing_portal/Responsive/DesktopSite/home_page.dart';
 import 'package:smart_governing_portal/auth.dart';
 import 'package:smart_governing_portal/test.dart';

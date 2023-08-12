@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:smart_governing_portal/Responsive/DesktopSite/adminRegisterDesktop.dart';
+import 'package:smart_governing_portal/Responsive/DesktopSite/admin_register_desktop.dart';
 import 'package:smart_governing_portal/constants.dart';
 
 class AdminLoginDesktop extends StatefulWidget{

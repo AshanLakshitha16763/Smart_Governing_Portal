@@ -1,8 +1,10 @@
 import 'dart:io';
+import 'package:flutter/foundation.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
-import 'package:smart_governing_portal/Responsive/DesktopSite/admin_applicationForm_page.dart';
+import 'package:smart_governing_portal/Responsive/DesktopSite/admin_application_form_page.dart';
 import 'package:smart_governing_portal/Responsive/DesktopSite/home_page.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -24,7 +26,8 @@ class _DLApplicationFormState extends State<DLApplicationForm> {
   String licenseNo = '';
   String areaCode = '';
   String docNo = '';
-  File? _imageFile;
+  File? _pickedImage;
+  Uint8List webImage = Uint8List(8);
 
   // TextEditingController to hold the selected dates
   final TextEditingController dobController = TextEditingController();
@@ -150,7 +153,7 @@ class _DLApplicationFormState extends State<DLApplicationForm> {
   }
 
   //choose image function
-  Future<void> _getImage() async {
+  /*Future<void> _getImage() async {
     FilePickerResult? result =
         await FilePicker.platform.pickFiles(type: FileType.image);
 
@@ -158,6 +161,35 @@ class _DLApplicationFormState extends State<DLApplicationForm> {
       setState(() {
         _imageFile = File(result.files.single.path!);
       });
+    }
+  }*/
+
+  Future<void> _pickImage() async {
+    if (!kIsWeb) {
+      final ImagePicker _picker = ImagePicker();
+      XFile? image = await _picker.pickImage(source: ImageSource.gallery);
+      if (image != null) {
+        var selected = File(image.path);
+        setState(() {
+          _pickedImage = selected;
+        });
+      } else {
+        const SnackBar(content: Text('An image hasn\'t been picked'));
+      }
+    } else if (kIsWeb) {
+      final ImagePicker _picker = ImagePicker();
+      XFile? image = await _picker.pickImage(source: ImageSource.gallery);
+      if (image != null) {
+        var f = await image.readAsBytes();
+        setState(() {
+          webImage = f;
+          _pickedImage = File('a');
+        });
+      } else {
+        const SnackBar(content: Text('An image hasn\'t been picked'));
+      }
+    } else {
+      const SnackBar(content: Text('Something went wrong'));
     }
   }
 
@@ -503,7 +535,9 @@ class _DLApplicationFormState extends State<DLApplicationForm> {
                                 return 'Please choose your Gender';
                               }
                               return null;
-                            }),
+                            },
+                            decoration: decorations("Choose your Blood Group"),
+                            ),
                         //Address
                         TextFormField(
                             validator: (value) {
@@ -677,15 +711,22 @@ class _DLApplicationFormState extends State<DLApplicationForm> {
                           children: [
                             const Text('Choose a profile image'),
                             InkWell(
-                              onTap: _getImage,
+                              onTap: _pickImage,
                               child: Container(
-                                width: 100,
-                                height: 100,
-                                color: Colors.grey,
-                                child: _imageFile != null
-                                    ? Image.file(_imageFile!, fit: BoxFit.cover)
-                                    : const Icon(Icons.add_a_photo),
-                              ),
+                                  width: 100,
+                                  height: 100,
+                                  color: Colors.grey,
+                                  child: _pickedImage == null
+                                      ? const Text("Not selected")
+                                      : kIsWeb
+                                          ? Image.memory(
+                                              webImage,
+                                              fit: BoxFit.fill,
+                                            )
+                                          : Image.file(
+                                              _pickedImage!,
+                                              fit: BoxFit.fill,
+                                            )),
                             )
                           ],
                         ),

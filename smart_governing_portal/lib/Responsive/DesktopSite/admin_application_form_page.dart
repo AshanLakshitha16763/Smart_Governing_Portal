@@ -1,5 +1,7 @@
 import 'dart:io';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:smart_governing_portal/Responsive/DesktopSite/admin_dashboard_page.dart';
 import 'package:smart_governing_portal/Responsive/DesktopSite/home_page.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -21,7 +23,8 @@ class _AdminHomePageState extends State<AdminHomePage> {
   String personalAddress = '';
   String gramaniladariDivision = '';
   String areaCode = '';
-  File? imageFile;
+  File? _pickedImage;
+  Uint8List webImage = Uint8List(8);
 
   String _province = '-Choose your Province-';
   String _district = '-Choose your District-';
@@ -92,14 +95,32 @@ class _AdminHomePageState extends State<AdminHomePage> {
   }
 
   //choose image function
-  Future<void> _getImage() async {
-    FilePickerResult? result =
-        await FilePicker.platform.pickFiles(type: FileType.image);
-
-    if (result != null && result.files.single.path != null) {
-      setState(() {
-        imageFile = File(result.files.single.path!);
-      });
+  Future<void> _pickImage() async {
+    if (!kIsWeb) {
+      final ImagePicker _picker = ImagePicker();
+      XFile? image = await _picker.pickImage(source: ImageSource.gallery);
+      if (image != null) {
+        var selected = File(image.path);
+        setState(() {
+          _pickedImage = selected;
+        });
+      } else {
+        const SnackBar(content: Text('An image hasn\'t been picked'));
+      }
+    } else if (kIsWeb) {
+      final ImagePicker _picker = ImagePicker();
+      XFile? image = await _picker.pickImage(source: ImageSource.gallery);
+      if (image != null) {
+        var f = await image.readAsBytes();
+        setState(() {
+          webImage = f;
+          _pickedImage = File('a');
+        });
+      } else {
+        const SnackBar(content: Text('An image hasn\'t been picked'));
+      }
+    } else {
+      const SnackBar(content: Text('Something went wrong'));
     }
   }
 
@@ -544,16 +565,24 @@ class _AdminHomePageState extends State<AdminHomePage> {
 
                         Row(
                           children: [
+                            const Text('Choose a profile image'),
                             InkWell(
-                              onTap: _getImage,
+                              onTap: _pickImage,
                               child: Container(
-                                width: 100,
-                                height: 100,
-                                color: Colors.grey,
-                                child: imageFile != null
-                                    ? Image.file(imageFile!, fit: BoxFit.cover)
-                                    : const Icon(Icons.add_a_photo),
-                              ),
+                                  width: 100,
+                                  height: 100,
+                                  color: Colors.grey,
+                                  child: _pickedImage == null
+                                      ? const Text("Not selected")
+                                      : kIsWeb
+                                          ? Image.memory(
+                                              webImage,
+                                              fit: BoxFit.fill,
+                                            )
+                                          : Image.file(
+                                              _pickedImage!,
+                                              fit: BoxFit.fill,
+                                            )),
                             )
                           ],
                         ),
