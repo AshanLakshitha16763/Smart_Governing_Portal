@@ -1,9 +1,7 @@
-
 import 'package:flutter/material.dart';
 import 'package:smart_governing_portal/Responsive/DesktopSite/admin_dashboard_page.dart';
 import 'package:smart_governing_portal/Responsive/DesktopSite/home_page.dart';
 import 'auth.dart';
-
 
 class WidgetTree extends StatefulWidget {
   const WidgetTree({super.key});
@@ -19,7 +17,7 @@ class _WidgetTreeState extends State<WidgetTree> {
       stream: Auth().authStateChanges,
       builder: (context, snapshot) {
         if (snapshot.hasData) {
-          return  const AdminDashboardPage();
+          return const AdminDashboardPage();
         } else {
           return const HomePage();
         }

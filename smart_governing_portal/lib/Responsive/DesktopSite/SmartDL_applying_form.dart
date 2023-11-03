@@ -1,8 +1,9 @@
+// ignore_for_file: deprecated_member_use, file_names, non_constant_identifier_names
+
 import 'dart:io';
 import 'package:flutter/foundation.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
-import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:smart_governing_portal/Responsive/DesktopSite/admin_application_form_page.dart';
 import 'package:smart_governing_portal/Responsive/DesktopSite/home_page.dart';
@@ -153,21 +154,10 @@ class _DLApplicationFormState extends State<DLApplicationForm> {
   }
 
   //choose image function
-  /*Future<void> _getImage() async {
-    FilePickerResult? result =
-        await FilePicker.platform.pickFiles(type: FileType.image);
-
-    if (result != null && result.files.single.path != null) {
-      setState(() {
-        _imageFile = File(result.files.single.path!);
-      });
-    }
-  }*/
-
   Future<void> _pickImage() async {
     if (!kIsWeb) {
-      final ImagePicker _picker = ImagePicker();
-      XFile? image = await _picker.pickImage(source: ImageSource.gallery);
+      final ImagePicker picker = ImagePicker();
+      XFile? image = await picker.pickImage(source: ImageSource.gallery);
       if (image != null) {
         var selected = File(image.path);
         setState(() {
@@ -177,8 +167,8 @@ class _DLApplicationFormState extends State<DLApplicationForm> {
         const SnackBar(content: Text('An image hasn\'t been picked'));
       }
     } else if (kIsWeb) {
-      final ImagePicker _picker = ImagePicker();
-      XFile? image = await _picker.pickImage(source: ImageSource.gallery);
+      final ImagePicker picker = ImagePicker();
+      XFile? image = await picker.pickImage(source: ImageSource.gallery);
       if (image != null) {
         var f = await image.readAsBytes();
         setState(() {

@@ -1,12 +1,18 @@
+// ignore_for_file: non_constant_identifier_names, file_names
+
 import 'dart:io';
 import 'package:flutter/foundation.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
-import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:smart_governing_portal/Responsive/DesktopSite/admin_application_form_page.dart';
 import 'package:smart_governing_portal/Responsive/DesktopSite/home_page.dart';
 import 'package:url_launcher/url_launcher.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+// ignore: unused_import
+import 'package:firebase_storage/firebase_storage.dart';
+// ignore: unused_import
+import 'package:path/path.dart';
 
 class NICApplicationForm extends StatefulWidget {
   const NICApplicationForm({super.key});
@@ -111,16 +117,51 @@ class _NICApplicationFormState extends State<NICApplicationForm> {
     'Vavuniya',
     'Mannar',
   ];
-  final List<String> _genderList = ['-Choose your Gender-','Male','Female'];
+  final List<String> _genderList = ['-Choose your Gender-', 'Male', 'Female'];
   //form submission method
-  void _submitForm() {
+  void _submitForm() async {
     if (NICapplicationformKey.currentState!.validate()) {
       // All fields are valid, proceed with form submission
+
+      /*Reference storageReference = FirebaseStorage.instance
+          .ref()
+          .child('profile_images')
+          .child(basename(_pickedImage!.path));
+      UploadTask uploadTask = storageReference.putFile(_pickedImage!);
+      TaskSnapshot taskSnapshot = await uploadTask.whenComplete(() => null);
+
+      // Get the download URL of the uploaded image
+      String imageUrl = await taskSnapshot.ref.getDownloadURL();*/
+
+      await FirebaseFirestore.instance.collection('NICCollection').add({
+        'Full Name': fullName,
+        'Other Names': otherNames,
+        'NIC No': nic,
+        'Date of Birth': dobController,
+        'otherNames': otherNames,
+        'Birth Place': birthPlace,
+        'Gender': _gender,
+        'Proffession': profession,
+        'Address': address,
+        'Province': _province,
+        'District': _district,
+        'Area Code': areaCode,
+        'Issued Date': issuedDateController,
+        'Doc No': docNo,
+      });
+
       // Clear the form after successful submission (if needed)
       NICapplicationformKey.currentState!.reset();
-    } else {
+    } /*else {
+      if (kDebugMode) {
+        print("error");
+      }
+      /*ScaffoldMessenger.of(context as BuildContext).showSnackBar(
+        const SnackBar(content: Text('fgfdg'))
+      );*/
+      //const Center(child: SnackBar(content: Text("Please fill in all the required"),));
       // There are invalid fields, show an error message
-      showDialog(
+      /*showDialog(
         context: context,
         builder: (context) => AlertDialog(
           title: const Text('Form Error'),
@@ -132,15 +173,15 @@ class _NICApplicationFormState extends State<NICApplicationForm> {
             ),
           ],
         ),
-      );
-    }
+      );*/
+    }*/
   }
 
   //choose image function
   Future<void> _pickImage() async {
     if (!kIsWeb) {
-      final ImagePicker _picker = ImagePicker();
-      XFile? image = await _picker.pickImage(source: ImageSource.gallery);
+      final ImagePicker picker = ImagePicker();
+      XFile? image = await picker.pickImage(source: ImageSource.gallery);
       if (image != null) {
         var selected = File(image.path);
         setState(() {
@@ -150,8 +191,8 @@ class _NICApplicationFormState extends State<NICApplicationForm> {
         const SnackBar(content: Text('An image hasn\'t been picked'));
       }
     } else if (kIsWeb) {
-      final ImagePicker _picker = ImagePicker();
-      XFile? image = await _picker.pickImage(source: ImageSource.gallery);
+      final ImagePicker picker0 = ImagePicker();
+      XFile? image = await picker0.pickImage(source: ImageSource.gallery);
       if (image != null) {
         var f = await image.readAsBytes();
         setState(() {
@@ -469,7 +510,10 @@ class _NICApplicationFormState extends State<NICApplicationForm> {
                         DropdownButtonFormField(
                           decoration: decorations('Gender'),
                           value: _gender,
-                          items: _genderList.map((String gender) => DropdownMenuItem(value: gender,child: Text(gender))).toList(),
+                          items: _genderList
+                              .map((String gender) => DropdownMenuItem(
+                                  value: gender, child: Text(gender)))
+                              .toList(),
                           onChanged: (String? newGender) {
                             setState(() {
                               _gender = newGender!;
@@ -489,7 +533,7 @@ class _NICApplicationFormState extends State<NICApplicationForm> {
                         TextFormField(
                             validator: (value) {
                               if (value!.isEmpty) {
-                                return 'Please enter your Personal Address';
+                                return 'Please enter your Proffession';
                               }
                               return null;
                             },
@@ -929,7 +973,9 @@ class _NICApplicationFormState extends State<NICApplicationForm> {
 }
 
 void _launchURL(String url) async {
+  // ignore: deprecated_member_use
   if (await canLaunch(url)) {
+    // ignore: deprecated_member_use
     await launch(url);
   } else {
     throw 'Could not launch $url';

@@ -1,3 +1,5 @@
+// ignore_for_file: deprecated_member_use
+
 import 'package:flutter/material.dart';
 import 'package:smart_governing_portal/Responsive/DesktopSite/home_page.dart';
 import 'package:url_launcher/url_launcher.dart';

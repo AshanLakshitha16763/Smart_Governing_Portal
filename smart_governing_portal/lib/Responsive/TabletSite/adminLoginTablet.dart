@@ -1,3 +1,5 @@
+// ignore_for_file: file_names, use_key_in_widget_constructors, camel_case_types
+
 import 'package:flutter/material.dart';
 import 'package:smart_governing_portal/Responsive/TabletSite/adminRegisterTablet.dart';
 import 'package:smart_governing_portal/constants.dart';
