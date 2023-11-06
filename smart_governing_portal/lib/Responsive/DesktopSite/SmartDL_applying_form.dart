@@ -152,7 +152,7 @@ class _DLApplicationFormState extends State<DLApplicationForm> {
       );
     }
   }
-
+/*
   //choose image function
   Future<void> _pickImage() async {
     if (!kIsWeb) {
@@ -182,7 +182,7 @@ class _DLApplicationFormState extends State<DLApplicationForm> {
       const SnackBar(content: Text('Something went wrong'));
     }
   }
-
+*/
   @override
   Widget build(BuildContext context) {
     double w = MediaQuery.of(context).size.width;
@@ -697,7 +697,7 @@ class _DLApplicationFormState extends State<DLApplicationForm> {
                         const SizedBox(
                           height: 10,
                         ),
-                        Row(
+                        /*Row(
                           children: [
                             const Text('Choose a profile image'),
                             InkWell(
@@ -719,7 +719,7 @@ class _DLApplicationFormState extends State<DLApplicationForm> {
                                             )),
                             )
                           ],
-                        ),
+                        ),*/
 
                         ElevatedButton(
                             onPressed: _submitForm,

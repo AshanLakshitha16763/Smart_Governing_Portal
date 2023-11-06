@@ -32,9 +32,9 @@ class _NICApplicationFormState extends State<NICApplicationForm> {
   String profession = '';
   String areaCode = '';
   String docNo = '';
-  File? _pickedImage;
-  Uint8List webImage = Uint8List(8);
-
+  //File? _pickedImage;
+  //Uint8List webImage = Uint8List(8);
+  // Get the image URL from the picked image
   // TextEditingController to hold the selected dates
   final TextEditingController dobController = TextEditingController();
   final TextEditingController issuedDateController = TextEditingController();
@@ -148,6 +148,7 @@ class _NICApplicationFormState extends State<NICApplicationForm> {
         'Area Code': areaCode,
         'Issued Date': issuedDateController,
         'Doc No': docNo,
+        //'Profile Image': _pickedImage,
       });
 
       // Clear the form after successful submission (if needed)
@@ -176,9 +177,9 @@ class _NICApplicationFormState extends State<NICApplicationForm> {
       );*/
     }*/
   }
-
+/*
   //choose image function
-  Future<void> _pickImage() async {
+  Future<void> pickImage() async {
     if (!kIsWeb) {
       final ImagePicker picker = ImagePicker();
       XFile? image = await picker.pickImage(source: ImageSource.gallery);
@@ -191,8 +192,8 @@ class _NICApplicationFormState extends State<NICApplicationForm> {
         const SnackBar(content: Text('An image hasn\'t been picked'));
       }
     } else if (kIsWeb) {
-      final ImagePicker picker0 = ImagePicker();
-      XFile? image = await picker0.pickImage(source: ImageSource.gallery);
+      final ImagePicker picker = ImagePicker();
+      XFile? image = await picker.pickImage(source: ImageSource.gallery);
       if (image != null) {
         var f = await image.readAsBytes();
         setState(() {
@@ -205,7 +206,7 @@ class _NICApplicationFormState extends State<NICApplicationForm> {
     } else {
       const SnackBar(content: Text('Something went wrong'));
     }
-  }
+  }*/
 
   @override
   Widget build(BuildContext context) {
@@ -719,12 +720,13 @@ class _NICApplicationFormState extends State<NICApplicationForm> {
                         const SizedBox(
                           height: 10,
                         ),
+                        /*
                         //Upload Image
                         Row(
                           children: [
                             const Text('Choose a profile image'),
                             InkWell(
-                              onTap: _pickImage,
+                              onTap: pickImage,
                               child: Container(
                                   width: 100,
                                   height: 100,
@@ -743,7 +745,7 @@ class _NICApplicationFormState extends State<NICApplicationForm> {
                             )
                           ],
                         ),
-
+*/
                         ElevatedButton(
                             onPressed: _submitForm,
                             style: ElevatedButton.styleFrom(
