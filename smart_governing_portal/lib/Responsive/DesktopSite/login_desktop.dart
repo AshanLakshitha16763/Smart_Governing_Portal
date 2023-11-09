@@ -2,9 +2,10 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:smart_governing_portal/Responsive/DesktopSite/RegisterDesktop.dart';
 import 'package:smart_governing_portal/Responsive/DesktopSite/admin_application_form_page.dart';
+import 'package:smart_governing_portal/Responsive/DesktopSite/after_Registration_Page.dart';
 import 'package:smart_governing_portal/Responsive/DesktopSite/home_page.dart';
 import 'package:smart_governing_portal/auth.dart';
-import 'package:smart_governing_portal/test.dart';
+
 
 class LoginDesktop extends StatefulWidget {
   const LoginDesktop({super.key});
@@ -26,7 +27,7 @@ class _LoginDesktopState extends State<LoginDesktop> {
 
       // ignore: use_build_context_synchronously
       Navigator.pushReplacement(
-          context, MaterialPageRoute(builder: (context) => const TestPage()));
+          context, MaterialPageRoute(builder: (context) => const AfterRegistrationPage()));
     } on FirebaseAuthException catch (e) {
       setState(() {
         errorMessage = e.message;
