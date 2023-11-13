@@ -22,22 +22,25 @@ class NICApplicationForm extends StatefulWidget {
 }
 
 class _NICApplicationFormState extends State<NICApplicationForm> {
+  final db = FirebaseFirestore.instance;
   final NICapplicationformKey = GlobalKey<FormState>();
-  String fullName = '';
-  String otherNames = '';
-  String nic = '';
-  String birthPlace = '';
-  var mobile = '';
-  String address = '';
-  String profession = '';
-  String areaCode = '';
-  String docNo = '';
+  TextEditingController fullNameController = TextEditingController();
+  TextEditingController otherNamesController = TextEditingController();
+  TextEditingController nicController = TextEditingController();
+  TextEditingController birthPlaceController = TextEditingController();
+  TextEditingController mobileController = TextEditingController();
+  TextEditingController addressController = TextEditingController();
+  TextEditingController professionController = TextEditingController();
+  TextEditingController areaCodeController = TextEditingController();
+  TextEditingController docNoController = TextEditingController();
+  final TextEditingController dobController = TextEditingController();
+  final TextEditingController issuedDateController = TextEditingController();
+  TextEditingController provinceController = TextEditingController();
+  TextEditingController districtController = TextEditingController();
+  TextEditingController genderController = TextEditingController();
   //File? _pickedImage;
   //Uint8List webImage = Uint8List(8);
   // Get the image URL from the picked image
-  // TextEditingController to hold the selected dates
-  final TextEditingController dobController = TextEditingController();
-  final TextEditingController issuedDateController = TextEditingController();
 
   // Function to show the date picker for Date of Birth
   Future<void> selectDateOfBirth(BuildContext context) async {
@@ -118,64 +121,47 @@ class _NICApplicationFormState extends State<NICApplicationForm> {
     'Mannar',
   ];
   final List<String> _genderList = ['-Choose your Gender-', 'Male', 'Female'];
+
   //form submission method
   void _submitForm() async {
     if (NICapplicationformKey.currentState!.validate()) {
       // All fields are valid, proceed with form submission
 
       /*Reference storageReference = FirebaseStorage.instance
-          .ref()
-          .child('profile_images')
-          .child(basename(_pickedImage!.path));
-      UploadTask uploadTask = storageReference.putFile(_pickedImage!);
-      TaskSnapshot taskSnapshot = await uploadTask.whenComplete(() => null);
+        .ref()
+        .child('profile_images')
+        .child(basename(_pickedImage!.path));
+    UploadTask uploadTask = storageReference.putFile(_pickedImage!);
+    TaskSnapshot taskSnapshot = await uploadTask.whenComplete(() => null);
+  
+    // Get the download URL of the uploaded image
+    String imageUrl = await taskSnapshot.ref.getDownloadURL();*/
 
-      // Get the download URL of the uploaded image
-      String imageUrl = await taskSnapshot.ref.getDownloadURL();*/
+      // Create a new user
+      final user = <String, dynamic>{
+        "Full Name": fullNameController.text,
+        "Other Names": otherNamesController.text,
+        "NIC No": nicController.text,
+        "Date of Birth": dobController.text,
+        "Birth Place": birthPlaceController.text,
+        "Gender": genderController.text,
+        "Proffession": professionController.text,
+        "Address": addressController.text,
+        "Province": provinceController.text,
+        "District": districtController.text,
+        "Area Code": areaCodeController.text,
+        "Issued Date": issuedDateController.text,
+        "Doc No": docNoController.text,
+        //"Profile Image": _pickedImage,
+      };
 
-      await FirebaseFirestore.instance.collection('NICCollection').add({
-        'Full Name': fullName,
-        'Other Names': otherNames,
-        'NIC No': nic,
-        'Date of Birth': dobController,
-        'otherNames': otherNames,
-        'Birth Place': birthPlace,
-        'Gender': _gender,
-        'Proffession': profession,
-        'Address': address,
-        'Province': _province,
-        'District': _district,
-        'Area Code': areaCode,
-        'Issued Date': issuedDateController,
-        'Doc No': docNo,
-        //'Profile Image': _pickedImage,
-      });
+      // Add a new document with a generated ID
+      db.collection("NICPT").add(user).then((DocumentReference doc) =>
+          print('DocumentSnapshot added with ID: ${doc.id}'));
 
       // Clear the form after successful submission (if needed)
       NICapplicationformKey.currentState!.reset();
-    } /*else {
-      if (kDebugMode) {
-        print("error");
-      }
-      /*ScaffoldMessenger.of(context as BuildContext).showSnackBar(
-        const SnackBar(content: Text('fgfdg'))
-      );*/
-      //const Center(child: SnackBar(content: Text("Please fill in all the required"),));
-      // There are invalid fields, show an error message
-      /*showDialog(
-        context: context,
-        builder: (context) => AlertDialog(
-          title: const Text('Form Error'),
-          content: const Text('Please fill in all the required fields.'),
-          actions: [
-            TextButton(
-              onPressed: () => Navigator.pop(context),
-              child: const Text('OK'),
-            ),
-          ],
-        ),
-      );*/
-    }*/
+    }
   }
 /*
   //choose image function
@@ -434,14 +420,12 @@ class _NICApplicationFormState extends State<NICApplicationForm> {
                         ),
                         //Full Name
                         TextFormField(
+                            controller: fullNameController,
                             validator: (value) {
                               if (value!.isEmpty) {
                                 return 'Please enter your full Name';
                               }
                               return null;
-                            },
-                            onSaved: (value) {
-                              fullName = value!;
                             },
                             decoration: decorations('Full Name')),
                         const SizedBox(
@@ -449,14 +433,12 @@ class _NICApplicationFormState extends State<NICApplicationForm> {
                         ),
                         //Other Names
                         TextFormField(
+                            controller: otherNamesController,
                             validator: (value) {
                               if (value!.isEmpty) {
                                 return 'Please enter your other Names if ave any';
                               }
                               return null;
-                            },
-                            onSaved: (value) {
-                              otherNames = value!;
                             },
                             decoration: decorations('Other Names')),
                         const SizedBox(
@@ -464,6 +446,7 @@ class _NICApplicationFormState extends State<NICApplicationForm> {
                         ),
                         //NIC
                         TextFormField(
+                            controller: nicController,
                             validator: (value) {
                               if (value!.isEmpty) {
                                 return 'Please enter your NIC number';
@@ -475,9 +458,6 @@ class _NICApplicationFormState extends State<NICApplicationForm> {
                                 return 'Please enter a valid NIC number. It should either have 10 characters with the last character as "v" or "V", or consist of 12 consecutive numbers.';
                               }
                               return null;
-                            },
-                            onSaved: (value) {
-                              nic = value!;
                             },
                             decoration: decorations('NIC No')),
                         const SizedBox(
@@ -494,14 +474,12 @@ class _NICApplicationFormState extends State<NICApplicationForm> {
                         ),
                         //Birth Place
                         TextFormField(
+                            controller: birthPlaceController,
                             validator: (value) {
                               if (value!.isEmpty) {
                                 return 'Please enter your Birth Place';
                               }
                               return null;
-                            },
-                            onSaved: (value) {
-                              birthPlace = value!;
                             },
                             decoration: decorations('Birth Place')),
                         const SizedBox(
@@ -517,7 +495,7 @@ class _NICApplicationFormState extends State<NICApplicationForm> {
                               .toList(),
                           onChanged: (String? newGender) {
                             setState(() {
-                              _gender = newGender!;
+                              genderController.text = newGender!;
                             });
                           },
                           validator: (value) {
@@ -532,14 +510,12 @@ class _NICApplicationFormState extends State<NICApplicationForm> {
                         ),
                         //Proffesion
                         TextFormField(
+                            controller: professionController,
                             validator: (value) {
                               if (value!.isEmpty) {
                                 return 'Please enter your Proffession';
                               }
                               return null;
-                            },
-                            onSaved: (value) {
-                              profession = value!;
                             },
                             decoration: decorations('Proffesion')),
                         const SizedBox(
@@ -547,14 +523,12 @@ class _NICApplicationFormState extends State<NICApplicationForm> {
                         ),
                         //Address
                         TextFormField(
+                            controller: addressController,
                             validator: (value) {
                               if (value!.isEmpty) {
                                 return 'Please enter your Personal Address';
                               }
                               return null;
-                            },
-                            onSaved: (value) {
-                              address = value!;
                             },
                             decoration: decorations('Address')),
                         const SizedBox(
@@ -578,62 +552,67 @@ class _NICApplicationFormState extends State<NICApplicationForm> {
                           },
                           onChanged: (String? newValue) {
                             setState(() {
-                              _province = newValue!;
+                              provinceController.text = newValue!;
 
                               // Update the items in the district dropdown based on the selected province
-                              if (_province == 'WESTERN') {
+                              if (provinceController.text == 'WESTERN') {
                                 _districtList = [
                                   '-Choose your District-',
                                   'Gampaha',
                                   'Colombo',
                                   'Kaluthara'
                                 ];
-                              } else if (_province == 'CENTRAL') {
+                              } else if (provinceController.text == 'CENTRAL') {
                                 _districtList = [
                                   '-Choose your District-',
                                   'Kandy',
                                   'Matale',
                                   'Nuwara Eliya'
                                 ];
-                              } else if (_province == 'SOUTHERN') {
+                              } else if (provinceController.text ==
+                                  'SOUTHERN') {
                                 _districtList = [
                                   '-Choose your District-',
                                   'Galle',
                                   'Matara',
                                   'Hambanthota'
                                 ];
-                              } else if (_province == 'SABARAGAMUWA') {
+                              } else if (provinceController.text ==
+                                  'SABARAGAMUWA') {
                                 _districtList = [
                                   '-Choose your District-',
                                   'Kegalle',
                                   'Rathnapura'
                                 ];
-                              } else if (_province == 'EASTERN') {
+                              } else if (provinceController.text == 'EASTERN') {
                                 _districtList = [
                                   '-Choose your District-',
                                   'Ampara',
                                   'Batticaloa',
                                   'Trincomalee'
                                 ];
-                              } else if (_province == 'UVA') {
+                              } else if (provinceController.text == 'UVA') {
                                 _districtList = [
                                   '-Choose your District-',
                                   'Badulla',
                                   'Monaragala'
                                 ];
-                              } else if (_province == 'NORTH WESTERN') {
+                              } else if (provinceController.text ==
+                                  'NORTH WESTERN') {
                                 _districtList = [
                                   '-Choose your District-',
                                   'Kurunegala',
                                   'Puttalam'
                                 ];
-                              } else if (_province == 'NORTH CENTRAL') {
+                              } else if (provinceController.text ==
+                                  'NORTH CENTRAL') {
                                 _districtList = [
                                   '-Choose your District-',
                                   'Anuradhapura',
                                   'Polonnaruwa'
                                 ];
-                              } else if (_province == 'NORTHERN') {
+                              } else if (provinceController.text ==
+                                  'NORTHERN') {
                                 _districtList = [
                                   '-Choose your District-',
                                   'Jaffna',
@@ -674,7 +653,7 @@ class _NICApplicationFormState extends State<NICApplicationForm> {
                           },
                           onChanged: (String? newDistrict) {
                             setState(() {
-                              _district = newDistrict!;
+                              districtController.text = newDistrict!;
                             });
                           },
                         ),
@@ -683,14 +662,12 @@ class _NICApplicationFormState extends State<NICApplicationForm> {
                         ),
                         //area code
                         TextFormField(
+                            controller: areaCodeController,
                             validator: (value) {
                               if (value!.isEmpty) {
                                 return 'Please enter your Area (work)';
                               }
                               return null;
-                            },
-                            onSaved: (value) {
-                              areaCode = value!;
                             },
                             decoration: decorations('Area Code')),
                         const SizedBox(
@@ -707,14 +684,12 @@ class _NICApplicationFormState extends State<NICApplicationForm> {
                         ),
                         //Doc No
                         TextFormField(
+                            controller: docNoController,
                             validator: (value) {
                               if (value!.isEmpty) {
                                 return 'Please enter your Grama Niladari Division (work)';
                               }
                               return null;
-                            },
-                            onSaved: (value) {
-                              docNo = value!;
                             },
                             decoration: decorations('Doc No')),
                         const SizedBox(
@@ -732,9 +707,9 @@ class _NICApplicationFormState extends State<NICApplicationForm> {
                                   height: 100,
                                   color: Colors.grey,
                                   child: _pickedImage == null
-                                      ? const Text("Not selected")
+                                      //? const Text("Not selected")
                                       : kIsWeb
-                                          ? Image.memory(
+                                          //? Image.memory(
                                               webImage,
                                               fit: BoxFit.fill,
                                             )

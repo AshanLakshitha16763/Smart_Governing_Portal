@@ -1,6 +1,7 @@
 // ignore_for_file: deprecated_member_use, file_names, non_constant_identifier_names
 
 import 'dart:io';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/foundation.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
@@ -17,22 +18,26 @@ class DLApplicationForm extends StatefulWidget {
 }
 
 class _DLApplicationFormState extends State<DLApplicationForm> {
+  final db = FirebaseFirestore.instance;
   final DLapplicationformKey = GlobalKey<FormState>();
-  String fullName = '';
-  String otherNames = '';
-  String nic = '';
-  String birthPlace = '';
-  var mobile = '';
-  String address = '';
-  String licenseNo = '';
-  String areaCode = '';
-  String docNo = '';
-  File? _pickedImage;
-  Uint8List webImage = Uint8List(8);
-
-  // TextEditingController to hold the selected dates
+  TextEditingController fullNameController = TextEditingController();
+  TextEditingController otherNamesController = TextEditingController();
+  TextEditingController nicController = TextEditingController();
+  TextEditingController birthPlaceController = TextEditingController();
+  TextEditingController mobileController = TextEditingController();
+  TextEditingController addressController = TextEditingController();
+  TextEditingController licenseNoController = TextEditingController();
+  TextEditingController areaCodeController = TextEditingController();
+  TextEditingController docNoController = TextEditingController();
   final TextEditingController dobController = TextEditingController();
   final TextEditingController issuedDateController = TextEditingController();
+  TextEditingController expiryDateController = TextEditingController();
+  TextEditingController bloodGroupController = TextEditingController();
+  TextEditingController genderController = TextEditingController();
+  TextEditingController provinceController = TextEditingController();
+  TextEditingController districtController = TextEditingController();
+  //File? _pickedImage;
+  //Uint8List webImage = Uint8List(8);
 
   // Function to show the date picker for Date of Birth
   Future<void> selectDateOfBirth(BuildContext context) async {
@@ -64,6 +69,22 @@ class _DLApplicationFormState extends State<DLApplicationForm> {
       final String formattedDate = DateFormat('dd-MM-yyyy').format(picked);
       setState(() {
         issuedDateController.text = formattedDate;
+      });
+    }
+  }
+
+  Future<void> selectExpiryDate(BuildContext context) async {
+    final DateTime? picked = await showDatePicker(
+      context: context,
+      initialDate: DateTime.now(), // You can set the initial date here.
+      firstDate: DateTime(2000), // Set the minimum date for the picker.
+      lastDate: DateTime(2030), // Set the maximum date for the picker.
+    );
+
+    if (picked != null && picked != DateTime.now()) {
+      final String formattedDate = DateFormat('dd-MM-yyyy').format(picked);
+      setState(() {
+        expiryDateController.text = formattedDate;
       });
     }
   }
@@ -130,8 +151,31 @@ class _DLApplicationFormState extends State<DLApplicationForm> {
   ];
 
   //form submission method
-  void _submitForm() {
+  void _submitForm() async {
     if (DLapplicationformKey.currentState!.validate()) {
+      final user = <String, dynamic>{
+        "Full Name": fullNameController.text,
+        "Other Names": otherNamesController.text,
+        "NIC": nicController.text,
+        "Birth Place": birthPlaceController.text,
+        "Mobile": mobileController.text,
+        "Address": addressController.text,
+        "License No": licenseNoController.text,
+        "Area Code": areaCodeController.text,
+        "Document No": docNoController.text,
+        "Date of Birth": dobController.text,
+        "Issued Date": issuedDateController.text,
+        "Expiry Date": expiryDateController.text,
+        "Blood Group": bloodGroupController.text,
+        "Gender": genderController.text,
+        "Province": provinceController.text,
+        "District": districtController.text,
+      };
+
+      // Add a new document with a generated ID
+      db.collection("DLPT").add(user).then((DocumentReference doc) =>
+          print('DocumentSnapshot added with ID: ${doc.id}'));
+
       // All fields are valid, proceed with form submission
       // Clear the form after successful submission (if needed)
       DLapplicationformKey.currentState!.reset();
@@ -152,6 +196,7 @@ class _DLApplicationFormState extends State<DLApplicationForm> {
       );
     }
   }
+
 /*
   //choose image function
   Future<void> _pickImage() async {
@@ -409,14 +454,12 @@ class _DLApplicationFormState extends State<DLApplicationForm> {
                         ),
                         //Full Name
                         TextFormField(
+                          controller: fullNameController,
                             validator: (value) {
                               if (value!.isEmpty) {
                                 return 'Please enter your full Name';
                               }
                               return null;
-                            },
-                            onSaved: (value) {
-                              fullName = value!;
                             },
                             decoration: decorations('Full Name')),
                         const SizedBox(
@@ -424,14 +467,12 @@ class _DLApplicationFormState extends State<DLApplicationForm> {
                         ),
                         //Other Names
                         TextFormField(
+                            controller: otherNamesController,
                             validator: (value) {
                               if (value!.isEmpty) {
                                 return 'Please enter your other Names if ave any';
                               }
                               return null;
-                            },
-                            onSaved: (value) {
-                              otherNames = value!;
                             },
                             decoration: decorations('Other Names')),
                         const SizedBox(
@@ -439,6 +480,7 @@ class _DLApplicationFormState extends State<DLApplicationForm> {
                         ),
                         //NIC
                         TextFormField(
+                            controller: nicController,
                             validator: (value) {
                               if (value!.isEmpty) {
                                 return 'Please enter your NIC number';
@@ -450,9 +492,6 @@ class _DLApplicationFormState extends State<DLApplicationForm> {
                                 return 'Please enter a valid NIC number. It should either have 10 characters with the last character as "v" or "V", or consist of 12 consecutive numbers.';
                               }
                               return null;
-                            },
-                            onSaved: (value) {
-                              nic = value!;
                             },
                             decoration: decorations('NIC No')),
                         const SizedBox(
@@ -477,7 +516,7 @@ class _DLApplicationFormState extends State<DLApplicationForm> {
                               .toList(),
                           onChanged: (String? newGender) {
                             setState(() {
-                              _gender = newGender!;
+                              genderController.text = newGender!;
                             });
                           },
                           validator: (value) {
@@ -492,14 +531,12 @@ class _DLApplicationFormState extends State<DLApplicationForm> {
                         ),
                         //License No
                         TextFormField(
+                          controller: licenseNoController,
                             validator: (value) {
                               if (value!.isEmpty) {
                                 return 'Please enter your License No';
                               }
                               return null;
-                            },
-                            onSaved: (value) {
-                              licenseNo = value!;
                             },
                             decoration: decorations('License No')),
                         const SizedBox(
@@ -509,35 +546,36 @@ class _DLApplicationFormState extends State<DLApplicationForm> {
 
                         //Blood Group
                         DropdownButtonFormField(
-                            value: _bloodGroup,
-                            items: _bloodGroupList
-                                .map((String newBloodGroup) => DropdownMenuItem(
-                                    value: newBloodGroup,
-                                    child: Text(newBloodGroup)))
-                                .toList(),
-                            onChanged: (String? newBloodGroup) {
-                              setState(() {
-                                _bloodGroup = newBloodGroup!;
-                              });
-                            },
-                            validator: (value) {
-                              if (value == '-Choose your Gender-') {
-                                return 'Please choose your Gender';
-                              }
-                              return null;
-                            },
-                            decoration: decorations("Choose your Blood Group"),
-                            ),
+                          value: _bloodGroup,
+                          items: _bloodGroupList
+                              .map((String newBloodGroup) => DropdownMenuItem(
+                                  value: newBloodGroup,
+                                  child: Text(newBloodGroup)))
+                              .toList(),
+                          onChanged: (String? newBloodGroup) {
+                            setState(() {
+                              bloodGroupController.text = newBloodGroup!;
+                            });
+                          },
+                          validator: (value) {
+                            if (value == '-Choose your Gender-') {
+                              return 'Please choose your Gender';
+                            }
+                            return null;
+                          },
+                          decoration: decorations("Choose your Blood Group"),
+                        ),
+                        const SizedBox(
+                          height: 10,
+                        ),
                         //Address
                         TextFormField(
+                            controller: addressController,
                             validator: (value) {
                               if (value!.isEmpty) {
                                 return 'Please enter your Personal Address';
                               }
                               return null;
-                            },
-                            onSaved: (value) {
-                              address = value!;
                             },
                             decoration: decorations('Address')),
                         const SizedBox(
@@ -561,62 +599,62 @@ class _DLApplicationFormState extends State<DLApplicationForm> {
                           },
                           onChanged: (String? newValue) {
                             setState(() {
-                              _province = newValue!;
+                              provinceController.text = newValue!;
 
                               // Update the items in the district dropdown based on the selected province
-                              if (_province == 'WESTERN') {
+                              if (provinceController.text == 'WESTERN') {
                                 _districtList = [
                                   '-Choose your District-',
                                   'Gampaha',
                                   'Colombo',
                                   'Kaluthara'
                                 ];
-                              } else if (_province == 'CENTRAL') {
+                              } else if (provinceController.text == 'CENTRAL') {
                                 _districtList = [
                                   '-Choose your District-',
                                   'Kandy',
                                   'Matale',
                                   'Nuwara Eliya'
                                 ];
-                              } else if (_province == 'SOUTHERN') {
+                              } else if (provinceController.text == 'SOUTHERN') {
                                 _districtList = [
                                   '-Choose your District-',
                                   'Galle',
                                   'Matara',
                                   'Hambanthota'
                                 ];
-                              } else if (_province == 'SABARAGAMUWA') {
+                              } else if (provinceController.text == 'SABARAGAMUWA') {
                                 _districtList = [
                                   '-Choose your District-',
                                   'Kegalle',
                                   'Rathnapura'
                                 ];
-                              } else if (_province == 'EASTERN') {
+                              } else if (provinceController.text == 'EASTERN') {
                                 _districtList = [
                                   '-Choose your District-',
                                   'Ampara',
                                   'Batticaloa',
                                   'Trincomalee'
                                 ];
-                              } else if (_province == 'UVA') {
+                              } else if (provinceController.text == 'UVA') {
                                 _districtList = [
                                   '-Choose your District-',
                                   'Badulla',
                                   'Monaragala'
                                 ];
-                              } else if (_province == 'NORTH WESTERN') {
+                              } else if (provinceController.text == 'NORTH WESTERN') {
                                 _districtList = [
                                   '-Choose your District-',
                                   'Kurunegala',
                                   'Puttalam'
                                 ];
-                              } else if (_province == 'NORTH CENTRAL') {
+                              } else if (provinceController.text == 'NORTH CENTRAL') {
                                 _districtList = [
                                   '-Choose your District-',
                                   'Anuradhapura',
                                   'Polonnaruwa'
                                 ];
-                              } else if (_province == 'NORTHERN') {
+                              } else if (provinceController.text == 'NORTHERN') {
                                 _districtList = [
                                   '-Choose your District-',
                                   'Jaffna',
@@ -657,7 +695,7 @@ class _DLApplicationFormState extends State<DLApplicationForm> {
                           },
                           onChanged: (String? newDistrict) {
                             setState(() {
-                              _district = newDistrict!;
+                              districtController.text = newDistrict!;
                             });
                           },
                         ),
@@ -666,14 +704,12 @@ class _DLApplicationFormState extends State<DLApplicationForm> {
                         ),
                         //area code
                         TextFormField(
+                            controller: areaCodeController,
                             validator: (value) {
                               if (value!.isEmpty) {
                                 return 'Please enter your Area (work)';
                               }
                               return null;
-                            },
-                            onSaved: (value) {
-                              areaCode = value!;
                             },
                             decoration: decorations('Area Code')),
                         const SizedBox(
@@ -690,8 +726,8 @@ class _DLApplicationFormState extends State<DLApplicationForm> {
                         ),
                         //Expiry Date
                         TextFormField(
-                            controller: issuedDateController,
-                            onTap: () => selectIssuedDate(context),
+                            controller: expiryDateController,
+                            onTap: () => selectExpiryDate(context),
                             readOnly: true,
                             decoration: decorations('Expiry Date')),
                         const SizedBox(
