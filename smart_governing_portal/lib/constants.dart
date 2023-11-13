@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+
 /*This navbar1 contains the login and register 
 button for desktop and tablet versions*/
 
@@ -25,7 +26,16 @@ var navbar = AppBar(
           Row(
             children: [
               TextButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    /*
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute<void>(
+                        builder: (BuildContext context) => const HomePage(),
+                      ),
+                    );
+                  */
+                  },
                   child: const Text(
                     'Home',
                     style: TextStyle(
@@ -272,7 +282,7 @@ var footer = Container(
 );
 
 //
-var MobileDrawer = Drawer(
+var mobileDrawer = Drawer(
   child: ListView(
     padding: EdgeInsets.zero,
     children: [
@@ -349,6 +359,108 @@ var MobileDrawer = Drawer(
         ),
         onTap: () {},
       ),
+    ],
+  ),
+);
+
+//homepage sections
+
+var section01 = SizedBox(
+  child: Row(
+    children: [
+      SizedBox(
+        //width: w * 0.5,
+        child: const Align(
+          alignment: Alignment.center,
+          child: Padding(
+            padding: EdgeInsets.only(left: 20, right: 20, top: 100),
+            child: FittedBox(
+              child: Text(
+                "WELCOME TO \nLET'S GOV",
+                style: TextStyle(
+                  fontFamily: 'Mitr',
+                  fontWeight: FontWeight.w800,
+                  fontSize: 80,
+                  color: Color.fromARGB(255, 10, 4, 70),
+                ),
+              ),
+            ),
+          ),
+        ),
+      ),
+      Column(
+        children: [
+          SizedBox(
+            //width: w * 0.5,
+            child: Padding(
+              padding: const EdgeInsets.only(
+                  right: 40, left: 40, top: 40, bottom: 20),
+              child: Container(
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.circular(12),
+                  border: Border.all(
+                    color: const Color.fromARGB(255, 187, 191, 190),
+                    width: 1,
+                  ),
+                  boxShadow: const [
+                    BoxShadow(
+                      color: Color.fromARGB(
+                        255,
+                        187,
+                        191,
+                        190,
+                      ),
+                      spreadRadius: 1,
+                      blurRadius: 5,
+                      offset: Offset(0, 5),
+                    ),
+                  ],
+                ),
+                child: Image.asset(
+                  'lib/Assets/homepagepic.png',
+                  fit: BoxFit.scaleDown,
+                ),
+              ),
+            ),
+          ),
+          const SizedBox(
+            height: 20,
+          ),
+          Container(
+            alignment: Alignment.center,
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(12),
+              border: Border.all(
+                color: const Color.fromARGB(255, 187, 191, 190),
+                width: 1,
+              ),
+              boxShadow: const [
+                BoxShadow(
+                  color: Color.fromARGB(
+                    255,
+                    187,
+                    191,
+                    190,
+                  ),
+                  spreadRadius: 1,
+                  blurRadius: 5,
+                  offset: Offset(0, 5),
+                ),
+              ],
+            ),
+            child: const Text(
+              'Chatbot',
+              textAlign: TextAlign.center,
+              style: TextStyle(
+                fontFamily: 'Inter',
+                fontSize: 20,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+          ),
+        ],
+      ), // chatbot here
     ],
   ),
 );
