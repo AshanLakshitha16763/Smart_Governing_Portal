@@ -42,6 +42,37 @@ class _NICApplicationFormState extends State<NICApplicationForm> {
   //Uint8List webImage = Uint8List(8);
   // Get the image URL from the picked image
 
+  /*
+  //choose image function
+  Future<void> pickImage() async {
+    if (!kIsWeb) {
+      final ImagePicker picker = ImagePicker();
+      XFile? image = await picker.pickImage(source: ImageSource.gallery);
+      if (image != null) {
+        var selected = File(image.path);
+        setState(() {
+          _pickedImage = selected;
+        });
+      } else {
+        const SnackBar(content: Text('An image hasn\'t been picked'));
+      }
+    } else if (kIsWeb) {
+      final ImagePicker picker = ImagePicker();
+      XFile? image = await picker.pickImage(source: ImageSource.gallery);
+      if (image != null) {
+        var f = await image.readAsBytes();
+        setState(() {
+          webImage = f;
+          _pickedImage = File('a');
+        });
+      } else {
+        const SnackBar(content: Text('An image hasn\'t been picked'));
+      }
+    } else {
+      const SnackBar(content: Text('Something went wrong'));
+    }
+  }*/
+
   // Function to show the date picker for Date of Birth
   Future<void> selectDateOfBirth(BuildContext context) async {
     final DateTime? picked = await showDatePicker(
@@ -123,7 +154,7 @@ class _NICApplicationFormState extends State<NICApplicationForm> {
   final List<String> _genderList = ['-Choose your Gender-', 'Male', 'Female'];
 
   //form submission method
-  void _submitForm() async {
+  void _submitForm(BuildContext context) async {
     if (NICapplicationformKey.currentState!.validate()) {
       // All fields are valid, proceed with form submission
 
@@ -161,38 +192,23 @@ class _NICApplicationFormState extends State<NICApplicationForm> {
 
       // Clear the form after successful submission (if needed)
       NICapplicationformKey.currentState!.reset();
+    } else {
+      // There are invalid fields, show an error message
+      showDialog(
+        context: context,
+        builder: (context) => AlertDialog(
+          title: const Text('Form Error'),
+          content: const Text('Please fill in all the required fields.'),
+          actions: [
+            TextButton(
+              onPressed: () => Navigator.pop(context),
+              child: const Text('OK'),
+            ),
+          ],
+        ),
+      );
     }
   }
-/*
-  //choose image function
-  Future<void> pickImage() async {
-    if (!kIsWeb) {
-      final ImagePicker picker = ImagePicker();
-      XFile? image = await picker.pickImage(source: ImageSource.gallery);
-      if (image != null) {
-        var selected = File(image.path);
-        setState(() {
-          _pickedImage = selected;
-        });
-      } else {
-        const SnackBar(content: Text('An image hasn\'t been picked'));
-      }
-    } else if (kIsWeb) {
-      final ImagePicker picker = ImagePicker();
-      XFile? image = await picker.pickImage(source: ImageSource.gallery);
-      if (image != null) {
-        var f = await image.readAsBytes();
-        setState(() {
-          webImage = f;
-          _pickedImage = File('a');
-        });
-      } else {
-        const SnackBar(content: Text('An image hasn\'t been picked'));
-      }
-    } else {
-      const SnackBar(content: Text('Something went wrong'));
-    }
-  }*/
 
   @override
   Widget build(BuildContext context) {
@@ -722,7 +738,9 @@ class _NICApplicationFormState extends State<NICApplicationForm> {
                         ),
 */
                         ElevatedButton(
-                            onPressed: _submitForm,
+                            onPressed: () {
+                              _submitForm(context);
+                            },
                             style: ElevatedButton.styleFrom(
                               maximumSize: Size.fromWidth(w / 4),
                               foregroundColor:
