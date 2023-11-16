@@ -225,7 +225,7 @@ class _AdminRegisterMobileState extends State<AdminRegisterMobile> {
 
                     TextButton( // Go to the Login page
                       onPressed: () => Navigator.of(context).push(
-                          MaterialPageRoute(builder: (context) => AdminLoginMobile())),
+                          MaterialPageRoute(builder: (context) => const AdminLoginMobile())),
                       child: const Text(
                         'Already have an account?',
                         style: TextStyle(

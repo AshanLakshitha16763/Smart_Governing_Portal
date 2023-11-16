@@ -55,7 +55,8 @@ Future main() async {
         apiKey: "AIzaSyAQGH-OoQz5jHZKxMR6t6GXXuQLo82RF6M", 
         appId: "1:913759630420:web:9fac7bd0a1c5cec94d69c1", 
         messagingSenderId: "913759630420", 
-        projectId: "smart-governing-portal"
+        projectId: "smart-governing-portal",
+        storageBucket: "smart-governing-portal.appspot.com"
       )
     );
   }

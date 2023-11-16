@@ -7,6 +7,7 @@ import 'package:smart_governing_portal/Responsive/DesktopSite/SmartDL_applying_f
 import 'package:smart_governing_portal/Responsive/DesktopSite/SmartNIC_applyingForm.dart';
 import 'package:smart_governing_portal/Responsive/DesktopSite/adminLoginDesktop.dart';
 import 'package:url_launcher/url_launcher.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -17,6 +18,13 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   int hoveredIndex = -1;
+  bool _isLoggedIn = false;
+
+  @override
+  void initState() {
+    super.initState();
+    _checkLogingStatus();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -749,12 +757,21 @@ class _HomePageState extends State<HomePage> {
       height: tileSize * (height / width),
       child: InkWell(
         onTap: () {
-          Navigator.push(
-            context,
-            MaterialPageRoute<void>(
-              builder: (BuildContext context) => pageName,
-            ),
-          );
+          if (_isLoggedIn) {
+            Navigator.push(
+              context,
+              MaterialPageRoute<void>(
+                builder: (BuildContext context) => pageName,
+              ),
+            );
+          } else {
+            Navigator.push(
+              context,
+              MaterialPageRoute<void>(
+                builder: (BuildContext context) => const LoginDesktop(),
+              ),
+            );
+          }
         },
         child: Container(
           alignment: Alignment.center,
@@ -801,6 +818,14 @@ class _HomePageState extends State<HomePage> {
         ),
       ),
     );
+  }
+
+  Future<void> _checkLogingStatus() async{
+    final prefs = await SharedPreferences.getInstance();
+    final isLoggedIn = prefs.getBool('isLoggedIn') ?? false;
+    setState(() {
+      _isLoggedIn = isLoggedIn;
+    });
   }
 
   int _calculateCrossAxisCountOURservices(BuildContext context) {
