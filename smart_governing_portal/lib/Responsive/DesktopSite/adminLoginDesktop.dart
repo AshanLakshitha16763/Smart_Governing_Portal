@@ -2,6 +2,8 @@
 
 import 'package:flutter/material.dart';
 import 'package:smart_governing_portal/Responsive/DesktopSite/admin_register_desktop.dart';
+import 'package:smart_governing_portal/Responsive/DesktopSite/after_registration_page.dart';
+import 'package:smart_governing_portal/Responsive/DesktopSite/home_page.dart';
 import 'package:smart_governing_portal/constants.dart';
 
 class AdminLoginDesktop extends StatefulWidget{
@@ -22,7 +24,151 @@ class _AdminLoginDesktopState extends State<AdminLoginDesktop> {
       body: Center(
         child: Column(
           children: [
-            navbar, // navigation bar
+
+            // navigation bar
+            AppBar(
+            automaticallyImplyLeading: false,
+            toolbarHeight: 120,
+            leadingWidth: 180,
+            leading: SizedBox(
+              width: 150,
+              child: Image.asset(
+                'lib/Assets/logo.png',
+                fit: BoxFit.cover,
+              ),
+            ),
+            actions: [
+              FittedBox(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.end,
+                  children: [
+                    const SizedBox(
+                      height: 15,
+                    ),
+                    Row(
+                      children: [
+                        TextButton(
+                            onPressed: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute<void>(
+                                  builder: (BuildContext context) =>
+                                      const HomePage(),
+                                ),
+                              );
+                            },
+                            child: const Text(
+                              'Home',
+                              style: TextStyle(
+                                color: Colors.black,
+                              ),
+                            )),
+                        const SizedBox(
+                          width: 20,
+                        ),
+                        TextButton(
+                            onPressed: () {},
+                            child: const Text(
+                              'Services',
+                              style: TextStyle(
+                                color: Colors.black,
+                              ),
+                            )),
+                        const SizedBox(
+                          width: 20,
+                        ),
+                        TextButton(
+                          onPressed: () {},
+                          child: const Text(
+                            'About Us',
+                            style: TextStyle(
+                              color: Colors.black,
+                            ),
+                          ),
+                        ),
+                        const SizedBox(
+                          width: 20,
+                        ),
+                        TextButton(
+                            onPressed: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute<void>(
+                                  builder: (BuildContext context) =>
+                                      const AfterRegistrationPage(),
+                                ),
+                              );
+                            },
+                            child: const Text(
+                              'User',
+                              style: TextStyle(
+                                color: Colors.black,
+                              ),
+                            )),
+                        const SizedBox(
+                          width: 20,
+                        ),
+                      ],
+                    ),
+                    const SizedBox(
+                      height: 20,
+                    ),
+                    Row(
+                      children: [
+                        ElevatedButton(
+                          onPressed: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute<void>(
+                                builder: (BuildContext context) =>
+                                    const AdminLoginDesktop(),
+                              ),
+                            );
+                          },
+                          style: const ButtonStyle(
+                              backgroundColor: MaterialStatePropertyAll(
+                                  Color.fromARGB(255, 255, 255, 255))),
+                          child: const Text(
+                            'Login',
+                            style: TextStyle(
+                                color: Color.fromARGB(255, 10, 4, 70)),
+                          ),
+                        ),
+                        const SizedBox(
+                          width: 15,
+                        ),
+                        ElevatedButton(
+                          onPressed: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute<void>(
+                                builder: (BuildContext context) =>
+                                    const AdminRegisterDesktop(),
+                              ),
+                            );
+                          },
+                          style: const ButtonStyle(
+                              backgroundColor: MaterialStatePropertyAll(
+                                  Color.fromARGB(255, 10, 4, 70))),
+                          child: const Text(
+                            'Register',
+                            style: TextStyle(
+                                color: Color.fromARGB(255, 255, 255, 255)),
+                          ),
+                        ),
+                        const SizedBox(
+                          width: 15,
+                        ),
+                      ],
+                    )
+                  ],
+                ),
+              ),
+            ],
+            backgroundColor: const Color.fromARGB(255, 115, 185, 250),
+          ),
+
+
             const SizedBox(
               height: 20,
             ),

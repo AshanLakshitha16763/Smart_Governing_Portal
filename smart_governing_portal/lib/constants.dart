@@ -368,9 +368,9 @@ var mobileDrawer = Drawer(
 var section01 = SizedBox(
   child: Row(
     children: [
-      SizedBox(
+      const SizedBox(
         //width: w * 0.5,
-        child: const Align(
+        child: Align(
           alignment: Alignment.center,
           child: Padding(
             padding: EdgeInsets.only(left: 20, right: 20, top: 100),

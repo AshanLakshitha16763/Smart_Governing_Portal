@@ -1,5 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:smart_governing_portal/Responsive/DesktopSite/adminLoginDesktop.dart';
 import 'package:smart_governing_portal/Responsive/DesktopSite/admin_application_form_page.dart';
 import 'package:smart_governing_portal/Responsive/DesktopSite/after_Registration_Page.dart';
 import 'package:smart_governing_portal/Responsive/DesktopSite/home_page.dart';
@@ -23,7 +24,13 @@ class _RegistorDesktopState extends State<RegistorDesktop> {
   Future createUserWithEmailAndPassword(BuildContext context) async {
     try {
       await Auth().createUserWithEmailAndPassword(
-          email: _emailController.text, password: _passwordController.text);
+          email: _emailController.text, password: _passwordController.text,);
+      
+      // Get the currently signed-in user
+      User? user = FirebaseAuth.instance.currentUser;
+
+      // Update the user's display name
+      await user?.updateDisplayName(_nameController.text);
 
       // ignore: use_build_context_synchronously
       Navigator.pushReplacement(
@@ -119,7 +126,7 @@ class _RegistorDesktopState extends State<RegistorDesktop> {
                                 context,
                                 MaterialPageRoute<void>(
                                   builder: (BuildContext context) =>
-                                      const AdminHomePage(),
+                                      const AdminLoginDesktop(),
                                 ),
                               );
                             },

@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:smart_governing_portal/Responsive/DesktopSite/RegisterDesktop.dart';
 import 'package:smart_governing_portal/Responsive/DesktopSite/SmartDL_applying_form.dart';
@@ -17,6 +18,8 @@ class _AfterRegistrationPageState extends State<AfterRegistrationPage> {
   int hoveredIndex = -1;
   @override
   Widget build(BuildContext context) {
+    User? user = FirebaseAuth.instance.currentUser;
+    String userName = user?.displayName ?? 'User';
     double w = MediaQuery.of(context).size.width;
     return Scaffold(
       appBar: AppBar(
@@ -169,9 +172,9 @@ class _AfterRegistrationPageState extends State<AfterRegistrationPage> {
           Column(
             children: [
               const SizedBox(height: 25),
-              const Text(
-                'Hello, Welocom Back!',
-                style: TextStyle(
+              Text(
+                'Hello, Welocom Back! $userName',
+                style: const TextStyle(
                   color: Color.fromARGB(255, 10, 4, 70),
                   fontFamily: 'Inter',
                   fontSize: 32,
