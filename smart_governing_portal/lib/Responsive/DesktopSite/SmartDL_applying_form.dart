@@ -2,6 +2,8 @@
 
 import 'dart:io';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/foundation.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
@@ -153,6 +155,9 @@ class _DLApplicationFormState extends State<DLApplicationForm> {
   //form submission method
   void _submitForm() async {
     if (DLapplicationformKey.currentState!.validate()) {
+      //get the current user's UID
+      User? curerrentUser = FirebaseAuth.instance.currentUser;
+
       final user = <String, dynamic>{
         "Full Name": fullNameController.text,
         "Other Names": otherNamesController.text,
@@ -172,9 +177,8 @@ class _DLApplicationFormState extends State<DLApplicationForm> {
         "District": districtController.text,
       };
 
-      // Add a new document with a generated ID
-      db.collection("DLPT").add(user).then((DocumentReference doc) =>
-          print('DocumentSnapshot added with ID: ${doc.id}'));
+      // Add a new document with user's UID
+      await db.collection("DLtest").doc(curerrentUser!.uid).set(user);
 
       // All fields are valid, proceed with form submission
       // Clear the form after successful submission (if needed)
@@ -454,7 +458,7 @@ class _DLApplicationFormState extends State<DLApplicationForm> {
                         ),
                         //Full Name
                         TextFormField(
-                          controller: fullNameController,
+                            controller: fullNameController,
                             validator: (value) {
                               if (value!.isEmpty) {
                                 return 'Please enter your full Name';
@@ -531,7 +535,7 @@ class _DLApplicationFormState extends State<DLApplicationForm> {
                         ),
                         //License No
                         TextFormField(
-                          controller: licenseNoController,
+                            controller: licenseNoController,
                             validator: (value) {
                               if (value!.isEmpty) {
                                 return 'Please enter your License No';
@@ -616,14 +620,16 @@ class _DLApplicationFormState extends State<DLApplicationForm> {
                                   'Matale',
                                   'Nuwara Eliya'
                                 ];
-                              } else if (provinceController.text == 'SOUTHERN') {
+                              } else if (provinceController.text ==
+                                  'SOUTHERN') {
                                 _districtList = [
                                   '-Choose your District-',
                                   'Galle',
                                   'Matara',
                                   'Hambanthota'
                                 ];
-                              } else if (provinceController.text == 'SABARAGAMUWA') {
+                              } else if (provinceController.text ==
+                                  'SABARAGAMUWA') {
                                 _districtList = [
                                   '-Choose your District-',
                                   'Kegalle',
@@ -642,19 +648,22 @@ class _DLApplicationFormState extends State<DLApplicationForm> {
                                   'Badulla',
                                   'Monaragala'
                                 ];
-                              } else if (provinceController.text == 'NORTH WESTERN') {
+                              } else if (provinceController.text ==
+                                  'NORTH WESTERN') {
                                 _districtList = [
                                   '-Choose your District-',
                                   'Kurunegala',
                                   'Puttalam'
                                 ];
-                              } else if (provinceController.text == 'NORTH CENTRAL') {
+                              } else if (provinceController.text ==
+                                  'NORTH CENTRAL') {
                                 _districtList = [
                                   '-Choose your District-',
                                   'Anuradhapura',
                                   'Polonnaruwa'
                                 ];
-                              } else if (provinceController.text == 'NORTHERN') {
+                              } else if (provinceController.text ==
+                                  'NORTHERN') {
                                 _districtList = [
                                   '-Choose your District-',
                                   'Jaffna',

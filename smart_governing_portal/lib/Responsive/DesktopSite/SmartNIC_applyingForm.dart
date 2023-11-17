@@ -1,6 +1,7 @@
 // ignore_for_file: non_constant_identifier_names, file_names
 
 import 'dart:io';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
@@ -156,6 +157,8 @@ class _NICApplicationFormState extends State<NICApplicationForm> {
   //form submission method
   void _submitForm(BuildContext context) async {
     if (NICapplicationformKey.currentState!.validate()) {
+      //get the current user
+      User? currentUser = FirebaseAuth.instance.currentUser;
       // All fields are valid, proceed with form submission
 
       /*Reference storageReference = FirebaseStorage.instance
@@ -186,9 +189,8 @@ class _NICApplicationFormState extends State<NICApplicationForm> {
         //"Profile Image": _pickedImage,
       };
 
-      // Add a new document with a generated ID
-      db.collection("NICPT").add(user).then((DocumentReference doc) =>
-          print('DocumentSnapshot added with ID: ${doc.id}'));
+      // Add a new document with users UID
+      await db.collection("NICtest").doc(currentUser!.uid).set(user);
 
       // Clear the form after successful submission (if needed)
       NICapplicationformKey.currentState!.reset();
