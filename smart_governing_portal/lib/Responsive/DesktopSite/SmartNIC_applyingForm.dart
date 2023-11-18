@@ -1,13 +1,11 @@
 // ignore_for_file: non_constant_identifier_names, file_names
 
-import 'dart:io';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/foundation.dart';
-import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
 import 'package:flutter/material.dart';
 import 'package:smart_governing_portal/Responsive/DesktopSite/admin_application_form_page.dart';
 import 'package:smart_governing_portal/Responsive/DesktopSite/home_page.dart';
+import 'package:smart_governing_portal/Responsive/DesktopSite/nic_template.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 // ignore: unused_import
@@ -194,6 +192,14 @@ class _NICApplicationFormState extends State<NICApplicationForm> {
 
       // Clear the form after successful submission (if needed)
       NICapplicationformKey.currentState!.reset();
+      
+      Navigator.push(
+        context,
+        MaterialPageRoute<void>(
+          builder: (BuildContext context) => const NICTemplate(),
+        ),
+      );
+
     } else {
       // There are invalid fields, show an error message
       showDialog(
