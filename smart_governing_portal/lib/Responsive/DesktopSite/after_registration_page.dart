@@ -1,10 +1,11 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:smart_governing_portal/Responsive/DesktopSite/RegisterDesktop.dart';
 import 'package:smart_governing_portal/Responsive/DesktopSite/SmartDL_applying_form.dart';
 import 'package:smart_governing_portal/Responsive/DesktopSite/SmartNIC_applyingForm.dart';
 import 'package:smart_governing_portal/Responsive/DesktopSite/adminLoginDesktop.dart';
-import 'package:smart_governing_portal/Responsive/DesktopSite/login_desktop.dart';
+import 'package:smart_governing_portal/Responsive/DesktopSite/dl_template.dart';
+import 'package:smart_governing_portal/Responsive/DesktopSite/nic_template.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class AfterRegistrationPage extends StatefulWidget {
@@ -201,7 +202,7 @@ class _AfterRegistrationPageState extends State<AfterRegistrationPage> {
                         child: Column(
                           children: [
                             LayoutBuilder(
-                              builder: (context, constraints) {                            
+                              builder: (context, constraints) {
                                 return Wrap(
                                   spacing: 300.0,
                                   runSpacing: 60.0,
@@ -618,14 +619,16 @@ class _AfterRegistrationPageState extends State<AfterRegistrationPage> {
           tileSize: tileSize,
           index: 0,
           imagePath: 'lib/Assets/ID.png',
-          pageName: const NICApplicationForm()),
+          pageName2: const NICApplicationForm(),
+          pageName1: const NICTemplate()),
       _OURserviceTile(' Smart Driving License Verification System',
           width: 360,
           height: 180,
           tileSize: tileSize,
           index: 1,
           imagePath: 'lib/Assets/DL.png',
-          pageName: const DLApplicationForm()),
+          pageName2: const DLApplicationForm(),
+          pageName1: const DLTemplate()),
     ];
   }
 
@@ -635,19 +638,33 @@ class _AfterRegistrationPageState extends State<AfterRegistrationPage> {
       required double height,
       required double tileSize,
       required int index,
-      required pageName,
+      required pageName1,
+      required pageName2,
       required imagePath}) {
     return SizedBox(
       width: tileSize,
       height: tileSize * (height / width),
       child: InkWell(
-        onTap: () {
-          Navigator.push(
-            context,
-            MaterialPageRoute<void>(
-              builder: (BuildContext context) => pageName,
-            ),
-          );
+        onTap: () async {
+          final userUid = FirebaseAuth.instance.currentUser?.uid ?? '';
+          final docSnapshot = await FirebaseFirestore.instance
+              .collection('NICtest')
+              .doc(userUid)
+              .get();
+
+          if (docSnapshot.exists) {
+            // Navigate to the NIC template page
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => pageName1),
+            );
+          } else {
+            // Navigate to the NIC application form page
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => pageName2),
+            );
+          }
         },
         child: Container(
           alignment: Alignment.center,
@@ -696,6 +713,45 @@ class _AfterRegistrationPageState extends State<AfterRegistrationPage> {
     );
   }
 
+  //Check if thre user has formdata already
+  /*void navigateBasedOnUserData() async {
+  final userUid = FirebaseAuth.instance.currentUser?.uid ?? '';
+  final docSnapshot = await FirebaseFirestore.instance.collection('YourCollectionName').doc(userUid).get();
+
+  if (docSnapshot.exists) {
+    // Navigate to the NIC template page
+    Navigator.push(
+      context,
+      MaterialPageRoute(builder: (context) => NicTemplatePage()),
+    );
+  } else {
+    // Navigate to the NIC application form page
+    Navigator.push(
+      context,
+      MaterialPageRoute(builder: (context) => NicApplicationFormPage()),
+    );
+  }
+  }*/
+  /*Future<bool> checkFormData() async {
+    try {
+      // Get the current user
+      User? currentUser = FirebaseAuth.instance.currentUser;
+
+      if (currentUser != null) {
+        // Check if a document exists with the user's UID as the document ID
+        DocumentSnapshot<Map<String, dynamic>> snapshot =
+            await FirebaseFirestore.instance.collection('NICPT').doc(currentUser.uid).get();
+
+        // Return true if the document exists, false otherwise
+        return snapshot.exists;
+      } else {
+        return false;
+      }
+    } catch (e) {
+      print('Error checking form data: $e');
+      return false;
+    }
+  }*/
 }
 
 //url launcher
