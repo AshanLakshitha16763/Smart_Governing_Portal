@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:smart_governing_portal/Responsive/DesktopSite/adminLoginDesktop.dart';
-import 'package:smart_governing_portal/Responsive/DesktopSite/admin_application_form_page.dart';
 import 'package:smart_governing_portal/Responsive/DesktopSite/after_registration_page.dart';
 import 'package:smart_governing_portal/Responsive/DesktopSite/home_page.dart';
 

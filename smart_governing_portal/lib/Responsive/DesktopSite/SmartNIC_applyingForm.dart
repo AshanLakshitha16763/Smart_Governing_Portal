@@ -177,7 +177,7 @@ class _NICApplicationFormState extends State<NICApplicationForm> {
         "Date of Birth": dobController.text,
         "Birth Place": birthPlaceController.text,
         "Gender": genderController.text,
-        "Proffession": professionController.text,
+        "Profession": professionController.text,
         "Address": addressController.text,
         "Province": provinceController.text,
         "District": districtController.text,

@@ -1,14 +1,15 @@
 // ignore_for_file: deprecated_member_use, file_names, non_constant_identifier_names
 
-import 'dart:io';
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
+/*import 'dart:io';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/foundation.dart';
-import 'package:image_picker/image_picker.dart';
+import 'package:image_picker/image_picker.dart';*/
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:intl/intl.dart';
 import 'package:flutter/material.dart';
 import 'package:smart_governing_portal/Responsive/DesktopSite/admin_application_form_page.dart';
+import 'package:smart_governing_portal/Responsive/DesktopSite/dl_template.dart';
 import 'package:smart_governing_portal/Responsive/DesktopSite/home_page.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -25,12 +26,9 @@ class _DLApplicationFormState extends State<DLApplicationForm> {
   TextEditingController fullNameController = TextEditingController();
   TextEditingController otherNamesController = TextEditingController();
   TextEditingController nicController = TextEditingController();
-  TextEditingController birthPlaceController = TextEditingController();
-  TextEditingController mobileController = TextEditingController();
   TextEditingController addressController = TextEditingController();
   TextEditingController licenseNoController = TextEditingController();
   TextEditingController areaCodeController = TextEditingController();
-  TextEditingController docNoController = TextEditingController();
   final TextEditingController dobController = TextEditingController();
   final TextEditingController issuedDateController = TextEditingController();
   TextEditingController expiryDateController = TextEditingController();
@@ -162,12 +160,9 @@ class _DLApplicationFormState extends State<DLApplicationForm> {
         "Full Name": fullNameController.text,
         "Other Names": otherNamesController.text,
         "NIC": nicController.text,
-        "Birth Place": birthPlaceController.text,
-        "Mobile": mobileController.text,
         "Address": addressController.text,
         "License No": licenseNoController.text,
         "Area Code": areaCodeController.text,
-        "Document No": docNoController.text,
         "Date of Birth": dobController.text,
         "Issued Date": issuedDateController.text,
         "Expiry Date": expiryDateController.text,
@@ -183,6 +178,14 @@ class _DLApplicationFormState extends State<DLApplicationForm> {
       // All fields are valid, proceed with form submission
       // Clear the form after successful submission (if needed)
       DLapplicationformKey.currentState!.reset();
+
+      Navigator.push(
+        context,
+        MaterialPageRoute<void>(
+          builder: (BuildContext context) => const DLTemplate(),
+        ),
+      );
+
     } else {
       // There are invalid fields, show an error message
       showDialog(

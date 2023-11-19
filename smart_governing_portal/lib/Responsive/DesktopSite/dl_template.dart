@@ -2,14 +2,14 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
-class NICTemplate extends StatefulWidget {
-  const NICTemplate({super.key});
+class DLTemplate extends StatefulWidget {
+  const DLTemplate({super.key});
 
   @override
-  State<NICTemplate> createState() => _NICTemplateState();
+  State<DLTemplate> createState() => _DLTemplateState();
 }
 
-class _NICTemplateState extends State<NICTemplate> {
+class _DLTemplateState extends State<DLTemplate> {
   late Future<DocumentSnapshot<Map<String, dynamic>>> data;
 
   @override
@@ -20,14 +20,14 @@ class _NICTemplateState extends State<NICTemplate> {
     if (user != null) {
       userUid = user.uid;
     }
-    data = FirebaseFirestore.instance.collection('NICtest').doc(userUid).get();
+    data = FirebaseFirestore.instance.collection('DLtest').doc(userUid).get();
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('National ID Card Template'),
+        title: const Text('Driving License Template'),
       ),
       body: SingleChildScrollView(
         child: Padding(
@@ -51,7 +51,7 @@ class _NICTemplateState extends State<NICTemplate> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         const Text(
-                          'National Identity Card',
+                          'Driving License',
                           style: TextStyle(
                               fontSize: 20, fontWeight: FontWeight.bold),
                         ),
@@ -60,7 +60,6 @@ class _NICTemplateState extends State<NICTemplate> {
                         _buildField('Other Names : ', documentData['Other Names']?? ''),
                         _buildField('Birth Place : ', documentData['Birth Place']?? ''),
                         _buildField('Address : ', documentData['Address']?? ''),
-                        _buildField('Profession : ', documentData['Profession']?? ''),
                         _buildField('Document Number : ', documentData['Doc No']?? ''),
                         _buildField('Date of Birth : ', documentData['Date of Birth']?? ''),
                         _buildField('Issued Date : ', documentData['Issued Date']?? ''),
