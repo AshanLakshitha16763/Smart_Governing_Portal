@@ -19,9 +19,9 @@ class _AfterRegistrationPageState extends State<AfterRegistrationPage> {
   int hoveredIndex = -1;
   @override
   Widget build(BuildContext context) {
+    double w = MediaQuery.of(context).size.width;
     User? user = FirebaseAuth.instance.currentUser;
     String userName = user?.displayName ?? 'User';
-    double w = MediaQuery.of(context).size.width;
     return Scaffold(
       appBar: AppBar(
         automaticallyImplyLeading: false,

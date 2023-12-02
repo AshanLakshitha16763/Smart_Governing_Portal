@@ -1,100 +1,34 @@
-// ignore_for_file: deprecated_member_use, file_names, non_constant_identifier_names
+// ignore_for_file: deprecated_member_use
 
-/*import 'dart:io';
-import 'package:firebase_core/firebase_core.dart';
+import 'dart:io';
 import 'package:flutter/foundation.dart';
-import 'package:image_picker/image_picker.dart';*/
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:intl/intl.dart';
 import 'package:flutter/material.dart';
-import 'package:smart_governing_portal/Responsive/DesktopSite/adminFormPage.dart';
-import 'package:smart_governing_portal/Responsive/DesktopSite/dl_template.dart';
+import 'package:image_picker/image_picker.dart';
+import 'package:smart_governing_portal/Responsive/DesktopSite/adminDashboardPage.dart';
 import 'package:smart_governing_portal/Responsive/DesktopSite/home_page.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-class DLApplicationForm extends StatefulWidget {
-  const DLApplicationForm({super.key});
+class AdminHomePage extends StatefulWidget {
+  const AdminHomePage({super.key});
 
   @override
-  State<DLApplicationForm> createState() => _DLApplicationFormState();
+  State<AdminHomePage> createState() => _AdminHomePageState();
 }
 
-class _DLApplicationFormState extends State<DLApplicationForm> {
-  final db = FirebaseFirestore.instance;
-  final DLapplicationformKey = GlobalKey<FormState>();
-  TextEditingController fullNameController = TextEditingController();
-  TextEditingController otherNamesController = TextEditingController();
-  TextEditingController nicController = TextEditingController();
-  TextEditingController addressController = TextEditingController();
-  TextEditingController licenseNoController = TextEditingController();
-  TextEditingController areaCodeController = TextEditingController();
-  final TextEditingController dobController = TextEditingController();
-  final TextEditingController issuedDateController = TextEditingController();
-  TextEditingController expiryDateController = TextEditingController();
-  TextEditingController bloodGroupController = TextEditingController();
-  TextEditingController genderController = TextEditingController();
-  TextEditingController provinceController = TextEditingController();
-  TextEditingController districtController = TextEditingController();
-  //File? _pickedImage;
-  //Uint8List webImage = Uint8List(8);
-
-  // Function to show the date picker for Date of Birth
-  Future<void> selectDateOfBirth(BuildContext context) async {
-    final DateTime? picked = await showDatePicker(
-      context: context,
-      initialDate: DateTime.now(), // You can set the initial date here.
-      firstDate: DateTime(1900), // Set the minimum date for the picker.
-      lastDate: DateTime.now(), // Set the maximum date for the picker.
-    );
-
-    if (picked != null && picked != DateTime.now()) {
-      final String formattedDate = DateFormat('dd-MM-yyyy').format(picked);
-      setState(() {
-        dobController.text = formattedDate;
-      });
-    }
-  }
-
-  // Function to show the date picker for Issued Date
-  Future<void> selectIssuedDate(BuildContext context) async {
-    final DateTime? picked = await showDatePicker(
-      context: context,
-      initialDate: DateTime.now(), // You can set the initial date here.
-      firstDate: DateTime(2000), // Set the minimum date for the picker.
-      lastDate: DateTime.now(), // Set the maximum date for the picker.
-    );
-
-    if (picked != null && picked != DateTime.now()) {
-      final String formattedDate = DateFormat('dd-MM-yyyy').format(picked);
-      setState(() {
-        issuedDateController.text = formattedDate;
-      });
-    }
-  }
-
-  Future<void> selectExpiryDate(BuildContext context) async {
-    final DateTime? picked = await showDatePicker(
-      context: context,
-      initialDate: DateTime.now(), // You can set the initial date here.
-      firstDate: DateTime(2000), // Set the minimum date for the picker.
-      lastDate: DateTime(2030), // Set the maximum date for the picker.
-    );
-
-    if (picked != null && picked != DateTime.now()) {
-      final String formattedDate = DateFormat('dd-MM-yyyy').format(picked);
-      setState(() {
-        expiryDateController.text = formattedDate;
-      });
-    }
-  }
+class _AdminHomePageState extends State<AdminHomePage> {
+  final adminRegistrationformKey = GlobalKey<FormState>();
+  String fullName = '';
+  String nic = '';
+  String gramaNiladhariID = '';
+  var mobile = '';
+  String personalAddress = '';
+  String gramaniladariDivision = '';
+  String areaCode = '';
+  File? _pickedImage;
+  Uint8List webImage = Uint8List(8);
 
   String _province = '-Choose your Province-';
   String _district = '-Choose your District-';
-  String _gender = '-Choose your Gender-';
-  String _bloodGroup = '-Choose your Blood Group-';
-
-  final List<String> _genderList = ['-Choose your Gender-', 'Male', 'Female'];
 
   final List<String> _provinceList = [
     '-Choose your Province-',
@@ -108,7 +42,6 @@ class _DLApplicationFormState extends State<DLApplicationForm> {
     'NORTH CENTRAL',
     'NORTHERN'
   ];
-
   List<String> _districtList = [
     '-Choose your District-',
     'Galle',
@@ -138,54 +71,12 @@ class _DLApplicationFormState extends State<DLApplicationForm> {
     'Mannar',
   ];
 
-  final List<String> _bloodGroupList = [
-    '-Choose your Blood Group-',
-    'A+',
-    'A-',
-    'B+',
-    'B-',
-    'O+',
-    'O-',
-    'AB+',
-    'AB-'
-  ];
-
   //form submission method
-  void _submitForm() async {
-    if (DLapplicationformKey.currentState!.validate()) {
-      //get the current user's UID
-      User? curerrentUser = FirebaseAuth.instance.currentUser;
-
-      final user = <String, dynamic>{
-        "Full Name": fullNameController.text,
-        "Other Names": otherNamesController.text,
-        "NIC": nicController.text,
-        "Address": addressController.text,
-        "License No": licenseNoController.text,
-        "Area Code": areaCodeController.text,
-        "Date of Birth": dobController.text,
-        "Issued Date": issuedDateController.text,
-        "Expiry Date": expiryDateController.text,
-        "Blood Group": bloodGroupController.text,
-        "Gender": genderController.text,
-        "Province": provinceController.text,
-        "District": districtController.text,
-      };
-
-      // Add a new document with user's UID
-      await db.collection("DLtest").doc(curerrentUser!.uid).set(user);
-
+  void _submitForm() {
+    if (adminRegistrationformKey.currentState!.validate()) {
       // All fields are valid, proceed with form submission
       // Clear the form after successful submission (if needed)
-      DLapplicationformKey.currentState!.reset();
-
-      Navigator.push(
-        context,
-        MaterialPageRoute<void>(
-          builder: (BuildContext context) => const DLTemplate(),
-        ),
-      );
-
+      adminRegistrationformKey.currentState!.reset();
     } else {
       // There are invalid fields, show an error message
       showDialog(
@@ -204,7 +95,6 @@ class _DLApplicationFormState extends State<DLApplicationForm> {
     }
   }
 
-/*
   //choose image function
   Future<void> _pickImage() async {
     if (!kIsWeb) {
@@ -234,11 +124,10 @@ class _DLApplicationFormState extends State<DLApplicationForm> {
       const SnackBar(content: Text('Something went wrong'));
     }
   }
-*/
+
   @override
   Widget build(BuildContext context) {
     double w = MediaQuery.of(context).size.width;
-    double h = MediaQuery.of(context).size.height;
     return Scaffold(
       body: ListView(
         children: [
@@ -246,6 +135,15 @@ class _DLApplicationFormState extends State<DLApplicationForm> {
           AppBar(
             automaticallyImplyLeading: false,
             toolbarHeight: 120,
+            centerTitle: true,
+            title: const Text(
+              'Government Admins Only',
+              style: TextStyle(
+                  color: Colors.white,
+                  fontSize: 24,
+                  fontFamily: 'poppins',
+                  fontWeight: FontWeight.bold),
+            ),
             leadingWidth: 180,
             leading: SizedBox(
               width: 150,
@@ -256,93 +154,80 @@ class _DLApplicationFormState extends State<DLApplicationForm> {
             ),
             actions: [
               FittedBox(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.end,
+                child: Row(
                   children: [
-                    const SizedBox(
-                      height: 15,
-                    ),
-                    Row(
-                      children: [
-                        TextButton(
-                            onPressed: () {
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute<void>(
-                                  builder: (BuildContext context) =>
-                                      const HomePage(),
-                                ),
-                              );
-                            },
-                            child: const Text(
-                              'Home',
-                              style: TextStyle(
-                                color: Colors.black,
-                              ),
-                            )),
-                        const SizedBox(
-                          width: 20,
-                        ),
-                        TextButton(
-                            onPressed: () {},
-                            child: const Text(
-                              'Services',
-                              style: TextStyle(
-                                color: Colors.black,
-                              ),
-                            )),
-                        const SizedBox(
-                          width: 20,
-                        ),
-                        TextButton(
-                          onPressed: () {},
-                          child: const Text(
-                            'About Us',
-                            style: TextStyle(
-                              color: Colors.black,
+                    TextButton(
+                        onPressed: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute<void>(
+                              builder: (BuildContext context) =>
+                                  const HomePage(),
                             ),
+                          );
+                        },
+                        child: const Text(
+                          'Home',
+                          style: TextStyle(
+                            color: Colors.black,
                           ),
-                        ),
-                        const SizedBox(
-                          width: 20,
-                        ),
-                        TextButton(
-                            onPressed: () {
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute<void>(
-                                  builder: (BuildContext context) =>
-                                      const AdminHomePage(),
-                                ),
-                              );
-                            },
-                            child: const Text(
-                              'Admin',
-                              style: TextStyle(
-                                color: Colors.black,
-                              ),
-                            )),
-                        const SizedBox(
-                          width: 20,
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.only(
-                            right: 20,
-                            top: 5,
-                          ),
-                          child: IconButton(
-                              onPressed: () {},
-                              icon: Image.asset(
-                                'lib/Assets/person.png',
-                                width: 40,
-                                height: 40,
-                              )),
-                        )
-                      ],
-                    ),
+                        )),
                     const SizedBox(
-                      height: 20,
+                      width: 20,
                     ),
+                    TextButton(
+                        onPressed: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute<void>(
+                              builder: (BuildContext context) =>
+                                  const AdminDashboardPage(),
+                            ),
+                          );
+                        },
+                        child: const Text(
+                          'Dashboard',
+                          style: TextStyle(
+                            color: Colors.black,
+                          ),
+                        )),
+                    const SizedBox(
+                      width: 20,
+                    ),
+                    TextButton(
+                        onPressed: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute<void>(
+                              builder: (BuildContext context) =>
+                                  const HomePage(),
+                            ),
+                          );
+                        },
+                        child: const Text(
+                          'User',
+                          style: TextStyle(
+                            color: Colors.black,
+                          ),
+                        )),
+                    const SizedBox(
+                      width: 20,
+                    ),
+
+                    //User profile image
+                    Padding(
+                      padding: const EdgeInsets.only(
+                        right: 20,
+                        top: 5,
+                      ),
+                      child: IconButton(
+                          onPressed: () {},
+                          icon: Image.asset(
+                            'lib/Assets/person.png',
+                            width: 40,
+                            height: 40,
+                          )),
+                    )
                   ],
                 ),
               )
@@ -350,87 +235,77 @@ class _DLApplicationFormState extends State<DLApplicationForm> {
             backgroundColor: const Color.fromARGB(255, 115, 185, 250),
           ),
 
-          //instructions
-          Padding(
-            padding: const EdgeInsets.all(20),
-            child: Column(
-              children: [
-                Container(
-                  width: w * 0.8,
-                  height: h * 0.5,
-                  alignment: Alignment.centerLeft,
-                  decoration: BoxDecoration(
-                    color: const Color.fromARGB(255, 248, 247, 247),
-                    borderRadius: BorderRadius.circular(12),
-                    border: Border.all(
-                      color: const Color.fromARGB(255, 187, 191, 190),
-                      width: 1,
-                    ),
-                    boxShadow: [
-                      BoxShadow(
-                        color: Colors.grey.shade300,
-                        spreadRadius: 1,
-                        blurRadius: 2,
-                        offset: const Offset(0, 5),
+          //first section
+          SizedBox(
+            child: Padding(
+              padding: const EdgeInsets.only(left: 20, right: 20, top: 50),
+              child: Column(
+                children: [
+                  Row(
+                    children: [
+                      Expanded(
+                        child: SizedBox(
+                          width: w * 0.5,
+                          child: const Align(
+                            alignment: Alignment.center,
+                            child: FittedBox(
+                              child: Text(
+                                "WELCOME TO \nADMIN PORTAL \nOF \nLET'S GOV",
+                                textAlign: TextAlign.center,
+                                style: TextStyle(
+                                  fontFamily: 'Mitr',
+                                  fontWeight: FontWeight.w800,
+                                  fontSize: 75,
+                                  color: Color.fromARGB(255, 10, 4, 70),
+                                ),
+                              ),
+                            ),
+                          ),
+                        ),
                       ),
+                      Container(
+                        width: w * 0.5,
+                      ), // chatbot here
                     ],
                   ),
-                  child: const Padding(
-                    padding: EdgeInsets.all(20),
+                  FittedBox(
                     child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        Text(
-                          'Please read the following before using the service.',
-                          textAlign: TextAlign.center,
-                          style: TextStyle(
-                            fontSize: 20,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                        Text(
-                          'Welcome to the online Driving License verification system.Lorem ipsum dolor sit amet, in vim nihil maiorum, vim et postea philosophia mediocritatem. Eu sit postea adolescens intellegam. Pri modus pericula ut, an vidisse aperiam nec, sed ea. animal inciderint. Etiam ceteros repudiandae ex usu, nec diam decore cu. Sea an libris.Loremipsum dolor sit amet, in vim nihil maiorum, vim et postea philosophia mediocritatem. Eu sit postea adolescens intellegam. Pri modus pericula ut, an vidisse aperiam nec, sed ea. ',
+                        const Text(
+                          'You need to use your Grama Niladhari ID number as the username for register / login.',
                           textAlign: TextAlign.center,
                           style: TextStyle(
                             fontSize: 20,
                           ),
                         ),
+                        const SizedBox(
+                          height: 15,
+                        ),
+                        const Text(
+                          'Create Your Admin Profile',
+                          textAlign: TextAlign.center,
+                          style: TextStyle(
+                              fontFamily: 'Inter',
+                              fontSize: 20,
+                              fontWeight: FontWeight.bold),
+                        ),
+                        const SizedBox(
+                          height: 15,
+                        ),
+                        Image.asset(
+                          'lib/Assets/belowicon.png',
+                          width: 32,
+                          height: 40,
+                        )
                       ],
                     ),
-                  ),
-                ),
-                const SizedBox(
-                  height: 20,
-                ),
-                const Text(
-                  'Copyright 2023',
-                  textAlign: TextAlign.left,
-                  style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold),
-                ),
-                const SizedBox(
-                  height: 25,
-                ),
-                const Text(
-                  'To apply Smart Driving License, please fill out this forum and sumbit',
-                  textAlign: TextAlign.center,
-                  style: TextStyle(
-                      fontFamily: 'Inter',
-                      fontSize: 20,
-                      fontWeight: FontWeight.bold),
-                ),
-                const SizedBox(
-                  height: 15,
-                ),
-                Image.asset(
-                  'lib/Assets/belowicon.png',
-                  width: 32,
-                  height: 40,
-                )
-              ],
+                  )
+                ],
+              ),
             ),
           ),
 
-          //Form
+          //form
           Padding(
             padding:
                 const EdgeInsets.only(left: 80, right: 80, top: 30, bottom: 30),
@@ -446,48 +321,26 @@ class _DLApplicationFormState extends State<DLApplicationForm> {
               child: Padding(
                 padding: const EdgeInsets.all(50),
                 child: Form(
-                    key: DLapplicationformKey,
+                    key: adminRegistrationformKey,
                     child: Column(
                       children: <Widget>[
-                        const Text(
-                          'Apply for Smart Driving License',
-                          style: TextStyle(
-                              fontFamily: 'Inter',
-                              fontSize: 20,
-                              fontWeight: FontWeight.bold),
-                        ),
-                        const SizedBox(
-                          height: 60,
-                        ),
                         //Full Name
                         TextFormField(
-                            controller: fullNameController,
                             validator: (value) {
                               if (value!.isEmpty) {
                                 return 'Please enter your full Name';
                               }
                               return null;
                             },
-                            decoration: decorations('Full Name')),
-                        const SizedBox(
-                          height: 10,
-                        ),
-                        //Other Names
-                        TextFormField(
-                            controller: otherNamesController,
-                            validator: (value) {
-                              if (value!.isEmpty) {
-                                return 'Please enter your other Names if ave any';
-                              }
-                              return null;
+                            onSaved: (value) {
+                              fullName = value!;
                             },
-                            decoration: decorations('Other Names')),
+                            decoration: decorations('Full Name')),
                         const SizedBox(
                           height: 10,
                         ),
                         //NIC
                         TextFormField(
-                            controller: nicController,
                             validator: (value) {
                               if (value!.isEmpty) {
                                 return 'Please enter your NIC number';
@@ -500,95 +353,64 @@ class _DLApplicationFormState extends State<DLApplicationForm> {
                               }
                               return null;
                             },
-                            decoration: decorations('NIC No')),
+                            onSaved: (value) {
+                              nic = value!;
+                            },
+                            decoration: decorations('NIC')),
                         const SizedBox(
                           height: 10,
                         ),
-                        //Date of Birth
+                        //grama niladhari ID
                         TextFormField(
-                            controller: dobController,
-                            onTap: () => selectDateOfBirth(context),
-                            readOnly: true,
-                            decoration: decorations('Date of Birth')),
-                        const SizedBox(
-                          height: 10,
-                        ),
-                        //Gender
-                        DropdownButtonFormField(
-                          decoration: decorations('Gender'),
-                          value: _gender,
-                          items: _genderList
-                              .map((String gender) => DropdownMenuItem(
-                                  value: gender, child: Text(gender)))
-                              .toList(),
-                          onChanged: (String? newGender) {
-                            setState(() {
-                              genderController.text = newGender!;
-                            });
-                          },
-                          validator: (value) {
-                            if (value == '-Choose your Gender-') {
-                              return 'Please choose your Gender';
-                            }
-                            return null;
-                          },
-                        ),
-                        const SizedBox(
-                          height: 10,
-                        ),
-                        //License No
-                        TextFormField(
-                            controller: licenseNoController,
                             validator: (value) {
                               if (value!.isEmpty) {
-                                return 'Please enter your License No';
+                                return 'Please enter your Grama Niladhari ID';
                               }
                               return null;
                             },
-                            decoration: decorations('License No')),
+                            onSaved: (value) {
+                              gramaNiladhariID = value!;
+                            },
+                            decoration: decorations('Grama Niladhari ID')),
                         const SizedBox(
                           height: 10,
                         ),
-                        //Vehicle Category
-
-                        //Blood Group
-                        DropdownButtonFormField(
-                          value: _bloodGroup,
-                          items: _bloodGroupList
-                              .map((String newBloodGroup) => DropdownMenuItem(
-                                  value: newBloodGroup,
-                                  child: Text(newBloodGroup)))
-                              .toList(),
-                          onChanged: (String? newBloodGroup) {
-                            setState(() {
-                              bloodGroupController.text = newBloodGroup!;
-                            });
-                          },
-                          validator: (value) {
-                            if (value == '-Choose your Gender-') {
-                              return 'Please choose your Gender';
-                            }
-                            return null;
-                          },
-                          decoration: decorations("Choose your Blood Group"),
-                        ),
-                        const SizedBox(
-                          height: 10,
-                        ),
-                        //Address
+                        //Mobile no
                         TextFormField(
-                            controller: addressController,
+                            validator: (value) {
+                              if (value!.isEmpty) {
+                                return 'Please enter your Mobile No';
+                              }
+                              // Check if the mobile number has exactly 10 digits and starts with '07'
+                              if (value.length != 10 ||
+                                  !value.startsWith('07')) {
+                                return 'Please enter a valid mobile number starting with "07" and having 10 digits.';
+                              }
+                              return null;
+                            },
+                            onSaved: (value) {
+                              mobile = value!;
+                            },
+                            decoration: decorations('Mobile No')),
+                        const SizedBox(
+                          height: 10,
+                        ),
+                        //personal address
+                        TextFormField(
                             validator: (value) {
                               if (value!.isEmpty) {
                                 return 'Please enter your Personal Address';
                               }
                               return null;
                             },
-                            decoration: decorations('Address')),
+                            onSaved: (value) {
+                              personalAddress = value!;
+                            },
+                            decoration: decorations('Personal Address')),
                         const SizedBox(
                           height: 10,
                         ),
-                        //Province Dropdown
+                        //Province
                         DropdownButtonFormField(
                           decoration: decorations('Province'),
                           value: _province,
@@ -606,67 +428,62 @@ class _DLApplicationFormState extends State<DLApplicationForm> {
                           },
                           onChanged: (String? newValue) {
                             setState(() {
-                              provinceController.text = newValue!;
+                              _province = newValue!;
 
                               // Update the items in the district dropdown based on the selected province
-                              if (provinceController.text == 'WESTERN') {
+                              if (_province == 'WESTERN') {
                                 _districtList = [
                                   '-Choose your District-',
                                   'Gampaha',
                                   'Colombo',
                                   'Kaluthara'
                                 ];
-                              } else if (provinceController.text == 'CENTRAL') {
+                              } else if (_province == 'CENTRAL') {
                                 _districtList = [
                                   '-Choose your District-',
                                   'Kandy',
                                   'Matale',
                                   'Nuwara Eliya'
                                 ];
-                              } else if (provinceController.text ==
-                                  'SOUTHERN') {
+                              } else if (_province == 'SOUTHERN') {
                                 _districtList = [
                                   '-Choose your District-',
                                   'Galle',
                                   'Matara',
                                   'Hambanthota'
                                 ];
-                              } else if (provinceController.text ==
-                                  'SABARAGAMUWA') {
+                              } else if (_province == 'SABARAGAMUWA') {
                                 _districtList = [
                                   '-Choose your District-',
                                   'Kegalle',
                                   'Rathnapura'
                                 ];
-                              } else if (provinceController.text == 'EASTERN') {
+                              } else if (_province == 'EASTERN') {
                                 _districtList = [
                                   '-Choose your District-',
                                   'Ampara',
                                   'Batticaloa',
                                   'Trincomalee'
                                 ];
-                              } else if (provinceController.text == 'UVA') {
+                              } else if (_province == 'UVA') {
                                 _districtList = [
                                   '-Choose your District-',
                                   'Badulla',
                                   'Monaragala'
                                 ];
-                              } else if (provinceController.text ==
-                                  'NORTH WESTERN') {
+                              } else if (_province == 'NORTH WESTERN') {
                                 _districtList = [
                                   '-Choose your District-',
                                   'Kurunegala',
                                   'Puttalam'
                                 ];
-                              } else if (provinceController.text ==
-                                  'NORTH CENTRAL') {
+                              } else if (_province == 'NORTH CENTRAL') {
                                 _districtList = [
                                   '-Choose your District-',
                                   'Anuradhapura',
                                   'Polonnaruwa'
                                 ];
-                              } else if (provinceController.text ==
-                                  'NORTHERN') {
+                              } else if (_province == 'NORTHERN') {
                                 _districtList = [
                                   '-Choose your District-',
                                   'Jaffna',
@@ -707,45 +524,47 @@ class _DLApplicationFormState extends State<DLApplicationForm> {
                           },
                           onChanged: (String? newDistrict) {
                             setState(() {
-                              districtController.text = newDistrict!;
+                              _district = newDistrict!;
                             });
                           },
                         ),
                         const SizedBox(
                           height: 10,
                         ),
+
+                        //grama niladari division (work)
+                        TextFormField(
+                            validator: (value) {
+                              if (value!.isEmpty) {
+                                return 'Please enter your Grama Niladari Division (work)';
+                              }
+                              return null;
+                            },
+                            onSaved: (value) {
+                              gramaniladariDivision = value!;
+                            },
+                            decoration:
+                                decorations('Grama Niladari Division (work)')),
+                        const SizedBox(
+                          height: 10,
+                        ),
                         //area code
                         TextFormField(
-                            controller: areaCodeController,
                             validator: (value) {
                               if (value!.isEmpty) {
                                 return 'Please enter your Area (work)';
                               }
                               return null;
                             },
-                            decoration: decorations('Area Code')),
+                            onSaved: (value) {
+                              areaCode = value!;
+                            },
+                            decoration: decorations('Area (work)')),
                         const SizedBox(
-                          height: 10,
+                          height: 45,
                         ),
-                        //Issued Date
-                        TextFormField(
-                            controller: issuedDateController,
-                            onTap: () => selectIssuedDate(context),
-                            readOnly: true,
-                            decoration: decorations('Issued Date')),
-                        const SizedBox(
-                          height: 10,
-                        ),
-                        //Expiry Date
-                        TextFormField(
-                            controller: expiryDateController,
-                            onTap: () => selectExpiryDate(context),
-                            readOnly: true,
-                            decoration: decorations('Expiry Date')),
-                        const SizedBox(
-                          height: 10,
-                        ),
-                        /*Row(
+
+                        Row(
                           children: [
                             const Text('Choose a profile image'),
                             InkWell(
@@ -767,12 +586,12 @@ class _DLApplicationFormState extends State<DLApplicationForm> {
                                             )),
                             )
                           ],
-                        ),*/
+                        ),
 
                         ElevatedButton(
                             onPressed: _submitForm,
                             style: ElevatedButton.styleFrom(
-                              maximumSize: Size.fromWidth(w / 4),
+                              maximumSize: Size.fromWidth(w / 3),
                               foregroundColor:
                                   const Color.fromARGB(255, 243, 242, 234),
                               backgroundColor:
@@ -1003,4 +822,18 @@ void _launchURL(String url) async {
   } else {
     throw 'Could not launch $url';
   }
+}
+
+//input decoration for the form fields
+InputDecoration decorations(String formfieldName) {
+  return InputDecoration(
+    labelText: formfieldName,
+    border: OutlineInputBorder(
+      borderRadius: BorderRadius.circular(10),
+    ),
+    focusedBorder: OutlineInputBorder(
+      borderSide: const BorderSide(color: Colors.blue, width: 2.0),
+      borderRadius: BorderRadius.circular(10),
+    ),
+  );
 }

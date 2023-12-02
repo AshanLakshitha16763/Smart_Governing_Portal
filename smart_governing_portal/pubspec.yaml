@@ -51,6 +51,7 @@ dependencies:
   path: ^1.8.3
   image_picker_web: ^2.0.0
   shared_preferences: ^2.2.2
+  kommunicate_flutter: ^1.7.9
 
 
   
