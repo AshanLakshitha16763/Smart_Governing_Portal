@@ -1,275 +1,228 @@
-// ignore_for_file: non_constant_identifier_names
-
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:smart_governing_portal/Responsive/DesktopSite/Admin/adminLoginDesktop.dart';
-import 'package:smart_governing_portal/Responsive/DesktopSite/login_desktop.dart';
-import 'package:smart_governing_portal/Responsive/DesktopSite/RegisterDesktop.dart';
-import 'package:smart_governing_portal/Responsive/DesktopSite/SmartDL_applying_form.dart';
-import 'package:smart_governing_portal/Responsive/DesktopSite/SmartNIC_applyingForm.dart';
+import 'package:smart_governing_portal/Responsive/DesktopSite/User/SmartDL_applying_form.dart';
+import 'package:smart_governing_portal/Responsive/DesktopSite/User/SmartNIC_applyingForm.dart';
+import 'package:smart_governing_portal/Responsive/DesktopSite/User/dl_template.dart';
+import 'package:smart_governing_portal/Responsive/DesktopSite/User/nic_template.dart';
 import 'package:url_launcher/url_launcher.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
-class HomePage extends StatefulWidget {
-  const HomePage({Key? key}) : super(key: key);
+class AfterRegistrationPage extends StatefulWidget {
+  const AfterRegistrationPage({super.key});
 
   @override
-  State<HomePage> createState() => _HomePageState();
+  State<AfterRegistrationPage> createState() => _AfterRegistrationPageState();
 }
 
-class _HomePageState extends State<HomePage> {
+class _AfterRegistrationPageState extends State<AfterRegistrationPage> {
   int hoveredIndex = -1;
-  bool _isLoggedIn = false;
-
-  @override
-  void initState() {
-    super.initState();
-    _checkLogingStatus();
-  }
-
   @override
   Widget build(BuildContext context) {
     double w = MediaQuery.of(context).size.width;
+    User? user = FirebaseAuth.instance.currentUser;
+    String userName = user?.displayName ?? 'User';
     return Scaffold(
-      body: ListView(
-        children: [
-          //navbar
-          AppBar(
-            automaticallyImplyLeading: false,
-            toolbarHeight: 120,
-            leadingWidth: 180,
-            leading: SizedBox(
-              width: 150,
-              child: Image.asset(
-                'lib/Assets/logo.png',
-                fit: BoxFit.cover,
-              ),
+      appBar: AppBar(
+        automaticallyImplyLeading: false,
+        toolbarHeight: 120,
+        leadingWidth: 180,
+        leading: SizedBox(
+          width: 150,
+          child: FittedBox(
+            child: Image.asset(
+              'lib/Assets/logo.png',
+              fit: BoxFit.cover,
             ),
-            actions: [
-              FittedBox(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.end,
+          ),
+        ),
+        actions: [
+          FittedBox(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.end,
+              children: [
+                const SizedBox(
+                  height: 15,
+                ),
+                Row(
                   children: [
-                    const SizedBox(
-                      height: 15,
-                    ),
-                    Row(
-                      children: [
-                        TextButton(
-                            onPressed: () {
-                              
-                             /* Navigator.push(
-                                context,
-                                MaterialPageRoute<void>(
-                                  builder: (BuildContext context) =>
-                                       ,
-                                ),
-                              );*/
-                            
-                            },
-                            child: const Text(
-                              'Home',
-                              style: TextStyle(
-                                color: Colors.black,
-                              ),
-                            )),
-                        const SizedBox(
-                          width: 20,
-                        ),
-                        TextButton(
-                            onPressed: () {},
-                            child: const Text(
-                              'Services',
-                              style: TextStyle(
-                                color: Colors.black,
-                              ),
-                            )),
-                        const SizedBox(
-                          width: 20,
-                        ),
-                        TextButton(
-                          onPressed: () {},
-                          child: const Text(
-                            'About Us',
-                            style: TextStyle(
-                              color: Colors.black,
-                            ),
-                          ),
-                        ),
-                        const SizedBox(
-                          width: 20,
-                        ),
-                        TextButton(
-                            onPressed: () {
+                    TextButton(
+                        onPressed: () {
+                          /*
                               Navigator.push(
                                 context,
                                 MaterialPageRoute<void>(
                                   builder: (BuildContext context) =>
-                                      const AdminLoginDesktop(),
+                                       FileUploadPage(),
                                 ),
                               );
-                            },
-                            child: const Text(
-                              'Admin',
-                              style: TextStyle(
-                                color: Colors.black,
-                              ),
-                            )),
-                        const SizedBox(
-                          width: 20,
+                            */
+                        },
+                        child: const Text(
+                          'Home',
+                          style: TextStyle(
+                            color: Colors.black,
+                          ),
+                        )),
+                    const SizedBox(
+                      width: 20,
+                    ),
+                    TextButton(
+                        onPressed: () {},
+                        child: const Text(
+                          'Services',
+                          style: TextStyle(
+                            color: Colors.black,
+                          ),
+                        )),
+                    const SizedBox(
+                      width: 20,
+                    ),
+                    TextButton(
+                      onPressed: () {},
+                      child: const Text(
+                        'About Us',
+                        style: TextStyle(
+                          color: Colors.black,
                         ),
-                      ],
+                      ),
                     ),
                     const SizedBox(
-                      height: 10,
+                      width: 20,
                     ),
-                    Row(
-                      children: [
-                        ElevatedButton(
-                          onPressed: () {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute<void>(
-                                builder: (BuildContext context) =>
-                                    const LoginDesktop(),
-                              ),
-                            );
-                          },
-                          style: const ButtonStyle(
-                              backgroundColor: MaterialStatePropertyAll(
-                                  Color.fromARGB(255, 255, 255, 255))),
-                          child: const Text(
-                            'Login',
-                            style: TextStyle(
-                                color: Color.fromARGB(255, 10, 4, 70)),
+                    TextButton(
+                        onPressed: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute<void>(
+                              builder: (BuildContext context) =>
+                                  const AdminLoginDesktop(),
+                            ),
+                          );
+                        },
+                        child: const Text(
+                          'Admin',
+                          style: TextStyle(
+                            color: Colors.black,
                           ),
-                        ),
-                        const SizedBox(
-                          width: 15,
-                        ),
-                        ElevatedButton(
-                          onPressed: () {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute<void>(
-                                builder: (BuildContext context) =>
-                                    const RegistorDesktop(),
-                              ),
-                            );
-                          },
-                          style: const ButtonStyle(
-                              backgroundColor: MaterialStatePropertyAll(
-                                  Color.fromARGB(255, 10, 4, 70))),
-                          child: const Text(
-                            'Register',
-                            style: TextStyle(
-                                color: Color.fromARGB(255, 255, 255, 255)),
-                          ),
-                        ),
-                        const SizedBox(
-                          width: 15,
-                        ),
-                      ],
-                    )
+                        )),
+                    const SizedBox(
+                      width: 20,
+                    ),
                   ],
                 ),
-              )
-            ],
-            backgroundColor: const Color.fromARGB(255, 115, 185, 250),
-          ),
-
-          //first section on the web
-          SizedBox(
-            child: Row(
-              children: [
-                SizedBox(
-                  width: w * 0.5,
-                  child: const Align(
-                    alignment: Alignment.center,
-                    child: Padding(
-                      padding: EdgeInsets.only(left: 20, right: 20, top: 100),
-                      child: FittedBox(
-                        child: Text(
-                          "WELCOME TO \nLET'S GOV",
-                          style: TextStyle(
-                            fontFamily: 'Mitr',
-                            fontWeight: FontWeight.w800,
-                            fontSize: 80,
-                            color: Color.fromARGB(255, 10, 4, 70),
+                const SizedBox(
+                  height: 10,
+                ),
+                /*Row(
+                  children: [
+                    ElevatedButton(
+                      onPressed: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute<void>(
+                            builder: (BuildContext context) =>
+                                const LoginDesktop(),
                           ),
+                        );
+                      },
+                      style: const ButtonStyle(
+                          backgroundColor: MaterialStatePropertyAll(
+                              Color.fromARGB(255, 255, 255, 255))),
+                      child: const Text(
+                        'Login',
+                        style: TextStyle(color: Color.fromARGB(255, 10, 4, 70)),
+                      ),
+                    ),
+                    const SizedBox(
+                      width: 15,
+                    ),
+                    ElevatedButton(
+                      onPressed: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute<void>(
+                            builder: (BuildContext context) =>
+                                const RegistorDesktop(),
+                          ),
+                        );
+                      },
+                      style: const ButtonStyle(
+                          backgroundColor: MaterialStatePropertyAll(
+                              Color.fromARGB(255, 10, 4, 70))),
+                      child: const Text(
+                        'Register',
+                        style: TextStyle(
+                            color: Color.fromARGB(255, 255, 255, 255)),
+                      ),
+                    ),
+                    const SizedBox(
+                      width: 15,
+                    ),
+                  ],
+                )*/
+              ],
+            ),
+          )
+        ],
+        backgroundColor: const Color.fromARGB(255, 115, 185, 250),
+      ),
+      body: ListView(
+        children: [
+          //Our Services & chat bot
+          Column(
+            children: [
+              const SizedBox(height: 25),
+              Text(
+                'Hello, Welocom Back! $userName',
+                style: const TextStyle(
+                  color: Color.fromARGB(255, 10, 4, 70),
+                  fontFamily: 'Inter',
+                  fontSize: 32,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+              const Text(
+                'The Best Service for the Citizens',
+                style: TextStyle(
+                  color: Color.fromARGB(255, 10, 4, 70),
+                  fontFamily: 'Inter',
+                  fontSize: 24,
+                ),
+              ),
+              const SizedBox(height: 25),
+              Row(
+                children: [
+                  Container(
+                    width: w / 2,
+                    child: SizedBox(
+                      child: Padding(
+                        padding:
+                            const EdgeInsets.only(left: 20, right: 20, top: 20),
+                        child: Column(
+                          children: [
+                            LayoutBuilder(
+                              builder: (context, constraints) {
+                                return Wrap(
+                                  spacing: 300.0,
+                                  runSpacing: 60.0,
+                                  children: _OURserviceTiles(300),
+                                );
+                              },
+                            ),
+                            const SizedBox(height: 60),
+                          ],
                         ),
                       ),
                     ),
                   ),
-                ),
-                Column(
-                  children: [
-                    SizedBox(
-                      width: w*0.5,
-                      child: Padding(
-                        padding: const EdgeInsets.only(right: 40,left: 40,top: 40,bottom: 20),
-                        child: Container(
-                          decoration: BoxDecoration(
-                            color: Colors.white,
-                            borderRadius: BorderRadius.circular(12),
-                            border: Border.all(
-                              color: const Color.fromARGB(255, 187, 191, 190),
-                              width: 1,
-                            ),
-                            boxShadow: const [
-                              BoxShadow(
-                                color: Color.fromARGB(255, 187, 191, 190,),
-                                spreadRadius: 1,
-                                blurRadius: 5,
-                                offset: Offset(0, 5),
-                              ),
-                            ],
-                          ),
-                          child: Image.asset(
-                            'lib/Assets/homepagepic.png',
-                            fit: BoxFit.scaleDown,
-                          ),
-                        ),
-                      ),
-                    ),
-                    const SizedBox(
-                      height: 20,
-                    ),
-                    Container(
-                      alignment: Alignment.center,
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(12),
-                        border: Border.all(
-                          color: const Color.fromARGB(255, 187, 191, 190),
-                          width: 1,
-                        ),
-                        boxShadow: const [
-                          BoxShadow(
-                            color: Color.fromARGB(255, 187, 191, 190,),
-                            spreadRadius: 1,
-                            blurRadius: 5,
-                            offset: Offset(0, 5),
-                          ),
-                        ],
-                      ),
-                      child: const Text(
-                        'Chatbot',
-                        textAlign: TextAlign.center,
-                        style: TextStyle(
-                          fontFamily: 'Inter',
-                          fontSize: 20,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                    ),
-                  ],
-                ), // chatbot here
-              ],
-            ),
+                  Container(),
+                ],
+              ),
+            ],
           ),
-          
-          const SizedBox(height: 180),
 
-          //second section on the web(GOV Services)
+          //GOV Services
           SizedBox(
             child: Padding(
               padding: const EdgeInsets.only(left: 120, right: 120, top: 20),
@@ -302,58 +255,6 @@ class _HomePageState extends State<HomePage> {
                         spacing: 60.0,
                         runSpacing: 40.0,
                         children: _GOVserviceTiles(tileSize),
-                      );
-                    },
-                  ),
-                  const SizedBox(height: 60),
-                ],
-              ),
-            ),
-          ),
-
-          //third section of the web(Our Services)
-          SizedBox(
-            child: Padding(
-              padding: const EdgeInsets.only(left: 120, right: 120, top: 100),
-              child: Column(
-                children: [
-                  FittedBox(
-                    child: Row(
-                      children: [
-                        Image.asset('lib/Assets/serve.png'),
-                        const SizedBox(width: 20),
-                        const Text(
-                          'Explore What We Serve You',
-                          style: TextStyle(
-                            color: Color.fromARGB(255, 10, 4, 70),
-                            fontFamily: 'Inter',
-                            fontSize: 32,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                  const Padding(
-                    padding: EdgeInsets.all(40.0),
-                    child: Text(
-                      'Explore What We Serve YouLorem ipsum dolor sit amet, in vim nihil maiorum, vim et postea philosophia mediocritatem. Eu sit postea adolescens intellegam. Pri modus pericula ut, an vidisse aperiam nec, sed ea. animal inciderint. Etiam ceteros repudiandae ex usu, nec diam decore cu. Sea an libris.Lorem ipsum dolor sit amet',
-                      textAlign: TextAlign.justify,
-                      style: TextStyle(
-                        color: Colors.black,
-                        fontSize: 20,
-                      ),
-                    ),
-                  ),
-                  LayoutBuilder(
-                    builder: (context, constraints) {
-                      final tileSize = constraints.maxWidth /
-                          _calculateCrossAxisCountOURservices(context);
-
-                      return Wrap(
-                        spacing: 300.0,
-                        runSpacing: 60.0,
-                        children: _OURserviceTiles(tileSize),
                       );
                     },
                   ),
@@ -559,7 +460,6 @@ class _HomePageState extends State<HomePage> {
   }
 
   // functions for the government services
-
   List<Widget> _GOVserviceTiles(double tileSize) {
     return [
       _GOVserviceTile(' AGRICULTURE, LIVESTOCK & FISHERIES',
@@ -719,28 +619,16 @@ class _HomePageState extends State<HomePage> {
           tileSize: tileSize,
           index: 0,
           imagePath: 'lib/Assets/ID.png',
-          pageName: const NICApplicationForm()),
+          pageName2: const NICApplicationForm(),
+          pageName1: const NICTemplate()),
       _OURserviceTile(' Smart Driving License Verification System',
           width: 360,
           height: 180,
           tileSize: tileSize,
           index: 1,
           imagePath: 'lib/Assets/DL.png',
-          pageName: const DLApplicationForm()),
-      _OURserviceTile(' Inquiry Tracking System',
-          width: 360,
-          height: 180,
-          tileSize: tileSize,
-          index: 2,
-          imagePath: 'lib/Assets/Inquiry.png',
-          pageName: null),
-      _OURserviceTile(' Smart Passport Verification System',
-          width: 360,
-          height: 180,
-          tileSize: tileSize,
-          index: 3,
-          imagePath: 'lib/Assets/Passport.png',
-          pageName: null),
+          pageName2: const DLApplicationForm(),
+          pageName1: const DLTemplate()),
     ];
   }
 
@@ -750,26 +638,31 @@ class _HomePageState extends State<HomePage> {
       required double height,
       required double tileSize,
       required int index,
-      required pageName,
+      required pageName1,
+      required pageName2,
       required imagePath}) {
     return SizedBox(
       width: tileSize,
       height: tileSize * (height / width),
       child: InkWell(
-        onTap: () {
-          if (_isLoggedIn) {
+        onTap: () async {
+          final userUid = FirebaseAuth.instance.currentUser?.uid ?? '';
+          final docSnapshot = await FirebaseFirestore.instance
+              .collection('NICtest')
+              .doc(userUid)
+              .get();
+
+          if (docSnapshot.exists) {
+            // Navigate to the NIC template page
             Navigator.push(
               context,
-              MaterialPageRoute<void>(
-                builder: (BuildContext context) => pageName,
-              ),
+              MaterialPageRoute(builder: (context) => pageName1),
             );
           } else {
+            // Navigate to the NIC application form page
             Navigator.push(
               context,
-              MaterialPageRoute<void>(
-                builder: (BuildContext context) => const LoginDesktop(),
-              ),
+              MaterialPageRoute(builder: (context) => pageName2),
             );
           }
         },
@@ -820,20 +713,45 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
-  Future<void> _checkLogingStatus() async{
-    final prefs = await SharedPreferences.getInstance();
-    final isLoggedIn = prefs.getBool('isLoggedIn') ?? false;
-    setState(() {
-      _isLoggedIn = isLoggedIn;
-    });
-  }
+  //Check if thre user has formdata already
+  /*void navigateBasedOnUserData() async {
+  final userUid = FirebaseAuth.instance.currentUser?.uid ?? '';
+  final docSnapshot = await FirebaseFirestore.instance.collection('YourCollectionName').doc(userUid).get();
 
-  int _calculateCrossAxisCountOURservices(BuildContext context) {
-    double screenWidth = MediaQuery.of(context).size.width;
-    double tileWidth = 360.0;
-    int crossAxisCount = (screenWidth / tileWidth).floor();
-    return crossAxisCount;
+  if (docSnapshot.exists) {
+    // Navigate to the NIC template page
+    Navigator.push(
+      context,
+      MaterialPageRoute(builder: (context) => NicTemplatePage()),
+    );
+  } else {
+    // Navigate to the NIC application form page
+    Navigator.push(
+      context,
+      MaterialPageRoute(builder: (context) => NicApplicationFormPage()),
+    );
   }
+  }*/
+  /*Future<bool> checkFormData() async {
+    try {
+      // Get the current user
+      User? currentUser = FirebaseAuth.instance.currentUser;
+
+      if (currentUser != null) {
+        // Check if a document exists with the user's UID as the document ID
+        DocumentSnapshot<Map<String, dynamic>> snapshot =
+            await FirebaseFirestore.instance.collection('NICPT').doc(currentUser.uid).get();
+
+        // Return true if the document exists, false otherwise
+        return snapshot.exists;
+      } else {
+        return false;
+      }
+    } catch (e) {
+      print('Error checking form data: $e');
+      return false;
+    }
+  }*/
 }
 
 //url launcher

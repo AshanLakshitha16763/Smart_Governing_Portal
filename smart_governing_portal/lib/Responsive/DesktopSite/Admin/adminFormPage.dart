@@ -4,8 +4,8 @@ import 'dart:io';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:smart_governing_portal/Responsive/DesktopSite/admin_dashboard_page.dart';
-import 'package:smart_governing_portal/Responsive/DesktopSite/home_page.dart';
+import 'package:smart_governing_portal/Responsive/DesktopSite/Admin/adminDashboardPage.dart';
+import 'package:smart_governing_portal/Responsive/DesktopSite/User/home_page.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class AdminHomePage extends StatefulWidget {
