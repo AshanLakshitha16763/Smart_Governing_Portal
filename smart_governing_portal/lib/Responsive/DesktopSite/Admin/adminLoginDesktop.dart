@@ -1,38 +1,72 @@
+// ignore_for_file: file_names, library_private_types_in_public_api
+
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:smart_governing_portal/Responsive/DesktopSite/Admin/adminFormPage.dart';
-import 'package:smart_governing_portal/Responsive/DesktopSite/RegisterDesktop.dart';
-import 'package:smart_governing_portal/Responsive/DesktopSite/after_Registration_Page.dart';
-import 'package:smart_governing_portal/Responsive/DesktopSite/home_page.dart';
+import 'package:smart_governing_portal/Responsive/DesktopSite/Admin/adminDashboardPage.dart';
+import 'package:smart_governing_portal/Responsive/DesktopSite/Admin/admin_register_desktop.dart';
+import 'package:smart_governing_portal/Responsive/DesktopSite/User/after_registration_page.dart';
+import 'package:smart_governing_portal/Responsive/DesktopSite/User/home_page.dart';
 import 'package:smart_governing_portal/auth.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
-
-class LoginDesktop extends StatefulWidget {
-  const LoginDesktop({super.key});
+class AdminLoginDesktop extends StatefulWidget {
+  const AdminLoginDesktop({super.key});
 
   @override
-  _LoginDesktopState createState() => _LoginDesktopState();
+  _AdminLoginDesktopState createState() => _AdminLoginDesktopState();
 }
 
-class _LoginDesktopState extends State<LoginDesktop> {
+class _AdminLoginDesktopState extends State<AdminLoginDesktop> {
+  final db = FirebaseFirestore.instance;
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+  final TextEditingController _nameController = TextEditingController();
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
   String? errorMessage = '';
 
   Future signInWithEmailAndPassword(BuildContext context) async {
+    // Get the currently signed-in user
+    User? user = FirebaseAuth.instance.currentUser;
+
+    // Update the user's display name
+    await user?.updateDisplayName(_nameController.text);
+
     try {
       await Auth().signInWithEmailAndPassword(
           email: _emailController.text, password: _passwordController.text);
 
       // ignore: use_build_context_synchronously
-      Navigator.pushReplacement(
-          context, MaterialPageRoute(builder: (context) => const AfterRegistrationPage()));
+      Navigator.pushReplacement(context,
+          MaterialPageRoute(builder: (context) => const AdminDashboardPage()));
     } on FirebaseAuthException catch (e) {
       setState(() {
         errorMessage = e.message;
       });
     }
+    _adminRights();
+  }
+
+  Future<void> _adminRights() async {
+    User? currentUser = FirebaseAuth.instance.currentUser;
+
+    // Check if the document already exists
+    final existingDoc =
+        await db.collection("AdminRights").doc(currentUser!.uid).get();
+
+    if (existingDoc.exists) {
+      // If the document exists, update the "Admin" field to "true"
+      await db.collection("AdminRights").doc(currentUser.uid).update({
+        "Admin": "true",
+      });
+    } else {
+      // If the document doesn't exist, create a new document and set "Admin" to "true"
+      final adminUser = <String, dynamic>{
+        "Admin": "true",
+      };
+      await db.collection("AdminRights").doc(currentUser.uid).set(adminUser);
+    }
+
+    return;
   }
 
   Widget _errorMessage() {
@@ -47,175 +81,175 @@ class _LoginDesktopState extends State<LoginDesktop> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Column(
-        children: [
-          // navigation bar
-          AppBar(
-            automaticallyImplyLeading: false,
-            toolbarHeight: 120,
-            leadingWidth: 180,
-            leading: SizedBox(
-              width: 150,
-              child: Image.asset(
-                'lib/Assets/logo.png',
-                fit: BoxFit.cover,
+      body: Center(
+        child: Column(
+          children: [
+            // navigation bar
+            AppBar(
+              automaticallyImplyLeading: false,
+              toolbarHeight: 120,
+              leadingWidth: 180,
+              leading: SizedBox(
+                width: 150,
+                child: Image.asset(
+                  'lib/Assets/logo.png',
+                  fit: BoxFit.cover,
+                ),
               ),
-            ),
-            actions: [
-              FittedBox(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.end,
-                  children: [
-                    const SizedBox(
-                      height: 15,
-                    ),
-                    Row(
-                      children: [
-                        TextButton(
-                            onPressed: () {
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute<void>(
-                                  builder: (BuildContext context) =>
-                                      const HomePage(),
+              actions: [
+                FittedBox(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.end,
+                    children: [
+                      const SizedBox(
+                        height: 15,
+                      ),
+                      Row(
+                        children: [
+                          TextButton(
+                              onPressed: () {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute<void>(
+                                    builder: (BuildContext context) =>
+                                        const HomePage(),
+                                  ),
+                                );
+                              },
+                              child: const Text(
+                                'Home',
+                                style: TextStyle(
+                                  color: Colors.black,
                                 ),
-                              );
-                            },
-                            child: const Text(
-                              'Home',
-                              style: TextStyle(
-                                color: Colors.black,
-                              ),
-                            )),
-                        const SizedBox(
-                          width: 20,
-                        ),
-                        TextButton(
+                              )),
+                          const SizedBox(
+                            width: 20,
+                          ),
+                          TextButton(
+                              onPressed: () {},
+                              child: const Text(
+                                'Services',
+                                style: TextStyle(
+                                  color: Colors.black,
+                                ),
+                              )),
+                          const SizedBox(
+                            width: 20,
+                          ),
+                          TextButton(
                             onPressed: () {},
                             child: const Text(
-                              'Services',
+                              'About Us',
                               style: TextStyle(
                                 color: Colors.black,
                               ),
-                            )),
-                        const SizedBox(
-                          width: 20,
-                        ),
-                        TextButton(
-                          onPressed: () {},
-                          child: const Text(
-                            'About Us',
-                            style: TextStyle(
-                              color: Colors.black,
                             ),
                           ),
-                        ),
-                        const SizedBox(
-                          width: 20,
-                        ),
-                        TextButton(
+                          const SizedBox(
+                            width: 20,
+                          ),
+                          TextButton(
+                              onPressed: () {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute<void>(
+                                    builder: (BuildContext context) =>
+                                        const AfterRegistrationPage(),
+                                  ),
+                                );
+                              },
+                              child: const Text(
+                                'User',
+                                style: TextStyle(
+                                  color: Colors.black,
+                                ),
+                              )),
+                          const SizedBox(
+                            width: 20,
+                          ),
+                        ],
+                      ),
+                      const SizedBox(
+                        height: 20,
+                      ),
+                      Row(
+                        children: [
+                          ElevatedButton(
                             onPressed: () {
                               Navigator.push(
                                 context,
                                 MaterialPageRoute<void>(
                                   builder: (BuildContext context) =>
-                                      const AdminHomePage(),
+                                      const AdminLoginDesktop(),
                                 ),
                               );
                             },
+                            style: const ButtonStyle(
+                                backgroundColor: MaterialStatePropertyAll(
+                                    Color.fromARGB(255, 255, 255, 255))),
                             child: const Text(
-                              'Admin',
+                              'Login',
                               style: TextStyle(
-                                color: Colors.black,
-                              ),
-                            )),
-                        const SizedBox(
-                          width: 20,
-                        ),
-                      ],
-                    ),
-                    const SizedBox(
-                      height: 20,
-                    ),
-                    Row(
-                      children: [
-                        ElevatedButton(
-                          onPressed: () {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute<void>(
-                                builder: (BuildContext context) =>
-                                    const LoginDesktop(),
-                              ),
-                            );
-                          },
-                          style: const ButtonStyle(
-                              backgroundColor: MaterialStatePropertyAll(
-                                  Color.fromARGB(255, 255, 255, 255))),
-                          child: const Text(
-                            'Login',
-                            style: TextStyle(
-                                color: Color.fromARGB(255, 10, 4, 70)),
+                                  color: Color.fromARGB(255, 10, 4, 70)),
+                            ),
                           ),
-                        ),
-                        const SizedBox(
-                          width: 15,
-                        ),
-                        ElevatedButton(
-                          onPressed: () {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute<void>(
-                                builder: (BuildContext context) =>
-                                    const RegistorDesktop(),
-                              ),
-                            );
-                          },
-                          style: const ButtonStyle(
-                              backgroundColor: MaterialStatePropertyAll(
-                                  Color.fromARGB(255, 10, 4, 70))),
-                          child: const Text(
-                            'Register',
-                            style: TextStyle(
-                                color: Color.fromARGB(255, 255, 255, 255)),
+                          const SizedBox(
+                            width: 15,
                           ),
-                        ),
-                        const SizedBox(
-                          width: 15,
-                        ),
-                      ],
-                    )
-                  ],
-                ),
-              ),
-            ],
-            backgroundColor: const Color.fromARGB(255, 115, 185, 250),
-          ),
-
-          const SizedBox(
-            height: 20,
-          ),
-
-          Expanded(
-            child: Center(
-              child: Container(
-                decoration: BoxDecoration(
-                  border: Border.all(
-                    color: const Color.fromARGB(
-                        255, 243, 236, 236), // Border color
-                    width: 3.0, // Border width
+                          ElevatedButton(
+                            onPressed: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute<void>(
+                                  builder: (BuildContext context) =>
+                                      const AdminRegisterDesktop(),
+                                ),
+                              );
+                            },
+                            style: const ButtonStyle(
+                                backgroundColor: MaterialStatePropertyAll(
+                                    Color.fromARGB(255, 10, 4, 70))),
+                            child: const Text(
+                              'Register',
+                              style: TextStyle(
+                                  color: Color.fromARGB(255, 255, 255, 255)),
+                            ),
+                          ),
+                          const SizedBox(
+                            width: 15,
+                          ),
+                        ],
+                      )
+                    ],
                   ),
-                  borderRadius: BorderRadius.circular(15), // Border radius
                 ),
-                width: MediaQuery.of(context).size.width - 100,
-                height: MediaQuery.of(context).size.height - 100,
-                child: Row(
-                  children: [
-                    Expanded(
-                      //LEFT ALL PROPERTIES
-                      flex: 1,
-                      child: SingleChildScrollView(
-                        child: Container(
+              ],
+              backgroundColor: const Color.fromARGB(255, 115, 185, 250),
+            ),
+
+            const SizedBox(
+              height: 20,
+            ),
+
+            Expanded(
+              child: Center(
+                child: Container(
+                  decoration: BoxDecoration(
+                    border: Border.all(
+                      color: const Color.fromARGB(
+                          255, 243, 236, 236), // Border color
+                      width: 3.0, // Border width
+                    ),
+                    borderRadius: BorderRadius.circular(15), // Border radius
+                  ),
+                  width: MediaQuery.of(context).size.width - 100,
+                  height: MediaQuery.of(context).size.height - 100,
+                  child: Row(
+                    children: [
+                      Expanded(
+                        //LEFT ALL PROPERTIES
+                        flex: 1,
+                        child: SingleChildScrollView(
                           child: Padding(
                             padding: const EdgeInsets.all(16.0),
                             child: Form(
@@ -254,6 +288,30 @@ class _LoginDesktopState extends State<LoginDesktop> {
                                   ),
                                   const SizedBox(height: 15),
                                   TextFormField(
+                                    //Username field
+                                    controller: _nameController,
+                                    validator: (value) {
+                                      if (value == null || value.isEmpty) {
+                                        return 'Please enter your Username';
+                                      }
+                                      return null;
+                                    },
+                                    decoration: InputDecoration(
+                                      labelText: 'Username',
+                                      hintText: 'Enter your Username',
+                                      prefixIcon: const Icon(Icons.person),
+                                      border: OutlineInputBorder(
+                                        borderRadius: BorderRadius.circular(10),
+                                      ),
+                                      focusedBorder: OutlineInputBorder(
+                                        borderSide: const BorderSide(
+                                            color: Colors.blue, width: 2.0),
+                                        borderRadius: BorderRadius.circular(10),
+                                      ),
+                                    ),
+                                  ),
+                                  const SizedBox(height: 15),
+                                  TextFormField(
                                     // email Textfield
                                     controller: _emailController,
                                     validator: (String? value) {
@@ -264,7 +322,6 @@ class _LoginDesktopState extends State<LoginDesktop> {
                                           .hasMatch(value)) {
                                         return 'Please enter a valid email address';
                                       }
-
                                       return null;
                                     },
                                     decoration: InputDecoration(
@@ -272,14 +329,12 @@ class _LoginDesktopState extends State<LoginDesktop> {
                                       hintText: 'Enter your email',
                                       prefixIcon: const Icon(Icons.email),
                                       border: OutlineInputBorder(
-                                        borderRadius:
-                                            BorderRadius.circular(10),
+                                        borderRadius: BorderRadius.circular(10),
                                       ),
                                       focusedBorder: OutlineInputBorder(
                                         borderSide: const BorderSide(
                                             color: Colors.blue, width: 2.0),
-                                        borderRadius:
-                                            BorderRadius.circular(10),
+                                        borderRadius: BorderRadius.circular(10),
                                       ),
                                     ),
                                   ),
@@ -305,17 +360,16 @@ class _LoginDesktopState extends State<LoginDesktop> {
                                       hintText: 'Enter your password',
                                       prefixIcon: const Icon(Icons.lock_open),
                                       border: OutlineInputBorder(
-                                        borderRadius:
-                                            BorderRadius.circular(10),
+                                        borderRadius: BorderRadius.circular(10),
                                       ),
                                       focusedBorder: OutlineInputBorder(
                                         borderSide: const BorderSide(
                                             color: Colors.blue, width: 2.0),
-                                        borderRadius:
-                                            BorderRadius.circular(10),
+                                        borderRadius: BorderRadius.circular(10),
                                       ),
                                     ),
                                   ),
+                                  const SizedBox(height: 6.0),
                                   Padding(
                                     padding: const EdgeInsets.all(10.0),
                                     child: _errorMessage(),
@@ -326,15 +380,13 @@ class _LoginDesktopState extends State<LoginDesktop> {
                                       padding:
                                           const EdgeInsetsDirectional.all(15),
                                       child: ElevatedButton(
-                                        onPressed:
-                                            () =>signInWithEmailAndPassword(context),
+                                        onPressed: () =>
+                                            signInWithEmailAndPassword(context),
                                         style: ElevatedButton.styleFrom(
-                                          foregroundColor:
-                                              const Color.fromARGB(
-                                                  255, 243, 242, 234),
-                                          backgroundColor:
-                                              const Color.fromARGB(
-                                                  255, 10, 4, 70),
+                                          foregroundColor: const Color.fromARGB(
+                                              255, 243, 242, 234),
+                                          backgroundColor: const Color.fromARGB(
+                                              255, 10, 4, 70),
                                           padding: const EdgeInsets.all(20),
                                           fixedSize: const Size(800, 50),
                                           textStyle: const TextStyle(
@@ -361,10 +413,10 @@ class _LoginDesktopState extends State<LoginDesktop> {
                                   ),
                                   const SizedBox(height: 1.0),
                                   TextButton(
-                                    onPressed: () => Navigator.of(context)
-                                        .push(MaterialPageRoute(
+                                    onPressed: () => Navigator.of(context).push(
+                                        MaterialPageRoute(
                                             builder: (context) =>
-                                                const RegistorDesktop())),
+                                                const AdminRegisterDesktop())),
                                     child: const Text(
                                       'Don\'t have an account? Sign Up',
                                       style: TextStyle(
@@ -467,27 +519,27 @@ class _LoginDesktopState extends State<LoginDesktop> {
                           ),
                         ),
                       ),
-                    ),
-                    Expanded(
-                      // RIGHT SIDE IMAGE
-                      flex: 1,
-                      child: Image.asset(
-                        'lib/Assets/Login.png',
-                        width: MediaQuery.of(context).size.width - 50,
-                        height: MediaQuery.of(context).size.height - 50,
-                        fit: BoxFit.contain,
+                      Expanded(
+                        // RIGHT SIDE IMAGE
+                        flex: 1,
+                        child: Image.asset(
+                          'lib/Assets/RegisterPages/adminLogin.jpg',
+                          width: MediaQuery.of(context).size.width - 50,
+                          height: MediaQuery.of(context).size.height - 50,
+                          fit: BoxFit.contain,
+                        ),
                       ),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
               ),
             ),
-          ),
 
-          const SizedBox(
-            height: 20,
-          ),
-        ],
+            const SizedBox(
+              height: 20,
+            ),
+          ],
+        ),
       ),
     );
   }

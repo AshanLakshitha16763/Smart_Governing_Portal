@@ -1,43 +1,76 @@
-// ignore_for_file: deprecated_member_use, file_names, non_constant_identifier_names
+// ignore_for_file: non_constant_identifier_names, file_names
 
-/*import 'dart:io';
-import 'package:firebase_core/firebase_core.dart';
-import 'package:flutter/foundation.dart';
-import 'package:image_picker/image_picker.dart';*/
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:intl/intl.dart';
 import 'package:flutter/material.dart';
 import 'package:smart_governing_portal/Responsive/DesktopSite/Admin/adminFormPage.dart';
-import 'package:smart_governing_portal/Responsive/DesktopSite/dl_template.dart';
-import 'package:smart_governing_portal/Responsive/DesktopSite/home_page.dart';
+import 'package:smart_governing_portal/Responsive/DesktopSite/User/home_page.dart';
+import 'package:smart_governing_portal/Responsive/DesktopSite/User/nic_template.dart';
 import 'package:url_launcher/url_launcher.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+// ignore: unused_import
+import 'package:firebase_storage/firebase_storage.dart';
+// ignore: unused_import
+import 'package:path/path.dart';
 
-class DLApplicationForm extends StatefulWidget {
-  const DLApplicationForm({super.key});
+class NICApplicationForm extends StatefulWidget {
+  const NICApplicationForm({super.key});
 
   @override
-  State<DLApplicationForm> createState() => _DLApplicationFormState();
+  State<NICApplicationForm> createState() => _NICApplicationFormState();
 }
 
-class _DLApplicationFormState extends State<DLApplicationForm> {
+class _NICApplicationFormState extends State<NICApplicationForm> {
   final db = FirebaseFirestore.instance;
-  final DLapplicationformKey = GlobalKey<FormState>();
+  final NICapplicationformKey = GlobalKey<FormState>();
   TextEditingController fullNameController = TextEditingController();
   TextEditingController otherNamesController = TextEditingController();
   TextEditingController nicController = TextEditingController();
+  TextEditingController birthPlaceController = TextEditingController();
+  TextEditingController mobileController = TextEditingController();
   TextEditingController addressController = TextEditingController();
-  TextEditingController licenseNoController = TextEditingController();
+  TextEditingController professionController = TextEditingController();
   TextEditingController areaCodeController = TextEditingController();
+  TextEditingController docNoController = TextEditingController();
   final TextEditingController dobController = TextEditingController();
   final TextEditingController issuedDateController = TextEditingController();
-  TextEditingController expiryDateController = TextEditingController();
-  TextEditingController bloodGroupController = TextEditingController();
-  TextEditingController genderController = TextEditingController();
   TextEditingController provinceController = TextEditingController();
   TextEditingController districtController = TextEditingController();
+  TextEditingController genderController = TextEditingController();
   //File? _pickedImage;
   //Uint8List webImage = Uint8List(8);
+  // Get the image URL from the picked image
+
+  /*
+  //choose image function
+  Future<void> pickImage() async {
+    if (!kIsWeb) {
+      final ImagePicker picker = ImagePicker();
+      XFile? image = await picker.pickImage(source: ImageSource.gallery);
+      if (image != null) {
+        var selected = File(image.path);
+        setState(() {
+          _pickedImage = selected;
+        });
+      } else {
+        const SnackBar(content: Text('An image hasn\'t been picked'));
+      }
+    } else if (kIsWeb) {
+      final ImagePicker picker = ImagePicker();
+      XFile? image = await picker.pickImage(source: ImageSource.gallery);
+      if (image != null) {
+        var f = await image.readAsBytes();
+        setState(() {
+          webImage = f;
+          _pickedImage = File('a');
+        });
+      } else {
+        const SnackBar(content: Text('An image hasn\'t been picked'));
+      }
+    } else {
+      const SnackBar(content: Text('Something went wrong'));
+    }
+  }*/
 
   // Function to show the date picker for Date of Birth
   Future<void> selectDateOfBirth(BuildContext context) async {
@@ -73,28 +106,9 @@ class _DLApplicationFormState extends State<DLApplicationForm> {
     }
   }
 
-  Future<void> selectExpiryDate(BuildContext context) async {
-    final DateTime? picked = await showDatePicker(
-      context: context,
-      initialDate: DateTime.now(), // You can set the initial date here.
-      firstDate: DateTime(2000), // Set the minimum date for the picker.
-      lastDate: DateTime(2030), // Set the maximum date for the picker.
-    );
-
-    if (picked != null && picked != DateTime.now()) {
-      final String formattedDate = DateFormat('dd-MM-yyyy').format(picked);
-      setState(() {
-        expiryDateController.text = formattedDate;
-      });
-    }
-  }
-
   String _province = '-Choose your Province-';
   String _district = '-Choose your District-';
   String _gender = '-Choose your Gender-';
-  String _bloodGroup = '-Choose your Blood Group-';
-
-  final List<String> _genderList = ['-Choose your Gender-', 'Male', 'Female'];
 
   final List<String> _provinceList = [
     '-Choose your Province-',
@@ -108,7 +122,6 @@ class _DLApplicationFormState extends State<DLApplicationForm> {
     'NORTH CENTRAL',
     'NORTHERN'
   ];
-
   List<String> _districtList = [
     '-Choose your District-',
     'Galle',
@@ -137,52 +150,54 @@ class _DLApplicationFormState extends State<DLApplicationForm> {
     'Vavuniya',
     'Mannar',
   ];
-
-  final List<String> _bloodGroupList = [
-    '-Choose your Blood Group-',
-    'A+',
-    'A-',
-    'B+',
-    'B-',
-    'O+',
-    'O-',
-    'AB+',
-    'AB-'
-  ];
+  final List<String> _genderList = ['-Choose your Gender-', 'Male', 'Female'];
 
   //form submission method
-  void _submitForm() async {
-    if (DLapplicationformKey.currentState!.validate()) {
-      //get the current user's UID
-      User? curerrentUser = FirebaseAuth.instance.currentUser;
+  void _submitForm(BuildContext context) async {
+    if (NICapplicationformKey.currentState!.validate()) {
+      //get the current user
+      User? currentUser = FirebaseAuth.instance.currentUser;
+      // All fields are valid, proceed with form submission
 
+      /*Reference storageReference = FirebaseStorage.instance
+        .ref()
+        .child('profile_images')
+        .child(basename(_pickedImage!.path));
+    UploadTask uploadTask = storageReference.putFile(_pickedImage!);
+    TaskSnapshot taskSnapshot = await uploadTask.whenComplete(() => null);
+  
+    // Get the download URL of the uploaded image
+    String imageUrl = await taskSnapshot.ref.getDownloadURL();*/
+
+      // Create a new user
       final user = <String, dynamic>{
         "Full Name": fullNameController.text,
         "Other Names": otherNamesController.text,
-        "NIC": nicController.text,
-        "Address": addressController.text,
-        "License No": licenseNoController.text,
-        "Area Code": areaCodeController.text,
+        "NIC No": nicController.text,
         "Date of Birth": dobController.text,
-        "Issued Date": issuedDateController.text,
-        "Expiry Date": expiryDateController.text,
-        "Blood Group": bloodGroupController.text,
+        "Birth Place": birthPlaceController.text,
         "Gender": genderController.text,
+        "Profession": professionController.text,
+        "Address": addressController.text,
         "Province": provinceController.text,
         "District": districtController.text,
+        "Area Code": areaCodeController.text,
+        "Issued Date": issuedDateController.text,
+        "Doc No": docNoController.text,
+        "Time":DateTime.now()
+        //"Profile Image": _pickedImage,
       };
 
-      // Add a new document with user's UID
-      await db.collection("DLtest").doc(curerrentUser!.uid).set(user);
+      // Add a new document with users UID
+      await db.collection("NICtest").doc(currentUser!.uid).set(user);
 
-      // All fields are valid, proceed with form submission
       // Clear the form after successful submission (if needed)
-      DLapplicationformKey.currentState!.reset();
-
+      NICapplicationformKey.currentState!.reset();
+      
       Navigator.push(
         context,
         MaterialPageRoute<void>(
-          builder: (BuildContext context) => const DLTemplate(),
+          builder: (BuildContext context) => const NICTemplate(),
         ),
       );
 
@@ -204,37 +219,6 @@ class _DLApplicationFormState extends State<DLApplicationForm> {
     }
   }
 
-/*
-  //choose image function
-  Future<void> _pickImage() async {
-    if (!kIsWeb) {
-      final ImagePicker picker = ImagePicker();
-      XFile? image = await picker.pickImage(source: ImageSource.gallery);
-      if (image != null) {
-        var selected = File(image.path);
-        setState(() {
-          _pickedImage = selected;
-        });
-      } else {
-        const SnackBar(content: Text('An image hasn\'t been picked'));
-      }
-    } else if (kIsWeb) {
-      final ImagePicker picker = ImagePicker();
-      XFile? image = await picker.pickImage(source: ImageSource.gallery);
-      if (image != null) {
-        var f = await image.readAsBytes();
-        setState(() {
-          webImage = f;
-          _pickedImage = File('a');
-        });
-      } else {
-        const SnackBar(content: Text('An image hasn\'t been picked'));
-      }
-    } else {
-      const SnackBar(content: Text('Something went wrong'));
-    }
-  }
-*/
   @override
   Widget build(BuildContext context) {
     double w = MediaQuery.of(context).size.width;
@@ -389,7 +373,7 @@ class _DLApplicationFormState extends State<DLApplicationForm> {
                           ),
                         ),
                         Text(
-                          'Welcome to the online Driving License verification system.Lorem ipsum dolor sit amet, in vim nihil maiorum, vim et postea philosophia mediocritatem. Eu sit postea adolescens intellegam. Pri modus pericula ut, an vidisse aperiam nec, sed ea. animal inciderint. Etiam ceteros repudiandae ex usu, nec diam decore cu. Sea an libris.Loremipsum dolor sit amet, in vim nihil maiorum, vim et postea philosophia mediocritatem. Eu sit postea adolescens intellegam. Pri modus pericula ut, an vidisse aperiam nec, sed ea. ',
+                          'Welcome to the online National Identity Card verification system.Lorem ipsum dolor sit amet, in vim nihil maiorum, vim et postea philosophia mediocritatem. Eu sit postea adolescens intellegam. Pri modus pericula ut, an vidisse aperiam nec, sed ea. animal inciderint. Etiam ceteros repudiandae ex usu, nec diam decore cu. Sea an libris.Loremipsum dolor sit amet, in vim nihil maiorum, vim et postea philosophia mediocritatem. Eu sit postea adolescens intellegam. Pri modus pericula ut, an vidisse aperiam nec, sed ea. ',
                           textAlign: TextAlign.center,
                           style: TextStyle(
                             fontSize: 20,
@@ -411,7 +395,7 @@ class _DLApplicationFormState extends State<DLApplicationForm> {
                   height: 25,
                 ),
                 const Text(
-                  'To apply Smart Driving License, please fill out this forum and sumbit',
+                  'To apply Smart  National Identity Card, please fill out this forum and sumbit',
                   textAlign: TextAlign.center,
                   style: TextStyle(
                       fontFamily: 'Inter',
@@ -446,11 +430,11 @@ class _DLApplicationFormState extends State<DLApplicationForm> {
               child: Padding(
                 padding: const EdgeInsets.all(50),
                 child: Form(
-                    key: DLapplicationformKey,
+                    key: NICapplicationformKey,
                     child: Column(
                       children: <Widget>[
                         const Text(
-                          'Apply for Smart Driving License',
+                          'Apply for Smart NIC',
                           style: TextStyle(
                               fontFamily: 'Inter',
                               fontSize: 20,
@@ -513,6 +497,19 @@ class _DLApplicationFormState extends State<DLApplicationForm> {
                         const SizedBox(
                           height: 10,
                         ),
+                        //Birth Place
+                        TextFormField(
+                            controller: birthPlaceController,
+                            validator: (value) {
+                              if (value!.isEmpty) {
+                                return 'Please enter your Birth Place';
+                              }
+                              return null;
+                            },
+                            decoration: decorations('Birth Place')),
+                        const SizedBox(
+                          height: 10,
+                        ),
                         //Gender
                         DropdownButtonFormField(
                           decoration: decorations('Gender'),
@@ -536,42 +533,16 @@ class _DLApplicationFormState extends State<DLApplicationForm> {
                         const SizedBox(
                           height: 10,
                         ),
-                        //License No
+                        //Proffesion
                         TextFormField(
-                            controller: licenseNoController,
+                            controller: professionController,
                             validator: (value) {
                               if (value!.isEmpty) {
-                                return 'Please enter your License No';
+                                return 'Please enter your Proffession';
                               }
                               return null;
                             },
-                            decoration: decorations('License No')),
-                        const SizedBox(
-                          height: 10,
-                        ),
-                        //Vehicle Category
-
-                        //Blood Group
-                        DropdownButtonFormField(
-                          value: _bloodGroup,
-                          items: _bloodGroupList
-                              .map((String newBloodGroup) => DropdownMenuItem(
-                                  value: newBloodGroup,
-                                  child: Text(newBloodGroup)))
-                              .toList(),
-                          onChanged: (String? newBloodGroup) {
-                            setState(() {
-                              bloodGroupController.text = newBloodGroup!;
-                            });
-                          },
-                          validator: (value) {
-                            if (value == '-Choose your Gender-') {
-                              return 'Please choose your Gender';
-                            }
-                            return null;
-                          },
-                          decoration: decorations("Choose your Blood Group"),
-                        ),
+                            decoration: decorations('Profesion')),
                         const SizedBox(
                           height: 10,
                         ),
@@ -736,28 +707,34 @@ class _DLApplicationFormState extends State<DLApplicationForm> {
                         const SizedBox(
                           height: 10,
                         ),
-                        //Expiry Date
+                        //Doc No
                         TextFormField(
-                            controller: expiryDateController,
-                            onTap: () => selectExpiryDate(context),
-                            readOnly: true,
-                            decoration: decorations('Expiry Date')),
+                            controller: docNoController,
+                            validator: (value) {
+                              if (value!.isEmpty) {
+                                return 'Please enter your Grama Niladari Division (work)';
+                              }
+                              return null;
+                            },
+                            decoration: decorations('Doc No')),
                         const SizedBox(
                           height: 10,
                         ),
-                        /*Row(
+                        /*
+                        //Upload Image
+                        Row(
                           children: [
                             const Text('Choose a profile image'),
                             InkWell(
-                              onTap: _pickImage,
+                              onTap: pickImage,
                               child: Container(
                                   width: 100,
                                   height: 100,
                                   color: Colors.grey,
                                   child: _pickedImage == null
-                                      ? const Text("Not selected")
+                                      //? const Text("Not selected")
                                       : kIsWeb
-                                          ? Image.memory(
+                                          //? Image.memory(
                                               webImage,
                                               fit: BoxFit.fill,
                                             )
@@ -767,10 +744,12 @@ class _DLApplicationFormState extends State<DLApplicationForm> {
                                             )),
                             )
                           ],
-                        ),*/
-
+                        ),
+*/
                         ElevatedButton(
-                            onPressed: _submitForm,
+                            onPressed: () {
+                              _submitForm(context);
+                            },
                             style: ElevatedButton.styleFrom(
                               maximumSize: Size.fromWidth(w / 4),
                               foregroundColor:
@@ -998,7 +977,9 @@ class _DLApplicationFormState extends State<DLApplicationForm> {
 }
 
 void _launchURL(String url) async {
+  // ignore: deprecated_member_use
   if (await canLaunch(url)) {
+    // ignore: deprecated_member_use
     await launch(url);
   } else {
     throw 'Could not launch $url';
