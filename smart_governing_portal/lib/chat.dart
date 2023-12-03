@@ -2,28 +2,9 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:kommunicate_flutter/kommunicate_flutter.dart';
-import 'package:smart_governing_portal/secrets.dart';
-
-void main() {
-  runApp(MyApp());
-}
-
-class MyApp extends StatelessWidget {
-  // This widget is the root of your application.
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Flutter Chatbot Demo',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-      ),
-      home: const MyHomePage(title: 'Flutter Chatbot Demo'),
-    );
-  }
-}
 
 class MyHomePage extends StatefulWidget {
-  const MyHomePage({Key? key, required this.title}) : super(key: key);
+  MyHomePage({Key? key, required this.title}) : super(key: key);
 
   final String title;
 
@@ -33,7 +14,7 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   // Replace this with your own API key from OpenAI
-  final String API_KEY = chatGptAPIKEY;
+  final String API_KEY = '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';
 
   // The base URL for the ChatGPT API
   final String BASE_URL = 'https://api.openai.com/v1/engines/davinci/completions';
@@ -105,11 +86,11 @@ class _MyHomePageState extends State<MyHomePage> {
   // The function to launch the kommunicate chat widget
   void _launchChat() async {
     // Initialize the kommunicate chat widget with your app ID
-    //await KommunicateFlutterPlugin.init(chatGptAPIKEY);
+    //await KommunicateFlutterPlugin.init('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');
 
     // Build the kommunicate conversation parameters
     Map<String, dynamic> conversationObject = {
-      'appId': kommunicateAPPID,
+      'appId': '14ed47dc99857b707364e31fbd4e371ee',
       'withPreChat': true,
       'isSingleConversation': true,
       'agentIds': ['Chatbot'],
@@ -118,7 +99,7 @@ class _MyHomePageState extends State<MyHomePage> {
 
     // Launch the kommunicate chat widget
     dynamic result = await KommunicateFlutterPlugin.buildConversation(conversationObject);
-    print("Conversation builder success : " + result.toString());
+    //print("Conversation builder success : " + result.toString());
   }
 
   @override

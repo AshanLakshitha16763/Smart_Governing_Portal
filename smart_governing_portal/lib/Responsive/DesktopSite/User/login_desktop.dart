@@ -1,41 +1,33 @@
-// ignore_for_file: file_names, library_private_types_in_public_api
-
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:smart_governing_portal/Responsive/DesktopSite/adminDashboardPage.dart';
-import 'package:smart_governing_portal/Responsive/DesktopSite/admin_register_desktop.dart';
-import 'package:smart_governing_portal/Responsive/DesktopSite/after_registration_page.dart';
-import 'package:smart_governing_portal/Responsive/DesktopSite/home_page.dart';
+import 'package:smart_governing_portal/Responsive/DesktopSite/User/RegisterDesktop.dart';
+import 'package:smart_governing_portal/Responsive/DesktopSite/Admin/adminFormPage.dart';
+import 'package:smart_governing_portal/Responsive/DesktopSite/User/after_registration_page.dart';
+import 'package:smart_governing_portal/Responsive/DesktopSite/User/home_page.dart';
 import 'package:smart_governing_portal/auth.dart';
 
-class AdminLoginDesktop extends StatefulWidget {
-  const AdminLoginDesktop({super.key});
+
+class LoginDesktop extends StatefulWidget {
+  const LoginDesktop({super.key});
 
   @override
-  _AdminLoginDesktopState createState() => _AdminLoginDesktopState();
+  _LoginDesktopState createState() => _LoginDesktopState();
 }
 
-class _AdminLoginDesktopState extends State<AdminLoginDesktop> {
+class _LoginDesktopState extends State<LoginDesktop> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
-  final TextEditingController _nameController = TextEditingController();
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
   String? errorMessage = '';
 
   Future signInWithEmailAndPassword(BuildContext context) async {
-    // Get the currently signed-in user
-    User? user = FirebaseAuth.instance.currentUser;
-
-    // Update the user's display name
-    await user?.updateDisplayName(_nameController.text);
-    
     try {
       await Auth().signInWithEmailAndPassword(
           email: _emailController.text, password: _passwordController.text);
 
       // ignore: use_build_context_synchronously
-      Navigator.pushReplacement(context,
-          MaterialPageRoute(builder: (context) => const AdminDashboardPage()));
+      Navigator.pushReplacement(
+          context, MaterialPageRoute(builder: (context) => const AfterRegistrationPage()));
     } on FirebaseAuthException catch (e) {
       setState(() {
         errorMessage = e.message;
@@ -55,175 +47,175 @@ class _AdminLoginDesktopState extends State<AdminLoginDesktop> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Center(
-        child: Column(
-          children: [
-            // navigation bar
-            AppBar(
-              automaticallyImplyLeading: false,
-              toolbarHeight: 120,
-              leadingWidth: 180,
-              leading: SizedBox(
-                width: 150,
-                child: Image.asset(
-                  'lib/Assets/logo.png',
-                  fit: BoxFit.cover,
-                ),
+      body: Column(
+        children: [
+          // navigation bar
+          AppBar(
+            automaticallyImplyLeading: false,
+            toolbarHeight: 120,
+            leadingWidth: 180,
+            leading: SizedBox(
+              width: 150,
+              child: Image.asset(
+                'lib/Assets/logo.png',
+                fit: BoxFit.cover,
               ),
-              actions: [
-                FittedBox(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.end,
-                    children: [
-                      const SizedBox(
-                        height: 15,
-                      ),
-                      Row(
-                        children: [
-                          TextButton(
-                              onPressed: () {
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute<void>(
-                                    builder: (BuildContext context) =>
-                                        const HomePage(),
-                                  ),
-                                );
-                              },
-                              child: const Text(
-                                'Home',
-                                style: TextStyle(
-                                  color: Colors.black,
+            ),
+            actions: [
+              FittedBox(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.end,
+                  children: [
+                    const SizedBox(
+                      height: 15,
+                    ),
+                    Row(
+                      children: [
+                        TextButton(
+                            onPressed: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute<void>(
+                                  builder: (BuildContext context) =>
+                                      const HomePage(),
                                 ),
-                              )),
-                          const SizedBox(
-                            width: 20,
-                          ),
-                          TextButton(
-                              onPressed: () {},
-                              child: const Text(
-                                'Services',
-                                style: TextStyle(
-                                  color: Colors.black,
-                                ),
-                              )),
-                          const SizedBox(
-                            width: 20,
-                          ),
-                          TextButton(
-                            onPressed: () {},
+                              );
+                            },
                             child: const Text(
-                              'About Us',
+                              'Home',
                               style: TextStyle(
                                 color: Colors.black,
                               ),
+                            )),
+                        const SizedBox(
+                          width: 20,
+                        ),
+                        TextButton(
+                            onPressed: () {},
+                            child: const Text(
+                              'Services',
+                              style: TextStyle(
+                                color: Colors.black,
+                              ),
+                            )),
+                        const SizedBox(
+                          width: 20,
+                        ),
+                        TextButton(
+                          onPressed: () {},
+                          child: const Text(
+                            'About Us',
+                            style: TextStyle(
+                              color: Colors.black,
                             ),
                           ),
-                          const SizedBox(
-                            width: 20,
-                          ),
-                          TextButton(
-                              onPressed: () {
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute<void>(
-                                    builder: (BuildContext context) =>
-                                        const AfterRegistrationPage(),
-                                  ),
-                                );
-                              },
-                              child: const Text(
-                                'User',
-                                style: TextStyle(
-                                  color: Colors.black,
-                                ),
-                              )),
-                          const SizedBox(
-                            width: 20,
-                          ),
-                        ],
-                      ),
-                      const SizedBox(
-                        height: 20,
-                      ),
-                      Row(
-                        children: [
-                          ElevatedButton(
+                        ),
+                        const SizedBox(
+                          width: 20,
+                        ),
+                        TextButton(
                             onPressed: () {
                               Navigator.push(
                                 context,
                                 MaterialPageRoute<void>(
                                   builder: (BuildContext context) =>
-                                      const AdminLoginDesktop(),
+                                      const AdminHomePage(),
                                 ),
                               );
                             },
-                            style: const ButtonStyle(
-                                backgroundColor: MaterialStatePropertyAll(
-                                    Color.fromARGB(255, 255, 255, 255))),
                             child: const Text(
-                              'Login',
+                              'Admin',
                               style: TextStyle(
-                                  color: Color.fromARGB(255, 10, 4, 70)),
-                            ),
-                          ),
-                          const SizedBox(
-                            width: 15,
-                          ),
-                          ElevatedButton(
-                            onPressed: () {
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute<void>(
-                                  builder: (BuildContext context) =>
-                                      const AdminRegisterDesktop(),
-                                ),
-                              );
-                            },
-                            style: const ButtonStyle(
-                                backgroundColor: MaterialStatePropertyAll(
-                                    Color.fromARGB(255, 10, 4, 70))),
-                            child: const Text(
-                              'Register',
-                              style: TextStyle(
-                                  color: Color.fromARGB(255, 255, 255, 255)),
-                            ),
-                          ),
-                          const SizedBox(
-                            width: 15,
-                          ),
-                        ],
-                      )
-                    ],
-                  ),
-                ),
-              ],
-              backgroundColor: const Color.fromARGB(255, 115, 185, 250),
-            ),
-
-            const SizedBox(
-              height: 20,
-            ),
-
-            Expanded(
-              child: Center(
-                child: Container(
-                  decoration: BoxDecoration(
-                    border: Border.all(
-                      color: const Color.fromARGB(
-                          255, 243, 236, 236), // Border color
-                      width: 3.0, // Border width
+                                color: Colors.black,
+                              ),
+                            )),
+                        const SizedBox(
+                          width: 20,
+                        ),
+                      ],
                     ),
-                    borderRadius: BorderRadius.circular(15), // Border radius
+                    const SizedBox(
+                      height: 20,
+                    ),
+                    Row(
+                      children: [
+                        ElevatedButton(
+                          onPressed: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute<void>(
+                                builder: (BuildContext context) =>
+                                    const LoginDesktop(),
+                              ),
+                            );
+                          },
+                          style: const ButtonStyle(
+                              backgroundColor: MaterialStatePropertyAll(
+                                  Color.fromARGB(255, 255, 255, 255))),
+                          child: const Text(
+                            'Login',
+                            style: TextStyle(
+                                color: Color.fromARGB(255, 10, 4, 70)),
+                          ),
+                        ),
+                        const SizedBox(
+                          width: 15,
+                        ),
+                        ElevatedButton(
+                          onPressed: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute<void>(
+                                builder: (BuildContext context) =>
+                                    const RegistorDesktop(),
+                              ),
+                            );
+                          },
+                          style: const ButtonStyle(
+                              backgroundColor: MaterialStatePropertyAll(
+                                  Color.fromARGB(255, 10, 4, 70))),
+                          child: const Text(
+                            'Register',
+                            style: TextStyle(
+                                color: Color.fromARGB(255, 255, 255, 255)),
+                          ),
+                        ),
+                        const SizedBox(
+                          width: 15,
+                        ),
+                      ],
+                    )
+                  ],
+                ),
+              ),
+            ],
+            backgroundColor: const Color.fromARGB(255, 115, 185, 250),
+          ),
+
+          const SizedBox(
+            height: 20,
+          ),
+
+          Expanded(
+            child: Center(
+              child: Container(
+                decoration: BoxDecoration(
+                  border: Border.all(
+                    color: const Color.fromARGB(
+                        255, 243, 236, 236), // Border color
+                    width: 3.0, // Border width
                   ),
-                  width: MediaQuery.of(context).size.width - 100,
-                  height: MediaQuery.of(context).size.height - 100,
-                  child: Row(
-                    children: [
-                      Expanded(
-                        //LEFT ALL PROPERTIES
-                        flex: 1,
-                        child: SingleChildScrollView(
+                  borderRadius: BorderRadius.circular(15), // Border radius
+                ),
+                width: MediaQuery.of(context).size.width - 100,
+                height: MediaQuery.of(context).size.height - 100,
+                child: Row(
+                  children: [
+                    Expanded(
+                      //LEFT ALL PROPERTIES
+                      flex: 1,
+                      child: SingleChildScrollView(
+                        child: Container(
                           child: Padding(
                             padding: const EdgeInsets.all(16.0),
                             child: Form(
@@ -262,30 +254,6 @@ class _AdminLoginDesktopState extends State<AdminLoginDesktop> {
                                   ),
                                   const SizedBox(height: 15),
                                   TextFormField(
-                                    //Username field
-                                    controller: _nameController,
-                                    validator: (value) {
-                                      if (value == null || value.isEmpty) {
-                                        return 'Please enter your Username';
-                                      }
-                                      return null;
-                                    },
-                                    decoration: InputDecoration(
-                                      labelText: 'Username',
-                                      hintText: 'Enter your Username',
-                                      prefixIcon: const Icon(Icons.person),
-                                      border: OutlineInputBorder(
-                                        borderRadius: BorderRadius.circular(10),
-                                      ),
-                                      focusedBorder: OutlineInputBorder(
-                                        borderSide: const BorderSide(
-                                            color: Colors.blue, width: 2.0),
-                                        borderRadius: BorderRadius.circular(10),
-                                      ),
-                                    ),
-                                  ),
-                                  const SizedBox(height: 15),
-                                  TextFormField(
                                     // email Textfield
                                     controller: _emailController,
                                     validator: (String? value) {
@@ -296,6 +264,7 @@ class _AdminLoginDesktopState extends State<AdminLoginDesktop> {
                                           .hasMatch(value)) {
                                         return 'Please enter a valid email address';
                                       }
+
                                       return null;
                                     },
                                     decoration: InputDecoration(
@@ -303,12 +272,14 @@ class _AdminLoginDesktopState extends State<AdminLoginDesktop> {
                                       hintText: 'Enter your email',
                                       prefixIcon: const Icon(Icons.email),
                                       border: OutlineInputBorder(
-                                        borderRadius: BorderRadius.circular(10),
+                                        borderRadius:
+                                            BorderRadius.circular(10),
                                       ),
                                       focusedBorder: OutlineInputBorder(
                                         borderSide: const BorderSide(
                                             color: Colors.blue, width: 2.0),
-                                        borderRadius: BorderRadius.circular(10),
+                                        borderRadius:
+                                            BorderRadius.circular(10),
                                       ),
                                     ),
                                   ),
@@ -334,16 +305,17 @@ class _AdminLoginDesktopState extends State<AdminLoginDesktop> {
                                       hintText: 'Enter your password',
                                       prefixIcon: const Icon(Icons.lock_open),
                                       border: OutlineInputBorder(
-                                        borderRadius: BorderRadius.circular(10),
+                                        borderRadius:
+                                            BorderRadius.circular(10),
                                       ),
                                       focusedBorder: OutlineInputBorder(
                                         borderSide: const BorderSide(
                                             color: Colors.blue, width: 2.0),
-                                        borderRadius: BorderRadius.circular(10),
+                                        borderRadius:
+                                            BorderRadius.circular(10),
                                       ),
                                     ),
                                   ),
-                                  const SizedBox(height: 6.0),
                                   Padding(
                                     padding: const EdgeInsets.all(10.0),
                                     child: _errorMessage(),
@@ -354,13 +326,15 @@ class _AdminLoginDesktopState extends State<AdminLoginDesktop> {
                                       padding:
                                           const EdgeInsetsDirectional.all(15),
                                       child: ElevatedButton(
-                                        onPressed: () =>
-                                            signInWithEmailAndPassword(context),
+                                        onPressed:
+                                            () =>signInWithEmailAndPassword(context),
                                         style: ElevatedButton.styleFrom(
-                                          foregroundColor: const Color.fromARGB(
-                                              255, 243, 242, 234),
-                                          backgroundColor: const Color.fromARGB(
-                                              255, 10, 4, 70),
+                                          foregroundColor:
+                                              const Color.fromARGB(
+                                                  255, 243, 242, 234),
+                                          backgroundColor:
+                                              const Color.fromARGB(
+                                                  255, 10, 4, 70),
                                           padding: const EdgeInsets.all(20),
                                           fixedSize: const Size(800, 50),
                                           textStyle: const TextStyle(
@@ -387,10 +361,10 @@ class _AdminLoginDesktopState extends State<AdminLoginDesktop> {
                                   ),
                                   const SizedBox(height: 1.0),
                                   TextButton(
-                                    onPressed: () => Navigator.of(context).push(
-                                        MaterialPageRoute(
+                                    onPressed: () => Navigator.of(context)
+                                        .push(MaterialPageRoute(
                                             builder: (context) =>
-                                                const AdminRegisterDesktop())),
+                                                const RegistorDesktop())),
                                     child: const Text(
                                       'Don\'t have an account? Sign Up',
                                       style: TextStyle(
@@ -493,27 +467,27 @@ class _AdminLoginDesktopState extends State<AdminLoginDesktop> {
                           ),
                         ),
                       ),
-                      Expanded(
-                        // RIGHT SIDE IMAGE
-                        flex: 1,
-                        child: Image.asset(
-                          'lib/Assets/RegisterPages/adminLogin.jpg',
-                          width: MediaQuery.of(context).size.width - 50,
-                          height: MediaQuery.of(context).size.height - 50,
-                          fit: BoxFit.contain,
-                        ),
+                    ),
+                    Expanded(
+                      // RIGHT SIDE IMAGE
+                      flex: 1,
+                      child: Image.asset(
+                        'lib/Assets/Login.png',
+                        width: MediaQuery.of(context).size.width - 50,
+                        height: MediaQuery.of(context).size.height - 50,
+                        fit: BoxFit.contain,
                       ),
-                    ],
-                  ),
+                    ),
+                  ],
                 ),
               ),
             ),
+          ),
 
-            const SizedBox(
-              height: 20,
-            ),
-          ],
-        ),
+          const SizedBox(
+            height: 20,
+          ),
+        ],
       ),
     );
   }

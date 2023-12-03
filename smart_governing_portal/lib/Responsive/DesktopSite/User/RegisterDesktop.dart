@@ -1,29 +1,60 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:smart_governing_portal/Responsive/DesktopSite/adminLoginDesktop.dart';
-import 'package:smart_governing_portal/Responsive/DesktopSite/after_registration_page.dart';
-import 'package:smart_governing_portal/Responsive/DesktopSite/home_page.dart';
+import 'package:smart_governing_portal/Responsive/DesktopSite/Admin/adminLoginDesktop.dart';
+import 'package:smart_governing_portal/Responsive/DesktopSite/User/after_registration_page.dart';
+import 'package:smart_governing_portal/Responsive/DesktopSite/User/home_page.dart';
+import 'package:smart_governing_portal/auth.dart';
+import 'login_desktop.dart';
 
-
-class AdminRegisterDesktop extends StatefulWidget {
-  const AdminRegisterDesktop({super.key});
+class RegistorDesktop extends StatefulWidget {
+  const RegistorDesktop({super.key});
 
   @override
-  _AdminRegisterDesktopState createState() => _AdminRegisterDesktopState();
+  _RegistorDesktopState createState() => _RegistorDesktopState();
 }
 
-class _AdminRegisterDesktopState extends State<AdminRegisterDesktop> {
+class _RegistorDesktopState extends State<RegistorDesktop> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   final TextEditingController _nameController = TextEditingController();
   final TextEditingController _emailController = TextEditingController();
-  final TextEditingController _usernameController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
+  String? errorMessage = '';
 
+  Future createUserWithEmailAndPassword(BuildContext context) async {
+    try {
+      await Auth().createUserWithEmailAndPassword(
+          email: _emailController.text, password: _passwordController.text,);
+      
+      // Get the currently signed-in user
+      User? user = FirebaseAuth.instance.currentUser;
+
+      // Update the user's display name
+      await user?.updateDisplayName(_nameController.text);
+
+      // ignore: use_build_context_synchronously
+      Navigator.pushReplacement(
+          context, MaterialPageRoute(builder: (context) => const AfterRegistrationPage()));
+    } on FirebaseAuthException catch (e) {
+      setState(() {
+        errorMessage = e.message;
+      });
+    }
+  }
+
+  Widget _errorMessage() {
+    return Text(errorMessage == '' ? '' : 'Humm ? $errorMessage');
+  }
+
+  @override
+  void initState() {
+    super.initState();
+  }
+  
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: Column(
         children: [
-
           // navigation bar
           AppBar(
             automaticallyImplyLeading: false,
@@ -94,12 +125,12 @@ class _AdminRegisterDesktopState extends State<AdminRegisterDesktop> {
                                 context,
                                 MaterialPageRoute<void>(
                                   builder: (BuildContext context) =>
-                                      const AfterRegistrationPage(),
+                                      const AdminLoginDesktop(),
                                 ),
                               );
                             },
                             child: const Text(
-                              'User',
+                              'Admin',
                               style: TextStyle(
                                 color: Colors.black,
                               ),
@@ -120,7 +151,7 @@ class _AdminRegisterDesktopState extends State<AdminRegisterDesktop> {
                               context,
                               MaterialPageRoute<void>(
                                 builder: (BuildContext context) =>
-                                    const AdminLoginDesktop(),
+                                    const LoginDesktop(),
                               ),
                             );
                           },
@@ -142,7 +173,7 @@ class _AdminRegisterDesktopState extends State<AdminRegisterDesktop> {
                               context,
                               MaterialPageRoute<void>(
                                 builder: (BuildContext context) =>
-                                    const AdminRegisterDesktop(),
+                                    const RegistorDesktop(),
                               ),
                             );
                           },
@@ -167,7 +198,6 @@ class _AdminRegisterDesktopState extends State<AdminRegisterDesktop> {
             backgroundColor: const Color.fromARGB(255, 115, 185, 250),
           ),
 
-
           const SizedBox(
             height: 20,
           ),
@@ -177,8 +207,9 @@ class _AdminRegisterDesktopState extends State<AdminRegisterDesktop> {
               child: Container(
                 decoration: BoxDecoration(
                   border: Border.all(
-                    color: const Color.fromARGB(255, 243, 236, 236), // Border color
-                     width: 3.0, // Border width
+                    color: const Color.fromARGB(
+                        255, 243, 236, 236), // Border color
+                    width: 3.0, // Border width
                   ),
                   borderRadius: BorderRadius.circular(15), // Border radius
                 ),
@@ -186,8 +217,8 @@ class _AdminRegisterDesktopState extends State<AdminRegisterDesktop> {
                 height: MediaQuery.of(context).size.height - 100,
                 child: Row(
                   children: [
-
-                    Expanded( // RIGHT SIDE PROPERTIES
+                    Expanded(
+                      // RIGHT SIDE PROPERTIES
                       flex: 1,
                       child: SingleChildScrollView(
                         child: Padding(
@@ -199,7 +230,8 @@ class _AdminRegisterDesktopState extends State<AdminRegisterDesktop> {
                                 const Center(
                                   child: Column(
                                     children: [
-                                      Center( // Register
+                                      Center(
+                                        // Register
                                         child: Text(
                                           'Register',
                                           style: TextStyle(
@@ -213,12 +245,9 @@ class _AdminRegisterDesktopState extends State<AdminRegisterDesktop> {
                                     ],
                                   ),
                                 ),
-
-                                const SizedBox(
-                                  height: 3
-                                  ),
-
-                                Padding( // user image
+                                const SizedBox(height: 3),
+                                Padding(
+                                  // user image
                                   padding:
                                       const EdgeInsetsDirectional.fromSTEB(
                                           7, 0, 7, 0),
@@ -229,12 +258,9 @@ class _AdminRegisterDesktopState extends State<AdminRegisterDesktop> {
                                     fit: BoxFit.contain,
                                   ),
                                 ),
-
-                                const SizedBox(
-                                  height: 15
-                                  ),
-
-                                TextFormField( // name field
+                                const SizedBox(height: 15),
+                                TextFormField(
+                                  // name field
                                   controller: _nameController,
                                   validator: (String? value) {
                                     if (value == null || value.isEmpty) {
@@ -245,25 +271,23 @@ class _AdminRegisterDesktopState extends State<AdminRegisterDesktop> {
                                   decoration: InputDecoration(
                                     labelText: 'Name',
                                     hintText: 'Enter your Name',
-                                    prefixIcon: const Icon(Icons.account_circle),
+                                    prefixIcon:
+                                        const Icon(Icons.account_circle),
                                     border: OutlineInputBorder(
                                       borderRadius:
                                           BorderRadius.circular(10),
                                     ),
                                     focusedBorder: OutlineInputBorder(
                                       borderSide: const BorderSide(
-                                          color:Colors.blue, width: 2.0),
+                                          color: Colors.blue, width: 2.0),
                                       borderRadius:
                                           BorderRadius.circular(10),
                                     ),
                                   ),
                                 ),
-
-                                const SizedBox(
-                                  height: 15
-                                  ),
-
-                                TextFormField( // email Textfield
+                                const SizedBox(height: 15),
+                                TextFormField(
+                                  // email Textfield
                                   controller: _emailController,
                                   validator: (String? value) {
                                     if (value == null || value.isEmpty) {
@@ -291,42 +315,9 @@ class _AdminRegisterDesktopState extends State<AdminRegisterDesktop> {
                                     ),
                                   ),
                                 ),
-
-                                const SizedBox(
-                                  height: 15
-                                  ),
-
-                                TextFormField( //Username field
-                                  controller: _usernameController,
-                                  validator: (value) {
-                                    if (value == null || value.isEmpty) {
-                                      return 'Please enter your Username';
-                                    }
-                                    return null;
-                                  },
-                                  obscureText: true,
-                                  decoration: InputDecoration(
-                                    labelText: 'Username',
-                                    hintText: 'Enter your Username',
-                                    prefixIcon: const Icon(Icons.person),
-                                    border: OutlineInputBorder(
-                                      borderRadius:
-                                          BorderRadius.circular(10),
-                                    ),
-                                    focusedBorder: OutlineInputBorder(
-                                      borderSide: const BorderSide(
-                                          color: Colors.blue, width: 2.0),
-                                      borderRadius:
-                                          BorderRadius.circular(10),
-                                    ),
-                                  ),
-                                ),
-
-                                const SizedBox(
-                                  height: 15
-                                  ),
-
-                                 TextFormField( //password field
+                                const SizedBox(height: 15),
+                                TextFormField(
+                                  //password field
                                   controller: _passwordController,
                                   validator: (value) {
                                     if (value == null || value.isEmpty) {
@@ -357,22 +348,24 @@ class _AdminRegisterDesktopState extends State<AdminRegisterDesktop> {
                                     ),
                                   ),
                                 ),
-                                
-                                const SizedBox(
-                                  height: 6.0
-                                  ),
-
-                                Center( //Register button
+                                Padding(
+                                  padding: const EdgeInsets.all(10.0),
+                                  child: _errorMessage(),
+                                ),
+                                Center(
+                                  //Register button
                                   child: Padding(
                                     padding:
                                         const EdgeInsetsDirectional.all(15),
                                     child: ElevatedButton(
-                                      onPressed: () {},
+                                      onPressed: () => createUserWithEmailAndPassword(context),
                                       style: ElevatedButton.styleFrom(
                                         foregroundColor:
                                             const Color.fromARGB(
                                                 255, 243, 242, 234),
-                                        backgroundColor:const Color.fromARGB(255, 10, 4, 70),   
+                                        backgroundColor:
+                                            const Color.fromARGB(
+                                                255, 10, 4, 70),
                                         padding: const EdgeInsets.all(20),
                                         fixedSize: const Size(800, 50),
                                         textStyle: const TextStyle(
@@ -397,16 +390,12 @@ class _AdminRegisterDesktopState extends State<AdminRegisterDesktop> {
                                     ),
                                   ),
                                 ),
-
-                                const SizedBox(
-                                  height: 1.0
-                                  ),
-
+                                const SizedBox(height: 1.0),
                                 TextButton(
                                   onPressed: () => Navigator.of(context)
                                       .push(MaterialPageRoute(
                                           builder: (context) =>
-                                              const AdminLoginDesktop())),
+                                              const LoginDesktop())),
                                   child: const Text(
                                     'Already have an Account?',
                                     style: TextStyle(
@@ -416,12 +405,9 @@ class _AdminRegisterDesktopState extends State<AdminRegisterDesktop> {
                                     ),
                                   ),
                                 ),
-
-                                const SizedBox(
-                                  height: 2.0
-                                  ),
-
-                                  Center( // Google,Apple,Facebook logo 
+                                const SizedBox(height: 2.0),
+                                Center(
+                                  // Google,Apple,Facebook logo
                                   child: Expanded(
                                     child: Row(
                                       mainAxisAlignment:
@@ -470,12 +456,10 @@ class _AdminRegisterDesktopState extends State<AdminRegisterDesktop> {
                                     ),
                                   ),
                                 ),
-
                                 const SizedBox(
                                   width: 5,
                                 ),
-
-                               const Center(
+                                const Center(
                                   child: Expanded(
                                     child: Row(
                                       mainAxisAlignment:
@@ -495,18 +479,17 @@ class _AdminRegisterDesktopState extends State<AdminRegisterDesktop> {
                                     ),
                                   ),
                                 ),
-
                               ],
                             ),
                           ),
                         ),
                       ),
                     ),
-
-                    Expanded( // RIGHT SIDE IMAGE
+                    Expanded(
+                      // RIGHT SIDE IMAGE
                       flex: 1,
                       child: Image.asset(
-                        'lib/Assets/RegisterPages/adminRegister.png',
+                        'lib/Assets/signup.png',
                         width: MediaQuery.of(context).size.width - 50,
                         height: MediaQuery.of(context).size.height - 50,
                         fit: BoxFit.contain,

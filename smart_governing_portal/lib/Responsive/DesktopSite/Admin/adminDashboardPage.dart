@@ -2,12 +2,12 @@
 
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:smart_governing_portal/Responsive/DesktopSite/home_page.dart';
+import 'package:smart_governing_portal/Responsive/DesktopSite/Admin/requestingNIC.dart';
+import 'package:smart_governing_portal/Responsive/DesktopSite/User/home_page.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class AdminDashboardPage extends StatefulWidget {
   const AdminDashboardPage({super.key});
-  
 
   @override
   State<AdminDashboardPage> createState() => _AdminDashboardPageState();
@@ -15,7 +15,7 @@ class AdminDashboardPage extends StatefulWidget {
 
 class _AdminDashboardPageState extends State<AdminDashboardPage> {
   int hoveredIndex = -1;
-  
+
   @override
   Widget build(BuildContext context) {
     User? user = FirebaseAuth.instance.currentUser;
@@ -126,16 +126,16 @@ class _AdminDashboardPageState extends State<AdminDashboardPage> {
             ],
             backgroundColor: const Color.fromARGB(255, 115, 185, 250),
           ),
-          
+
           //lists
           SizedBox(
             child: Padding(
               padding: const EdgeInsets.only(left: 120, right: 120, top: 20),
               child: Column(
                 children: [
-                   FittedBox(
+                  FittedBox(
                     child: Text(
-                      'Hello, Welcome Back! $userName' ,
+                      'Hello, Welcome Back! $userName',
                       style: const TextStyle(
                         color: Color.fromARGB(255, 10, 4, 70),
                         fontFamily: 'Inter',
@@ -145,15 +145,14 @@ class _AdminDashboardPageState extends State<AdminDashboardPage> {
                     ),
                   ),
                   const Padding(
-                    padding: EdgeInsets.only(top: 20,bottom: 40),
+                    padding: EdgeInsets.only(top: 20, bottom: 40),
                     child: Text(
                       'The best service for the citizens from us',
                       textAlign: TextAlign.justify,
                       style: TextStyle(
-                        color: Colors.black,
-                        fontSize: 24,
-                        fontFamily: 'Inter'
-                      ),
+                          color: Colors.black,
+                          fontSize: 24,
+                          fontFamily: 'Inter'),
                     ),
                   ),
                   LayoutBuilder(
@@ -364,12 +363,10 @@ class _AdminDashboardPageState extends State<AdminDashboardPage> {
               ),
             ),
           )
-        
         ],
       ),
     );
   }
-
 
   //functions for admin dashboard lists
   List<Widget> _adminDashboardLists(double tileSize) {
@@ -379,28 +376,32 @@ class _AdminDashboardPageState extends State<AdminDashboardPage> {
           height: 220,
           tileSize: tileSize,
           index: 0,
-          imagePath: 'lib/Assets/lists.png'),
-      _adminDashboardList(' The List of Users that Requesting Smart Driving License',
+          imagePath: 'lib/Assets/lists.png', 
+          pageName: RequestingNIC()),
+      _adminDashboardList(
+          ' The List of Users that Requesting Smart Driving License',
           width: 380,
           height: 220,
           tileSize: tileSize,
           index: 1,
-          imagePath: 'lib/Assets/lists.png'),
+          imagePath: 'lib/Assets/lists.png', 
+          pageName: null),
       _adminDashboardList(' Previous List of Users for Smart NIC',
           width: 380,
           height: 220,
           tileSize: tileSize,
           index: 2,
-          imagePath: 'lib/Assets/lists.png'),
+          imagePath: 'lib/Assets/lists.png', 
+          pageName: null),
       _adminDashboardList(' Previous List of Users for Smart Driving License',
           width: 380,
           height: 220,
           tileSize: tileSize,
           index: 3,
-          imagePath: 'lib/Assets/lists.png'),
+          imagePath: 'lib/Assets/lists.png', 
+          pageName: null),
     ];
   }
-
 
   // ignore: unused_element
   Widget _adminDashboardList(String text,
@@ -408,12 +409,20 @@ class _AdminDashboardPageState extends State<AdminDashboardPage> {
       required double height,
       required double tileSize,
       required int index,
+      required pageName,
       required imagePath}) {
     return SizedBox(
       width: tileSize,
       height: tileSize * (height / width),
       child: InkWell(
-        onTap: () {},
+        onTap: () {
+          Navigator.push(
+            context,
+            MaterialPageRoute<void>(
+              builder: (BuildContext context) => pageName,
+            ),
+          );
+        },
         child: Container(
           alignment: Alignment.center,
           decoration: BoxDecoration(
@@ -444,7 +453,9 @@ class _AdminDashboardPageState extends State<AdminDashboardPage> {
                   width: 35,
                   height: 35,
                 ),
-                const SizedBox(height: 10,),
+                const SizedBox(
+                  height: 10,
+                ),
                 Text(
                   text,
                   textAlign: TextAlign.center,
@@ -468,10 +479,7 @@ class _AdminDashboardPageState extends State<AdminDashboardPage> {
     int crossAxisCount = (screenWidth / tileWidth).floor();
     return crossAxisCount;
   }
-
 }
-
-
 
 void _launchURL(String url) async {
   if (await canLaunch(url)) {
@@ -480,8 +488,3 @@ void _launchURL(String url) async {
     throw 'Could not launch $url';
   }
 }
-
-
-
-
-  
