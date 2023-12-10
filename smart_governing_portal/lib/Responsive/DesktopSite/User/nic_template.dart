@@ -3,7 +3,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 class NICTemplate extends StatefulWidget {
-  const NICTemplate({super.key,});
+  const NICTemplate({Key? key}) : super(key: key);
 
   @override
   State<NICTemplate> createState() => _NICTemplateState();
@@ -29,7 +29,7 @@ class _NICTemplateState extends State<NICTemplate> {
       appBar: AppBar(
         title: const Text('National ID Card Template'),
       ),
-      body: SingleChildScrollView(
+      body: Center(
         child: Padding(
           padding: const EdgeInsets.all(16.0),
           child: FutureBuilder<DocumentSnapshot<Map<String, dynamic>>>(
@@ -38,34 +38,57 @@ class _NICTemplateState extends State<NICTemplate> {
               if (snapshot.connectionState == ConnectionState.waiting) {
                 return const CircularProgressIndicator();
               } else if (snapshot.hasError) {
-                return Text('Error: ${snapshot.error}');
+                return Center(
+                  child: Text(
+                    'Error: ${snapshot.error}',
+                    style: TextStyle(color: Colors.red),
+                  ),
+                );
               } else if (!snapshot.hasData || !snapshot.data!.exists) {
-                return const Text('Document not found');
+                return Center(
+                  child: Text(
+                    'Document not found',
+                    style: TextStyle(color: Colors.red),
+                  ),
+                );
               } else {
                 var documentData = snapshot.data!.data()!;
-                return Card(
-                  elevation: 5,
-                  child: Padding(
-                    padding: const EdgeInsets.all(16.0),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        const Text(
-                          'National Identity Card',
-                          style: TextStyle(
-                              fontSize: 20, fontWeight: FontWeight.bold),
+                return Center(
+                  child: Container(
+                    width: double.infinity,
+                    decoration: BoxDecoration(
+                      color: Colors.blue,
+                      borderRadius: BorderRadius.circular(8.0),
+                    ),
+                    child: Card(
+                      elevation: 5,
+                      color: Colors.white,
+                      child: Padding(
+                        padding: const EdgeInsets.all(16.0),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              'National Identity Card',
+                              style: TextStyle(
+                                fontSize: 24,
+                                fontWeight: FontWeight.bold,
+                                color: Colors.blue,
+                              ),
+                            ),
+                            const SizedBox(height: 16),
+                            _buildField('Full Name', documentData['Full Name'] ?? ''),
+                            _buildField('Other Names', documentData['Other Names'] ?? ''),
+                            _buildField('Birth Place', documentData['Birth Place'] ?? ''),
+                            _buildField('Address', documentData['Address'] ?? ''),
+                            _buildField('Profession', documentData['Profession'] ?? ''),
+                            _buildField('Document Number', documentData['Doc No'] ?? ''),
+                            _buildField('Date of Birth', documentData['Date of Birth'] ?? ''),
+                            _buildField('Issued Date', documentData['Issued Date'] ?? ''),
+                            _buildField('Gender', documentData['Gender'] ?? ''),
+                          ],
                         ),
-                        const SizedBox(height: 10),
-                        _buildField('Full Name : ', documentData['Full Name']?? ''),
-                        _buildField('Other Names : ', documentData['Other Names']?? ''),
-                        _buildField('Birth Place : ', documentData['Birth Place']?? ''),
-                        _buildField('Address : ', documentData['Address']?? ''),
-                        _buildField('Profession : ', documentData['Profession']?? ''),
-                        _buildField('Document Number : ', documentData['Doc No']?? ''),
-                        _buildField('Date of Birth : ', documentData['Date of Birth']?? ''),
-                        _buildField('Issued Date : ', documentData['Issued Date']?? ''),
-                        _buildField('Gender : ', documentData['Gender']?? ''),
-                      ],
+                      ),
                     ),
                   ),
                 );
@@ -81,16 +104,22 @@ class _NICTemplateState extends State<NICTemplate> {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 8.0),
       child: Row(
-        crossAxisAlignment: CrossAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text(
-            label,
-            style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+          Expanded(
+            flex: 1,
+            child: Text(
+              '$label:',
+              style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: Colors.blue),
+            ),
           ),
-          const SizedBox(height: 5),
-          Text(
-            value,
-            style: const TextStyle(fontSize: 18),
+          const SizedBox(width: 8),
+          Expanded(
+            flex: 2,
+            child: Text(
+              value,
+              style: const TextStyle(fontSize: 18),
+            ),
           ),
         ],
       ),

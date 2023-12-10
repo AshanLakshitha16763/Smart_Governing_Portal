@@ -3,7 +3,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 class NICTemplate extends StatefulWidget {
-  const NICTemplate({super.key});
+  const NICTemplate({Key? key}) : super(key: key);
 
   @override
   State<NICTemplate> createState() => _NICTemplateState();
@@ -28,6 +28,7 @@ class _NICTemplateState extends State<NICTemplate> {
     return Scaffold(
       appBar: AppBar(
         title: const Text('National ID Card Template'),
+        backgroundColor: Colors.blue, // Set app bar color
       ),
       body: SingleChildScrollView(
         child: Padding(
@@ -36,7 +37,11 @@ class _NICTemplateState extends State<NICTemplate> {
             future: data,
             builder: (context, snapshot) {
               if (snapshot.connectionState == ConnectionState.waiting) {
-                return const CircularProgressIndicator();
+                return Center(
+                  child: CircularProgressIndicator(
+                    valueColor: AlwaysStoppedAnimation<Color>(Colors.blue),
+                  ),
+                );
               } else if (snapshot.hasError) {
                 return Text('Error: ${snapshot.error}');
               } else if (!snapshot.hasData || !snapshot.data!.exists) {
@@ -45,6 +50,7 @@ class _NICTemplateState extends State<NICTemplate> {
                 var documentData = snapshot.data!.data()!;
                 return Card(
                   elevation: 5,
+                  color: Colors.blue.shade100, // Set card color
                   child: Padding(
                     padding: const EdgeInsets.all(16.0),
                     child: Column(
@@ -53,18 +59,21 @@ class _NICTemplateState extends State<NICTemplate> {
                         const Text(
                           'National Identity Card',
                           style: TextStyle(
-                              fontSize: 20, fontWeight: FontWeight.bold),
+                            fontSize: 20,
+                            fontWeight: FontWeight.bold,
+                            color: Colors.blue, // Set text color
+                          ),
                         ),
                         const SizedBox(height: 10),
-                        _buildField('Full Name : ', documentData['Full Name']?? ''),
-                        _buildField('Other Names : ', documentData['Other Names']?? ''),
-                        _buildField('Birth Place : ', documentData['Birth Place']?? ''),
-                        _buildField('Address : ', documentData['Address']?? ''),
-                        _buildField('Profession : ', documentData['Profession']?? ''),
-                        _buildField('Document Number : ', documentData['Doc No']?? ''),
-                        _buildField('Date of Birth : ', documentData['Date of Birth']?? ''),
-                        _buildField('Issued Date : ', documentData['Issued Date']?? ''),
-                        _buildField('Gender : ', documentData['Gender']?? ''),
+                        _buildField('Full Name : ', documentData['Full Name'] ?? ''),
+                        _buildField('Other Names : ', documentData['Other Names'] ?? ''),
+                        _buildField('Birth Place : ', documentData['Birth Place'] ?? ''),
+                        _buildField('Address : ', documentData['Address'] ?? ''),
+                        _buildField('Profession : ', documentData['Profession'] ?? ''),
+                        _buildField('Document Number : ', documentData['Doc No'] ?? ''),
+                        _buildField('Date of Birth : ', documentData['Date of Birth'] ?? ''),
+                        _buildField('Issued Date : ', documentData['Issued Date'] ?? ''),
+                        _buildField('Gender : ', documentData['Gender'] ?? ''),
                       ],
                     ),
                   ),
@@ -87,7 +96,7 @@ class _NICTemplateState extends State<NICTemplate> {
             label,
             style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
           ),
-          const SizedBox(height: 5),
+          const SizedBox(width: 5),
           Text(
             value,
             style: const TextStyle(fontSize: 18),
