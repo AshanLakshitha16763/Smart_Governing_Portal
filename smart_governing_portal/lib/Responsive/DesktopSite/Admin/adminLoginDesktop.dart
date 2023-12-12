@@ -34,10 +34,6 @@ class _AdminLoginDesktopState extends State<AdminLoginDesktop> {
     try {
       await Auth().signInWithEmailAndPassword(
           email: _emailController.text, password: _passwordController.text);
-
-      // ignore: use_build_context_synchronously
-      Navigator.pushReplacement(context,
-          MaterialPageRoute(builder: (context) => const AdminDashboardPage()));
     } on FirebaseAuthException catch (e) {
       setState(() {
         errorMessage = e.message;
@@ -54,18 +50,29 @@ class _AdminLoginDesktopState extends State<AdminLoginDesktop> {
         await db.collection("AdminRights").doc(currentUser!.uid).get();
 
     if (existingDoc.exists) {
-      // If the document exists, update the "Admin" field to "true"
-      await db.collection("AdminRights").doc(currentUser.uid).update({
-        "Admin": "true",
-      });
+      // ignore: use_build_context_synchronously
+      Navigator.pushReplacement(context,
+          MaterialPageRoute(builder: (context) => const AdminDashboardPage()));
     } else {
-      // If the document doesn't exist, create a new document and set "Admin" to "true"
-      final adminUser = <String, dynamic>{
-        "Admin": "true",
-      };
-      await db.collection("AdminRights").doc(currentUser.uid).set(adminUser);
+      // ignore: use_build_context_synchronously
+      showDialog(
+        context: context,
+        builder: (context) {
+          return AlertDialog(
+            title: const Text('Permission Denied'),
+            content: const Text('You do not have admin rights.'),
+            actions: <Widget>[
+              TextButton(
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+                child: const Text('OK'),
+              ),
+            ],
+          );
+        },
+      );
     }
-
     return;
   }
 
