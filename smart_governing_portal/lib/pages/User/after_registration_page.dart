@@ -1,11 +1,11 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:smart_governing_portal/Responsive/DesktopSite/Admin/adminLoginDesktop.dart';
-import 'package:smart_governing_portal/Responsive/DesktopSite/User/SmartDL_applying_form.dart';
-import 'package:smart_governing_portal/Responsive/DesktopSite/User/SmartNIC_applyingForm.dart';
-import 'package:smart_governing_portal/Responsive/DesktopSite/User/dl_template.dart';
-import 'package:smart_governing_portal/Responsive/DesktopSite/User/nic_template.dart';
+import 'package:smart_governing_portal/pages/Admin/adminLoginPage.dart';
+import 'package:smart_governing_portal/pages/User/SmartDL_applying_form.dart';
+import 'package:smart_governing_portal/pages/User/SmartNIC_applyingForm.dart';
+import 'package:smart_governing_portal/pages/User/dl_template.dart';
+import 'package:smart_governing_portal/pages/User/nic_template.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class AfterRegistrationPage extends StatefulWidget {
@@ -96,7 +96,7 @@ class _AfterRegistrationPageState extends State<AfterRegistrationPage> {
                             context,
                             MaterialPageRoute<void>(
                               builder: (BuildContext context) =>
-                                  const AdminLoginDesktop(),
+                                  const AdminLoginPage(),
                             ),
                           );
                         },

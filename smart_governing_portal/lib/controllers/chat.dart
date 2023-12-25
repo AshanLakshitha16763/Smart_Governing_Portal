@@ -2,7 +2,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:kommunicate_flutter/kommunicate_flutter.dart';
-import 'package:smart_governing_portal/secrets.dart';
+import 'package:smart_governing_portal/controllers/secrets.dart';
 
 class MyHomePage extends StatefulWidget {
   MyHomePage({Key? key, required this.title}) : super(key: key);
@@ -15,10 +15,10 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   // Replace this with your own API key from OpenAI
-  final String API_KEY = GPTAPI_KEY;
+  final String API_KEY = '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';
 
   // The base URL for the ChatGPT API
-  final String BASE_URL = 'https://api.openai.com/v1/engines/davinci/completions';
+  final String BASE_URL = GptAPI_KEY;
 
   // The text controller for the user input
   final TextEditingController _textController = TextEditingController();
@@ -91,7 +91,7 @@ class _MyHomePageState extends State<MyHomePage> {
 
     // Build the kommunicate conversation parameters
     Map<String, dynamic> conversationObject = {
-      'appId': 'app',
+      'appId': '14ed47dc99857b707364e31fbd4e371ee',
       'withPreChat': true,
       'isSingleConversation': true,
       'agentIds': ['Chatbot'],

@@ -1,9 +1,9 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:smart_governing_portal/Responsive/DesktopSite/Admin/adminDashboardPage.dart';
-import 'package:smart_governing_portal/Responsive/DesktopSite/User/after_registration_page.dart';
-import 'package:smart_governing_portal/Responsive/DesktopSite/User/home_page.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:smart_governing_portal/pages/Admin/adminDashboardPage.dart';
+import 'package:smart_governing_portal/pages/User/after_registration_page.dart';
+import 'package:smart_governing_portal/pages/User/user_homePage.dart';
 
 class Auth {
   final FirebaseAuth _auth = FirebaseAuth.instance;

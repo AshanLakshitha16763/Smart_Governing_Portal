@@ -8,9 +8,10 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:intl/intl.dart';
 import 'package:flutter/material.dart';
-import 'package:smart_governing_portal/Responsive/DesktopSite/Admin/adminFormPage.dart';
-import 'package:smart_governing_portal/Responsive/DesktopSite/dl_template.dart';
-import 'package:smart_governing_portal/Responsive/DesktopSite/home_page.dart';
+
+import 'package:smart_governing_portal/pages/Admin/adminFormPage.dart';
+import 'package:smart_governing_portal/pages/User/dl_template.dart';
+import 'package:smart_governing_portal/pages/User/user_homePage.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class DLApplicationForm extends StatefulWidget {
@@ -154,7 +155,7 @@ class _DLApplicationFormState extends State<DLApplicationForm> {
   void _submitForm() async {
     if (DLapplicationformKey.currentState!.validate()) {
       //get the current user's UID
-      User? curerrentUser = FirebaseAuth.instance.currentUser;
+      User? currentUser = FirebaseAuth.instance.currentUser;
 
       final user = <String, dynamic>{
         "Full Name": fullNameController.text,
@@ -170,10 +171,11 @@ class _DLApplicationFormState extends State<DLApplicationForm> {
         "Gender": genderController.text,
         "Province": provinceController.text,
         "District": districtController.text,
+        "Time": DateTime.now()
       };
 
       // Add a new document with user's UID
-      await db.collection("DLtest").doc(curerrentUser!.uid).set(user);
+      await db.collection("DLtest").doc(currentUser!.uid).set(user);
 
       // All fields are valid, proceed with form submission
       // Clear the form after successful submission (if needed)

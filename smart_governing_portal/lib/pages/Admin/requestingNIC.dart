@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:intl/intl.dart';
-import 'package:smart_governing_portal/Responsive/DesktopSite/Admin/RequestingNicTemplate.dart';
+import 'package:smart_governing_portal/pages/Admin/requestingNicTemplate.dart';
+
 
 
 class RequestingNIC extends StatefulWidget {
