@@ -2,8 +2,8 @@
 
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:smart_governing_portal/Responsive/DesktopSite/Admin/requestingNIC.dart';
-import 'package:smart_governing_portal/Responsive/DesktopSite/User/home_page.dart';
+import 'package:smart_governing_portal/pages/Admin/requestingNIC.dart';
+import 'package:smart_governing_portal/pages/User/user_homePage.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class AdminDashboardPage extends StatefulWidget {

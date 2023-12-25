@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 
-
 /*This navbar1 contains the login and register 
 button for desktop and tablet versions*/
 
@@ -282,7 +281,9 @@ var footer = Container(
 );
 
 //
-var mobileDrawer = Drawer(
+Widget mobileDrawer(double width){
+  return Drawer(
+  width: width,
   child: ListView(
     padding: EdgeInsets.zero,
     children: [
@@ -306,7 +307,7 @@ var mobileDrawer = Drawer(
       ListTile(
         leading: const Icon(
           Icons.home,
-          color: Colors.brown,
+          color: Colors.blue,
         ),
         title: const Text(
           "Home",
@@ -320,7 +321,7 @@ var mobileDrawer = Drawer(
       ListTile(
         leading: const Icon(
           Icons.search,
-          color: Colors.brown,
+          color: Colors.blue,
         ),
         title: const Text(
           "Services",
@@ -334,7 +335,7 @@ var mobileDrawer = Drawer(
       ListTile(
         leading: const Icon(
           Icons.groups,
-          color: Colors.brown,
+          color: Colors.blue,
         ),
         title: const Text(
           "About us",
@@ -347,8 +348,22 @@ var mobileDrawer = Drawer(
       ),
       ListTile(
         leading: const Icon(
+          Icons.supervised_user_circle_outlined,
+          color: Colors.blue,
+        ),
+        title: const Text(
+          "User",
+          style: TextStyle(
+            fontWeight: FontWeight.bold,
+            fontSize: 16,
+          ),
+        ),
+        onTap: () {},
+      ),
+      ListTile(
+        leading: const Icon(
           Icons.admin_panel_settings,
-          color: Colors.brown,
+          color: Colors.blue,
         ),
         title: const Text(
           "Admin",
@@ -362,6 +377,7 @@ var mobileDrawer = Drawer(
     ],
   ),
 );
+} 
 
 //homepage sections
 
