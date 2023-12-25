@@ -1,11 +1,11 @@
 // ignore_for_file: non_constant_identifier_names
 
 import 'package:flutter/material.dart';
-import 'package:smart_governing_portal/Responsive/DesktopSite/Admin/adminLoginDesktop.dart';
-import 'package:smart_governing_portal/Responsive/DesktopSite/login_desktop.dart';
-import 'package:smart_governing_portal/Responsive/DesktopSite/RegisterDesktop.dart';
-import 'package:smart_governing_portal/Responsive/DesktopSite/SmartDL_applying_form.dart';
-import 'package:smart_governing_portal/Responsive/DesktopSite/SmartNIC_applyingForm.dart';
+import 'package:smart_governing_portal/pages/Admin/adminLoginPage.dart';
+import 'package:smart_governing_portal/pages/User/SmartDL_applying_form.dart';
+import 'package:smart_governing_portal/pages/User/SmartNIC_applyingForm.dart';
+import 'package:smart_governing_portal/pages/User/user_loginPage.dart';
+import 'package:smart_governing_portal/pages/User/user_signupPage.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -30,10 +30,7 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     double w = MediaQuery.of(context).size.width;
     return Scaffold(
-      body: ListView(
-        children: [
-          //navbar
-          AppBar(
+      appBar: AppBar(
             automaticallyImplyLeading: false,
             toolbarHeight: 120,
             leadingWidth: 180,
@@ -104,7 +101,7 @@ class _HomePageState extends State<HomePage> {
                                 context,
                                 MaterialPageRoute<void>(
                                   builder: (BuildContext context) =>
-                                      const AdminLoginDesktop(),
+                                      const AdminLoginPage(),
                                 ),
                               );
                             },
@@ -130,7 +127,7 @@ class _HomePageState extends State<HomePage> {
                               context,
                               MaterialPageRoute<void>(
                                 builder: (BuildContext context) =>
-                                    const LoginDesktop(),
+                                    const UserLoginPage(),
                               ),
                             );
                           },
@@ -152,7 +149,7 @@ class _HomePageState extends State<HomePage> {
                               context,
                               MaterialPageRoute<void>(
                                 builder: (BuildContext context) =>
-                                    const RegistorDesktop(),
+                                    const UserSignUpPage(),
                               ),
                             );
                           },
@@ -177,6 +174,8 @@ class _HomePageState extends State<HomePage> {
             backgroundColor: const Color.fromARGB(255, 115, 185, 250),
           ),
 
+      body: ListView(
+        children: [
           //first section on the web
           SizedBox(
             child: Row(
@@ -768,7 +767,7 @@ class _HomePageState extends State<HomePage> {
             Navigator.push(
               context,
               MaterialPageRoute<void>(
-                builder: (BuildContext context) => const LoginDesktop(),
+                builder: (BuildContext context) => const UserLoginPage(),
               ),
             );
           }

@@ -2,8 +2,8 @@ import 'dart:async';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
-import 'package:smart_governing_portal/secrets.dart';
-import 'package:smart_governing_portal/widget_tree.dart';
+import 'package:smart_governing_portal/controllers/secrets.dart';
+import 'package:smart_governing_portal/controllers/widget_tree.dart';
 
 
 Future main() async {

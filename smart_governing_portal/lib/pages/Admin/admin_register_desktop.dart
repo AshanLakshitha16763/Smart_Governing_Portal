@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:smart_governing_portal/Responsive/DesktopSite/Admin/adminLoginDesktop.dart';
-import 'package:smart_governing_portal/Responsive/DesktopSite/User/after_registration_page.dart';
-import 'package:smart_governing_portal/Responsive/DesktopSite/User/home_page.dart';
+import 'package:smart_governing_portal/pages/Admin/adminLoginPage.dart';
+import 'package:smart_governing_portal/pages/User/after_registration_page.dart';
+import 'package:smart_governing_portal/pages/User/user_homePage.dart';
 
 
 class AdminRegisterDesktop extends StatefulWidget {
@@ -21,12 +21,7 @@ class _AdminRegisterDesktopState extends State<AdminRegisterDesktop> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Center(
-        child: Column(
-          children: [
-        
-            // navigation bar
-            AppBar(
+      appBar: AppBar(
               automaticallyImplyLeading: false,
               toolbarHeight: 120,
               leadingWidth: 180,
@@ -121,7 +116,7 @@ class _AdminRegisterDesktopState extends State<AdminRegisterDesktop> {
                                 context,
                                 MaterialPageRoute<void>(
                                   builder: (BuildContext context) =>
-                                      const AdminLoginDesktop(),
+                                      const AdminLoginPage(),
                                 ),
                               );
                             },
@@ -167,8 +162,10 @@ class _AdminRegisterDesktopState extends State<AdminRegisterDesktop> {
               ],
               backgroundColor: const Color.fromARGB(255, 115, 185, 250),
             ),
-        
-        
+            
+      body: Center(
+        child: Column(
+          children: [
             const SizedBox(
               height: 20,
             ),
@@ -407,7 +404,7 @@ class _AdminRegisterDesktopState extends State<AdminRegisterDesktop> {
                                     onPressed: () => Navigator.of(context)
                                         .push(MaterialPageRoute(
                                             builder: (context) =>
-                                                const AdminLoginDesktop())),
+                                                const AdminLoginPage())),
                                     child: const Text(
                                       'Already have an Account?',
                                       style: TextStyle(

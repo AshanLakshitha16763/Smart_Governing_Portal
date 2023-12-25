@@ -2,7 +2,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:kommunicate_flutter/kommunicate_flutter.dart';
-import 'package:smart_governing_portal/secrets.dart';
+import 'package:smart_governing_portal/controllers/secrets.dart';
 
 class MyHomePage extends StatefulWidget {
   MyHomePage({Key? key, required this.title}) : super(key: key);
