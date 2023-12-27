@@ -2,6 +2,7 @@ import 'dart:async';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:lottie/lottie.dart';
 import 'package:smart_governing_portal/controllers/secrets.dart';
 import 'package:smart_governing_portal/controllers/widget_tree.dart';
 
@@ -39,7 +40,7 @@ class _MyAppState extends State<MyApp> {
     super.initState();
 
     // Simulate a 5-second delay and then update loading state
-    Timer(const Duration(seconds: 2), () {
+    Timer(const Duration(seconds: 5), () {
       setState(() {
         _isLoading = false;
       });
@@ -58,7 +59,7 @@ class _MyAppState extends State<MyApp> {
               seedColor: const Color.fromARGB(255, 205, 219, 243)),
           useMaterial3: true,
         ),
-      home: _isLoading ? const LinearProgressIndicator() : const WidgetTree(),
+      home: _isLoading ? Center(child: Lottie.asset('lib/Assets/animations/loading.json',frameRate: FrameRate(40)),) : const WidgetTree(),
     );
   }
 }

@@ -1,7 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:smart_governing_portal/pages/Admin/adminFormPage.dart';
-import 'package:smart_governing_portal/pages/home_page.dart';
+import 'package:smart_governing_portal/pages/User/user_homePage.dart';
 import 'package:smart_governing_portal/controllers/auth.dart';
 import 'package:smart_governing_portal/controllers/constants.dart';
 import 'package:smart_governing_portal/pages/User/after_registration_page.dart';
@@ -147,9 +147,12 @@ class _UserLoginPageState extends State<UserLoginPage> {
               borderRadius: BorderRadius.circular(20),
             ),
           ),
-          child: const Text(
-            'Login',
-            style: TextStyle(fontSize: 20),
+          child: const FittedBox(
+            fit: BoxFit.scaleDown,
+            child: Text(
+              'Login',
+              style: TextStyle(fontSize: 20),
+            ),
           ),
         ),
         const SizedBox(height: 8.0),
@@ -241,7 +244,7 @@ class _UserLoginPageState extends State<UserLoginPage> {
                     Navigator.push(
                       context,
                       MaterialPageRoute<void>(
-                        builder: (BuildContext context) => const HomePage(),
+                        builder: (BuildContext context) => const UserHomePage(),
                       ),
                     );
                   },
@@ -495,7 +498,7 @@ class _UserLoginPageState extends State<UserLoginPage> {
             appBar: AppBar(
               backgroundColor: const Color.fromARGB(255, 115, 185, 250),
             ),
-            drawer: mobileDrawer(width*0.25),
+            drawer: mobileDrawer(width*0.6,context),
             body: _body());
       }
     });

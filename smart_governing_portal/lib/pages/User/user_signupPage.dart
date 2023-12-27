@@ -278,7 +278,7 @@ class _UserSignUpPageState extends State<UserSignUpPage> {
                     Navigator.push(
                       context,
                       MaterialPageRoute<void>(
-                        builder: (BuildContext context) => const HomePage(),
+                        builder: (BuildContext context) => const UserHomePage(),
                       ),
                     );
                   },
@@ -532,7 +532,7 @@ class _UserSignUpPageState extends State<UserSignUpPage> {
             appBar: AppBar(
               backgroundColor: const Color.fromARGB(255, 115, 185, 250),
             ),
-            drawer: mobileDrawer(width*0.25),
+            drawer: mobileDrawer(width*0.25,context),
             body: _body());
       }
     });

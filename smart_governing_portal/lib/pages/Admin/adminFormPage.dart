@@ -162,7 +162,7 @@ class _AdminHomePageState extends State<AdminHomePage> {
                             context,
                             MaterialPageRoute<void>(
                               builder: (BuildContext context) =>
-                                  const HomePage(),
+                                  const UserHomePage(),
                             ),
                           );
                         },
@@ -200,7 +200,7 @@ class _AdminHomePageState extends State<AdminHomePage> {
                             context,
                             MaterialPageRoute<void>(
                               builder: (BuildContext context) =>
-                                  const HomePage(),
+                                  const UserHomePage(),
                             ),
                           );
                         },

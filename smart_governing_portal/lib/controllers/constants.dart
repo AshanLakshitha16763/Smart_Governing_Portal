@@ -1,4 +1,8 @@
+import 'dart:js';
 import 'package:flutter/material.dart';
+import 'package:smart_governing_portal/pages/Admin/adminLoginPage.dart';
+import 'package:smart_governing_portal/pages/User/user_homePage.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 /*This navbar1 contains the login and register 
 button for desktop and tablet versions*/
@@ -120,168 +124,209 @@ var navbar = AppBar(
   backgroundColor: const Color.fromARGB(255, 115, 185, 250),
 );
 
+
+
+void _launchURL(String url) async {
+  if (await canLaunch(url)) {
+    await launch(url);
+  } else {
+    throw 'Could not launch $url';
+  }
+}
+
 //This is the Footer
 var footer = Container(
-  color: const Color.fromARGB(255, 248, 247, 247),
-  child: Padding(
-    padding: const EdgeInsets.all(20.0),
-    child: FittedBox(
-      fit: BoxFit.scaleDown,
-      child: Column(
-        children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      color: const Color.fromARGB(255, 248, 247, 247),
+      child: Padding(
+        padding: const EdgeInsets.all(20.0),
+        child: FittedBox(
+          fit: BoxFit.scaleDown,
+          child: Column(
             children: [
-              Column(
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Image.asset(
-                    'lib/Assets/logo.png',
-                    width: 150,
+                  Column(
+                    children: [
+                      Image.asset(
+                        'lib/Assets/logo.png',
+                        width: 150,
+                      ),
+                      const Text(
+                        'A centralized platform for citizens',
+                        style: TextStyle(
+                          fontSize: 15,
+                        ),
+                      ),
+                      const SizedBox(
+                        height: 10,
+                      ),
+                      const Text(
+                        'Lorem ipsum dolor sit amet,\nin vim orum, vim et postea \nphilosophia mediocritatem. \nEu sit postea adolescens intellegam.',
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                          fontSize: 15,
+                        ),
+                      ),
+                    ],
                   ),
-                  const Text(
-                    'A centralized platform for citizens',
-                    style: TextStyle(
-                      fontSize: 15,
-                    ),
+                  //Discover
+                  Column(
+                    children: [
+                      const SizedBox(
+                        height: 50,
+                      ),
+                      const Text(
+                        'Discover',
+                        style: TextStyle(
+                            fontSize: 20, fontWeight: FontWeight.bold),
+                      ),
+                      TextButton(
+                          onPressed: () {
+                            _launchURL(
+                                'https://www.gov.lk/sri-lanka/country-overview?');
+                          },
+                          child: const Text(
+                            'Country Overview',
+                            style: TextStyle(fontSize: 15),
+                          )),
+                      TextButton(
+                          onPressed: () {
+                            _launchURL(
+                                'https://www.gov.lk/sri-lanka/government?');
+                          },
+                          child: const Text(
+                            'Government',
+                            style: TextStyle(fontSize: 15),
+                          )),
+                      TextButton(
+                          onPressed: () {
+                            _launchURL(
+                                'https://www.gov.lk/sri-lanka/constitution?');
+                          },
+                          child: const Text(
+                            'Costitution',
+                            style: TextStyle(fontSize: 15),
+                          )),
+                      TextButton(
+                          onPressed: () {
+                            _launchURL(
+                                'http://hrlibrary.umn.edu/research/srilanka/legalsystem.html#:~:text=Hierarchy%20of%20courts.,interpretation%20of%20the%20case%20law.');
+                          },
+                          child: const Text(
+                            'Legal System',
+                            style: TextStyle(fontSize: 15),
+                          )),
+                    ],
                   ),
-                  const SizedBox(
-                    height: 10,
+
+                  //Quick Links
+                  Column(
+                    children: [
+                      const SizedBox(
+                        height: 50,
+                      ),
+                      const Text(
+                        'Quick Links',
+                        style: TextStyle(
+                            fontSize: 20, fontWeight: FontWeight.bold),
+                      ),
+                      TextButton(
+                          onPressed: () {
+                            _launchURL(
+                                'https://www.gov.lk/webdirectory/ministry?');
+                          },
+                          child: const Text(
+                            'Ministry Websites',
+                            style: TextStyle(fontSize: 15),
+                          )),
+                      TextButton(
+                          onPressed: () {
+                            _launchURL(
+                                'https://www.gov.lk/webdirectory/departments?');
+                          },
+                          child: const Text(
+                            'Departments Websites',
+                            style: TextStyle(fontSize: 15),
+                          )),
+                      TextButton(
+                          onPressed: () {
+                            _launchURL(
+                                'https://www.gov.lk/webdirectory/statutoryboards?');
+                          },
+                          child: const Text(
+                            'Statutory Boards',
+                            style: TextStyle(fontSize: 15),
+                          )),
+                      TextButton(
+                          onPressed: () {
+                            /* _launchURL('');*/
+                          },
+                          child: const Text(
+                            'Authorization Websites',
+                            style: TextStyle(fontSize: 15),
+                          )),
+                    ],
                   ),
-                  const Text(
-                    'Lorem ipsum dolor sit amet,\nin vim orum, vim et postea \nphilosophia mediocritatem. \nEu sit postea adolescens intellegam.',
-                    textAlign: TextAlign.center,
-                    style: TextStyle(
-                      fontSize: 15,
-                    ),
+
+                  //Easy Navigate To
+                  Column(
+                    children: [
+                      const SizedBox(
+                        height: 50,
+                      ),
+                      const Text(
+                        'Easy Navigate To',
+                        style: TextStyle(
+                            fontSize: 20, fontWeight: FontWeight.bold),
+                      ),
+                      TextButton(
+                          onPressed: () {},
+                          child: const Text(
+                            'Home',
+                            style: TextStyle(fontSize: 15),
+                          )),
+                      TextButton(
+                          onPressed: () {},
+                          child: const Text(
+                            'Services',
+                            style: TextStyle(fontSize: 15),
+                          )),
+                      TextButton(
+                          onPressed: () {},
+                          child: const Text(
+                            'About Us',
+                            style: TextStyle(fontSize: 15),
+                          )),
+                      TextButton(
+                          onPressed: () {},
+                          child: const Text(
+                            'Register',
+                            style: TextStyle(fontSize: 15),
+                          )),
+                    ],
                   ),
                 ],
               ),
-              Column(
-                children: [
-                  const SizedBox(
-                    height: 50,
-                  ),
-                  const Text(
-                    'Discover',
-                    style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-                  ),
-                  TextButton(
-                      onPressed: () {},
-                      child: const Text(
-                        'Country Overview',
-                        style: TextStyle(fontSize: 15),
-                      )),
-                  TextButton(
-                      onPressed: () {},
-                      child: const Text(
-                        'Government',
-                        style: TextStyle(fontSize: 15),
-                      )),
-                  TextButton(
-                      onPressed: () {},
-                      child: const Text(
-                        'Costitution',
-                        style: TextStyle(fontSize: 15),
-                      )),
-                  TextButton(
-                      onPressed: () {},
-                      child: const Text(
-                        'Legal System',
-                        style: TextStyle(fontSize: 15),
-                      )),
-                ],
+              const SizedBox(
+                height: 20,
               ),
-              Column(
-                children: [
-                  const SizedBox(
-                    height: 50,
-                  ),
-                  const Text(
-                    'Quick Links',
-                    style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-                  ),
-                  TextButton(
-                      onPressed: () {},
-                      child: const Text(
-                        'Ministry Websites',
-                        style: TextStyle(fontSize: 15),
-                      )),
-                  TextButton(
-                      onPressed: () {},
-                      child: const Text(
-                        'Departments Websites',
-                        style: TextStyle(fontSize: 15),
-                      )),
-                  TextButton(
-                      onPressed: () {},
-                      child: const Text(
-                        'Statutory Boards',
-                        style: TextStyle(fontSize: 15),
-                      )),
-                  TextButton(
-                      onPressed: () {},
-                      child: const Text(
-                        'Authorization Websites',
-                        style: TextStyle(fontSize: 15),
-                      )),
-                ],
-              ),
-              Column(
-                children: [
-                  const SizedBox(
-                    height: 50,
-                  ),
-                  const Text(
-                    'Easy Navigate To',
-                    style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-                  ),
-                  TextButton(
-                      onPressed: () {},
-                      child: const Text(
-                        'Home',
-                        style: TextStyle(fontSize: 15),
-                      )),
-                  TextButton(
-                      onPressed: () {},
-                      child: const Text(
-                        'Services',
-                        style: TextStyle(fontSize: 15),
-                      )),
-                  TextButton(
-                      onPressed: () {},
-                      child: const Text(
-                        'About Us',
-                        style: TextStyle(fontSize: 15),
-                      )),
-                  TextButton(
-                      onPressed: () {},
-                      child: const Text(
-                        'Register',
-                        style: TextStyle(fontSize: 15),
-                      )),
-                ],
-              ),
+              const Text(
+                'Copyright 2023, Let’s Gov, government service. All right reserved.',
+                style: TextStyle(
+                  color: Color.fromARGB(255, 100, 100, 100),
+                  fontSize: 15,
+                  fontFamily: 'Inter',
+                ),
+              )
             ],
           ),
-          const SizedBox(
-            height: 20,
-          ),
-          const Text(
-            'Copyright 2023, Let’s Gov, government service. All right reserved.',
-            style: TextStyle(
-              color: Color.fromARGB(255, 100, 100, 100),
-              fontSize: 15,
-              fontFamily: 'Inter',
-            ),
-          )
-        ],
+        ),
       ),
-    ),
-  ),
-);
+    );
 
 //
-Widget mobileDrawer(double width){
+Widget mobileDrawer(double width,context){
   return Drawer(
   width: width,
   child: ListView(
@@ -316,7 +361,15 @@ Widget mobileDrawer(double width){
             fontSize: 16,
           ),
         ),
-        onTap: () {},
+        onTap: () {
+          Navigator.pop(context as BuildContext);
+          Navigator.push(
+            context as BuildContext,
+            MaterialPageRoute<void>(
+              builder: (BuildContext context) => const UserHomePage(),
+            ),
+          );
+        },
       ),
       ListTile(
         leading: const Icon(
@@ -330,7 +383,14 @@ Widget mobileDrawer(double width){
             fontSize: 16,
           ),
         ),
-        onTap: () {},
+        onTap: () {
+          Navigator.push(
+            context as BuildContext,
+            MaterialPageRoute<void>(
+              builder: (BuildContext context) => const UserHomePage(),
+            ),
+          );
+        },
       ),
       ListTile(
         leading: const Icon(
@@ -358,7 +418,12 @@ Widget mobileDrawer(double width){
             fontSize: 16,
           ),
         ),
-        onTap: () {},
+        onTap: () {Navigator.push(
+            context as BuildContext,
+            MaterialPageRoute<void>(
+              builder: (BuildContext context) => const UserHomePage(),
+            ),
+          );},
       ),
       ListTile(
         leading: const Icon(
@@ -372,111 +437,20 @@ Widget mobileDrawer(double width){
             fontSize: 16,
           ),
         ),
-        onTap: () {},
+        onTap: () {
+          Navigator.pop(context as BuildContext);
+          Navigator.push(
+            context as BuildContext,
+            MaterialPageRoute<void>(
+              builder: (BuildContext context) => const AdminLoginPage(),
+            ),
+          );},
       ),
     ],
   ),
 );
 } 
 
-//homepage sections
 
-var section01 = SizedBox(
-  child: Row(
-    children: [
-      const SizedBox(
-        //width: w * 0.5,
-        child: Align(
-          alignment: Alignment.center,
-          child: Padding(
-            padding: EdgeInsets.only(left: 20, right: 20, top: 100),
-            child: FittedBox(
-              child: Text(
-                "WELCOME TO \nLET'S GOV",
-                style: TextStyle(
-                  fontFamily: 'Mitr',
-                  fontWeight: FontWeight.w800,
-                  fontSize: 80,
-                  color: Color.fromARGB(255, 10, 4, 70),
-                ),
-              ),
-            ),
-          ),
-        ),
-      ),
-      Column(
-        children: [
-          SizedBox(
-            //width: w * 0.5,
-            child: Padding(
-              padding: const EdgeInsets.only(
-                  right: 40, left: 40, top: 40, bottom: 20),
-              child: Container(
-                decoration: BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.circular(12),
-                  border: Border.all(
-                    color: const Color.fromARGB(255, 187, 191, 190),
-                    width: 1,
-                  ),
-                  boxShadow: const [
-                    BoxShadow(
-                      color: Color.fromARGB(
-                        255,
-                        187,
-                        191,
-                        190,
-                      ),
-                      spreadRadius: 1,
-                      blurRadius: 5,
-                      offset: Offset(0, 5),
-                    ),
-                  ],
-                ),
-                child: Image.asset(
-                  'lib/Assets/homepagepic.png',
-                  fit: BoxFit.scaleDown,
-                ),
-              ),
-            ),
-          ),
-          const SizedBox(
-            height: 20,
-          ),
-          Container(
-            alignment: Alignment.center,
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(12),
-              border: Border.all(
-                color: const Color.fromARGB(255, 187, 191, 190),
-                width: 1,
-              ),
-              boxShadow: const [
-                BoxShadow(
-                  color: Color.fromARGB(
-                    255,
-                    187,
-                    191,
-                    190,
-                  ),
-                  spreadRadius: 1,
-                  blurRadius: 5,
-                  offset: Offset(0, 5),
-                ),
-              ],
-            ),
-            child: const Text(
-              'Chatbot',
-              textAlign: TextAlign.center,
-              style: TextStyle(
-                fontFamily: 'Inter',
-                fontSize: 20,
-                fontWeight: FontWeight.bold,
-              ),
-            ),
-          ),
-        ],
-      ), // chatbot here
-    ],
-  ),
-);
+
+

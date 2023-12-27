@@ -54,7 +54,7 @@ class _AdminDashboardPageState extends State<AdminDashboardPage> {
                             context,
                             MaterialPageRoute<void>(
                               builder: (BuildContext context) =>
-                                  const HomePage(),
+                                  const UserHomePage(),
                             ),
                           );
                         },
@@ -92,7 +92,7 @@ class _AdminDashboardPageState extends State<AdminDashboardPage> {
                             context,
                             MaterialPageRoute<void>(
                               builder: (BuildContext context) =>
-                                  const HomePage(),
+                                  const UserHomePage(),
                             ),
                           );
                         },

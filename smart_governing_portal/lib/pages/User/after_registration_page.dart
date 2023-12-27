@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:smart_governing_portal/controllers/constants.dart';
 import 'package:smart_governing_portal/pages/Admin/adminLoginPage.dart';
 import 'package:smart_governing_portal/pages/User/SmartDL_applying_form.dart';
 import 'package:smart_governing_portal/pages/User/SmartNIC_applyingForm.dart';
@@ -16,39 +17,64 @@ class AfterRegistrationPage extends StatefulWidget {
 }
 
 class _AfterRegistrationPageState extends State<AfterRegistrationPage> {
+  late double height;
+  late double width;
   int hoveredIndex = -1;
+  late String userName;
+
   @override
   Widget build(BuildContext context) {
-    double w = MediaQuery.of(context).size.width;
+    width = MediaQuery.of(context).size.width;
+    height = MediaQuery.of(context).size.height;
     User? user = FirebaseAuth.instance.currentUser;
-    String userName = user?.displayName ?? 'User';
-    return Scaffold(
-      appBar: AppBar(
-        automaticallyImplyLeading: false,
-        toolbarHeight: 120,
-        leadingWidth: 180,
-        leading: SizedBox(
-          width: 150,
-          child: FittedBox(
-            child: Image.asset(
-              'lib/Assets/logo.png',
-              fit: BoxFit.cover,
-            ),
-          ),
-        ),
-        actions: [
-          FittedBox(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.end,
-              children: [
-                const SizedBox(
-                  height: 15,
+    userName = user?.displayName ?? 'User';
+    return LayoutBuilder(builder: (context, constraints) {
+      if (constraints.maxWidth > 800) {
+        return Scaffold(
+          appBar: AppBar(
+            automaticallyImplyLeading: false,
+            toolbarHeight: 120,
+            leadingWidth: 180,
+            leading: SizedBox(
+              width: 150,
+              child: FittedBox(
+                child: Image.asset(
+                  'lib/Assets/logo.png',
+                  fit: BoxFit.cover,
                 ),
-                Row(
-                  children: [
-                    TextButton(
-                        onPressed: () {
-                          /*
+              ),
+            ),
+            actions: [_appbarActions()],
+            backgroundColor: const Color.fromARGB(255, 115, 185, 250),
+          ),
+          body: _body(),
+        );
+      } else {
+        return Scaffold(
+      appBar: AppBar(
+        backgroundColor: const Color.fromARGB(255, 115, 185, 250),
+      ),
+      drawer: mobileDrawer(width*0.6, context),
+      body: _body(),
+    );
+      }
+    });
+  }
+
+  //appbar actions
+  Widget _appbarActions() {
+    return FittedBox(
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.end,
+        children: [
+          const SizedBox(
+            height: 15,
+          ),
+          Row(
+            children: [
+              TextButton(
+                  onPressed: () {
+                    /*
                               Navigator.push(
                                 context,
                                 MaterialPageRoute<void>(
@@ -57,64 +83,64 @@ class _AfterRegistrationPageState extends State<AfterRegistrationPage> {
                                 ),
                               );
                             */
-                        },
-                        child: const Text(
-                          'Home',
-                          style: TextStyle(
-                            color: Colors.black,
-                          ),
-                        )),
-                    const SizedBox(
-                      width: 20,
+                  },
+                  child: const Text(
+                    'Home',
+                    style: TextStyle(
+                      color: Colors.black,
                     ),
-                    TextButton(
-                        onPressed: () {},
-                        child: const Text(
-                          'Services',
-                          style: TextStyle(
-                            color: Colors.black,
-                          ),
-                        )),
-                    const SizedBox(
-                      width: 20,
+                  )),
+              const SizedBox(
+                width: 20,
+              ),
+              TextButton(
+                  onPressed: () {},
+                  child: const Text(
+                    'Services',
+                    style: TextStyle(
+                      color: Colors.black,
                     ),
-                    TextButton(
-                      onPressed: () {},
-                      child: const Text(
-                        'About Us',
-                        style: TextStyle(
-                          color: Colors.black,
-                        ),
+                  )),
+              const SizedBox(
+                width: 20,
+              ),
+              TextButton(
+                onPressed: () {},
+                child: const Text(
+                  'About Us',
+                  style: TextStyle(
+                    color: Colors.black,
+                  ),
+                ),
+              ),
+              const SizedBox(
+                width: 20,
+              ),
+              TextButton(
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute<void>(
+                        builder: (BuildContext context) =>
+                            const AdminLoginPage(),
                       ),
+                    );
+                  },
+                  child: const Text(
+                    'Admin',
+                    style: TextStyle(
+                      color: Colors.black,
                     ),
-                    const SizedBox(
-                      width: 20,
-                    ),
-                    TextButton(
-                        onPressed: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute<void>(
-                              builder: (BuildContext context) =>
-                                  const AdminLoginPage(),
-                            ),
-                          );
-                        },
-                        child: const Text(
-                          'Admin',
-                          style: TextStyle(
-                            color: Colors.black,
-                          ),
-                        )),
-                    const SizedBox(
-                      width: 20,
-                    ),
-                  ],
-                ),
-                const SizedBox(
-                  height: 10,
-                ),
-                /*Row(
+                  )),
+              const SizedBox(
+                width: 20,
+              ),
+            ],
+          ),
+          const SizedBox(
+            height: 10,
+          ),
+          /*Row(
                   children: [
                     ElevatedButton(
                       onPressed: () {
@@ -161,20 +187,21 @@ class _AfterRegistrationPageState extends State<AfterRegistrationPage> {
                     ),
                   ],
                 )*/
-              ],
-            ),
-          )
         ],
-        backgroundColor: const Color.fromARGB(255, 115, 185, 250),
       ),
-      body: ListView(
+    );
+  }
+
+  Widget _section1() {
+    return ConstrainedBox(
+      constraints: BoxConstraints(minHeight: height * 0.9),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.spaceAround,
         children: [
-          //Our Services & chat bot
           Column(
             children: [
-              const SizedBox(height: 25),
               Text(
-                'Hello, Welocom Back! $userName',
+                'Hello, Welocome Back! $userName',
                 style: const TextStyle(
                   color: Color.fromARGB(255, 10, 4, 70),
                   fontFamily: 'Inter',
@@ -190,272 +217,97 @@ class _AfterRegistrationPageState extends State<AfterRegistrationPage> {
                   fontSize: 24,
                 ),
               ),
-              const SizedBox(height: 25),
-              Row(
-                children: [
-                  Container(
-                    width: w / 2,
-                    child: SizedBox(
-                      child: Padding(
-                        padding:
-                            const EdgeInsets.only(left: 20, right: 20, top: 20),
-                        child: Column(
-                          children: [
-                            LayoutBuilder(
-                              builder: (context, constraints) {
-                                return Wrap(
-                                  spacing: 300.0,
-                                  runSpacing: 60.0,
-                                  children: _OURserviceTiles(300),
-                                );
-                              },
-                            ),
-                            const SizedBox(height: 60),
-                          ],
-                        ),
-                      ),
-                    ),
-                  ),
-                  Container(),
-                ],
-              ),
             ],
           ),
-
-          //GOV Services
-          SizedBox(
-            child: Padding(
-              padding: const EdgeInsets.only(left: 120, right: 120, top: 20),
-              child: Column(
-                children: [
-                  FittedBox(
-                    child: Row(
-                      children: [
-                        Image.asset('lib/Assets/people.png'),
-                        const SizedBox(width: 20),
-                        const Text(
-                          'Explore Government Services in Sri Lanka....',
-                          style: TextStyle(
-                            color: Color.fromARGB(255, 10, 4, 70),
-                            fontFamily: 'Inter',
-                            fontSize: 32,
-                            fontWeight: FontWeight.bold,
+          Row(
+            children: [
+              SizedBox(
+                child: SizedBox(
+                  width: width / 2,
+                  child: SizedBox(
+                    child: Padding(
+                      padding:
+                          const EdgeInsets.only(left: 20, right: 20, top: 20),
+                      child: Column(
+                        children: [
+                          LayoutBuilder(
+                            builder: (context, constraints) {
+                              return Wrap(
+                                spacing: 300.0,
+                                runSpacing: 60.0,
+                                children: _OURserviceTiles(300),
+                              );
+                            },
                           ),
-                        ),
-                      ],
+                          const SizedBox(height: 60),
+                        ],
+                      ),
                     ),
                   ),
-                  const SizedBox(height: 60),
-                  LayoutBuilder(
-                    builder: (context, constraints) {
-                      final tileSize = constraints.maxWidth /
-                          _calculateCrossAxisCount(context);
+                ),
+              ),
+              Container(),
+            ],
+          ),
+        ],
+      ),
+    );
+  }
 
-                      return Wrap(
-                        spacing: 60.0,
-                        runSpacing: 40.0,
-                        children: _GOVserviceTiles(tileSize),
-                      );
-                    },
+  Widget _section2() {
+    return SizedBox(
+      child: Padding(
+        padding: const EdgeInsets.only(left: 20, right: 20, top: 20),
+        child: Column(
+          children: [
+            FittedBox(
+              fit: BoxFit.fitWidth,
+              child: Row(
+                children: [
+                  Image.asset('lib/Assets/people.png'),
+                  const SizedBox(width: 20),
+                  const Text(
+                    'Explore Government Services in Sri Lanka....',
+                    style: TextStyle(
+                      color: Color.fromARGB(255, 10, 4, 70),
+                      fontFamily: 'Inter',
+                      fontSize: 32,
+                      fontWeight: FontWeight.bold,
+                    ),
                   ),
-                  const SizedBox(height: 60),
                 ],
               ),
             ),
-          ),
+            const SizedBox(height: 60),
+            LayoutBuilder(
+              builder: (context, constraints) {
+                final tileSize =
+                    constraints.maxWidth / _calculateCrossAxisCount(context);
 
-          //Footer
-          Container(
-            color: const Color.fromARGB(255, 248, 247, 247),
-            child: Padding(
-              padding: const EdgeInsets.all(20.0),
-              child: FittedBox(
-                fit: BoxFit.scaleDown,
-                child: Column(
-                  children: [
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Column(
-                          children: [
-                            Image.asset(
-                              'lib/Assets/logo.png',
-                              width: 150,
-                            ),
-                            const Text(
-                              'A centralized platform for citizens',
-                              style: TextStyle(
-                                fontSize: 15,
-                              ),
-                            ),
-                            const SizedBox(
-                              height: 10,
-                            ),
-                            const Text(
-                              'Lorem ipsum dolor sit amet,\nin vim orum, vim et postea \nphilosophia mediocritatem. \nEu sit postea adolescens intellegam.',
-                              textAlign: TextAlign.center,
-                              style: TextStyle(
-                                fontSize: 15,
-                              ),
-                            ),
-                          ],
-                        ),
-                        //Discover
-                        Column(
-                          children: [
-                            const SizedBox(
-                              height: 50,
-                            ),
-                            const Text(
-                              'Discover',
-                              style: TextStyle(
-                                  fontSize: 20, fontWeight: FontWeight.bold),
-                            ),
-                            TextButton(
-                                onPressed: () {
-                                  _launchURL(
-                                      'https://www.gov.lk/sri-lanka/country-overview?');
-                                },
-                                child: const Text(
-                                  'Country Overview',
-                                  style: TextStyle(fontSize: 15),
-                                )),
-                            TextButton(
-                                onPressed: () {
-                                  _launchURL(
-                                      'https://www.gov.lk/sri-lanka/government?');
-                                },
-                                child: const Text(
-                                  'Government',
-                                  style: TextStyle(fontSize: 15),
-                                )),
-                            TextButton(
-                                onPressed: () {
-                                  _launchURL(
-                                      'https://www.gov.lk/sri-lanka/constitution?');
-                                },
-                                child: const Text(
-                                  'Costitution',
-                                  style: TextStyle(fontSize: 15),
-                                )),
-                            TextButton(
-                                onPressed: () {
-                                  _launchURL(
-                                      'http://hrlibrary.umn.edu/research/srilanka/legalsystem.html#:~:text=Hierarchy%20of%20courts.,interpretation%20of%20the%20case%20law.');
-                                },
-                                child: const Text(
-                                  'Legal System',
-                                  style: TextStyle(fontSize: 15),
-                                )),
-                          ],
-                        ),
-
-                        //Quick Links
-                        Column(
-                          children: [
-                            const SizedBox(
-                              height: 50,
-                            ),
-                            const Text(
-                              'Quick Links',
-                              style: TextStyle(
-                                  fontSize: 20, fontWeight: FontWeight.bold),
-                            ),
-                            TextButton(
-                                onPressed: () {
-                                  _launchURL(
-                                      'https://www.gov.lk/webdirectory/ministry?');
-                                },
-                                child: const Text(
-                                  'Ministry Websites',
-                                  style: TextStyle(fontSize: 15),
-                                )),
-                            TextButton(
-                                onPressed: () {
-                                  _launchURL(
-                                      'https://www.gov.lk/webdirectory/departments?');
-                                },
-                                child: const Text(
-                                  'Departments Websites',
-                                  style: TextStyle(fontSize: 15),
-                                )),
-                            TextButton(
-                                onPressed: () {
-                                  _launchURL(
-                                      'https://www.gov.lk/webdirectory/statutoryboards?');
-                                },
-                                child: const Text(
-                                  'Statutory Boards',
-                                  style: TextStyle(fontSize: 15),
-                                )),
-                            TextButton(
-                                onPressed: () {
-                                  /* _launchURL('');*/
-                                },
-                                child: const Text(
-                                  'Authorization Websites',
-                                  style: TextStyle(fontSize: 15),
-                                )),
-                          ],
-                        ),
-
-                        //Easy Navigate To
-                        Column(
-                          children: [
-                            const SizedBox(
-                              height: 50,
-                            ),
-                            const Text(
-                              'Easy Navigate To',
-                              style: TextStyle(
-                                  fontSize: 20, fontWeight: FontWeight.bold),
-                            ),
-                            TextButton(
-                                onPressed: () {},
-                                child: const Text(
-                                  'Home',
-                                  style: TextStyle(fontSize: 15),
-                                )),
-                            TextButton(
-                                onPressed: () {},
-                                child: const Text(
-                                  'Services',
-                                  style: TextStyle(fontSize: 15),
-                                )),
-                            TextButton(
-                                onPressed: () {},
-                                child: const Text(
-                                  'About Us',
-                                  style: TextStyle(fontSize: 15),
-                                )),
-                            TextButton(
-                                onPressed: () {},
-                                child: const Text(
-                                  'Register',
-                                  style: TextStyle(fontSize: 15),
-                                )),
-                          ],
-                        ),
-                      ],
-                    ),
-                    const SizedBox(
-                      height: 20,
-                    ),
-                    const Text(
-                      'Copyright 2023, Let’s Gov, government service. All right reserved.',
-                      style: TextStyle(
-                        color: Color.fromARGB(255, 100, 100, 100),
-                        fontSize: 15,
-                        fontFamily: 'Inter',
-                      ),
-                    )
-                  ],
-                ),
-              ),
+                return Wrap(
+                  spacing: 60.0,
+                  runSpacing: 40.0,
+                  children: _GOVserviceTiles(tileSize),
+                );
+              },
             ),
-          )
-        ],
+            const SizedBox(height: 60),
+          ],
+        ),
       ),
+    );
+  }
+
+  Widget _body() {
+    return ListView(
+      children: [
+        //Our Services & chat bot
+        _section1(),
+        //GOV Services
+        _section2(),
+        //Footer
+        footer
+      ],
     );
   }
 

@@ -8,6 +8,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:intl/intl.dart';
 import 'package:flutter/material.dart';
+import 'package:smart_governing_portal/controllers/constants.dart';
 
 import 'package:smart_governing_portal/pages/Admin/adminFormPage.dart';
 import 'package:smart_governing_portal/pages/User/dl_template.dart';
@@ -22,6 +23,8 @@ class DLApplicationForm extends StatefulWidget {
 }
 
 class _DLApplicationFormState extends State<DLApplicationForm> {
+  late double width;
+  late double height;
   final db = FirebaseFirestore.instance;
   final DLapplicationformKey = GlobalKey<FormState>();
   TextEditingController fullNameController = TextEditingController();
@@ -37,6 +40,8 @@ class _DLApplicationFormState extends State<DLApplicationForm> {
   TextEditingController genderController = TextEditingController();
   TextEditingController provinceController = TextEditingController();
   TextEditingController districtController = TextEditingController();
+  final ScrollController _scrollController = ScrollController();
+  final GlobalKey _DLformKey = GlobalKey();
   //File? _pickedImage;
   //Uint8List webImage = Uint8List(8);
 
@@ -187,7 +192,6 @@ class _DLApplicationFormState extends State<DLApplicationForm> {
           builder: (BuildContext context) => const DLTemplate(),
         ),
       );
-
     } else {
       // There are invalid fields, show an error message
       showDialog(
@@ -239,8 +243,8 @@ class _DLApplicationFormState extends State<DLApplicationForm> {
 */
   @override
   Widget build(BuildContext context) {
-    double w = MediaQuery.of(context).size.width;
-    double h = MediaQuery.of(context).size.height;
+    width = MediaQuery.of(context).size.width;
+    height = MediaQuery.of(context).size.height;
     return Scaffold(
       body: ListView(
         children: [
@@ -256,498 +260,514 @@ class _DLApplicationFormState extends State<DLApplicationForm> {
                 fit: BoxFit.cover,
               ),
             ),
-            actions: [
-              FittedBox(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.end,
-                  children: [
-                    const SizedBox(
-                      height: 15,
-                    ),
-                    Row(
-                      children: [
-                        TextButton(
-                            onPressed: () {
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute<void>(
-                                  builder: (BuildContext context) =>
-                                      const HomePage(),
-                                ),
-                              );
-                            },
-                            child: const Text(
-                              'Home',
-                              style: TextStyle(
-                                color: Colors.black,
-                              ),
-                            )),
-                        const SizedBox(
-                          width: 20,
-                        ),
-                        TextButton(
-                            onPressed: () {},
-                            child: const Text(
-                              'Services',
-                              style: TextStyle(
-                                color: Colors.black,
-                              ),
-                            )),
-                        const SizedBox(
-                          width: 20,
-                        ),
-                        TextButton(
-                          onPressed: () {},
-                          child: const Text(
-                            'About Us',
-                            style: TextStyle(
-                              color: Colors.black,
-                            ),
-                          ),
-                        ),
-                        const SizedBox(
-                          width: 20,
-                        ),
-                        TextButton(
-                            onPressed: () {
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute<void>(
-                                  builder: (BuildContext context) =>
-                                      const AdminHomePage(),
-                                ),
-                              );
-                            },
-                            child: const Text(
-                              'Admin',
-                              style: TextStyle(
-                                color: Colors.black,
-                              ),
-                            )),
-                        const SizedBox(
-                          width: 20,
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.only(
-                            right: 20,
-                            top: 5,
-                          ),
-                          child: IconButton(
-                              onPressed: () {},
-                              icon: Image.asset(
-                                'lib/Assets/person.png',
-                                width: 40,
-                                height: 40,
-                              )),
-                        )
-                      ],
-                    ),
-                    const SizedBox(
-                      height: 20,
-                    ),
-                  ],
-                ),
-              )
-            ],
+            actions: [_appbarActions()],
             backgroundColor: const Color.fromARGB(255, 115, 185, 250),
           ),
 
           //instructions
-          Padding(
-            padding: const EdgeInsets.all(20),
-            child: Column(
-              children: [
-                Container(
-                  width: w * 0.8,
-                  height: h * 0.5,
-                  alignment: Alignment.centerLeft,
-                  decoration: BoxDecoration(
-                    color: const Color.fromARGB(255, 248, 247, 247),
-                    borderRadius: BorderRadius.circular(12),
-                    border: Border.all(
-                      color: const Color.fromARGB(255, 187, 191, 190),
-                      width: 1,
-                    ),
-                    boxShadow: [
-                      BoxShadow(
-                        color: Colors.grey.shade300,
-                        spreadRadius: 1,
-                        blurRadius: 2,
-                        offset: const Offset(0, 5),
-                      ),
-                    ],
-                  ),
-                  child: const Padding(
-                    padding: EdgeInsets.all(20),
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Text(
-                          'Please read the following before using the service.',
-                          textAlign: TextAlign.center,
-                          style: TextStyle(
-                            fontSize: 20,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                        Text(
-                          'Welcome to the online Driving License verification system.Lorem ipsum dolor sit amet, in vim nihil maiorum, vim et postea philosophia mediocritatem. Eu sit postea adolescens intellegam. Pri modus pericula ut, an vidisse aperiam nec, sed ea. animal inciderint. Etiam ceteros repudiandae ex usu, nec diam decore cu. Sea an libris.Loremipsum dolor sit amet, in vim nihil maiorum, vim et postea philosophia mediocritatem. Eu sit postea adolescens intellegam. Pri modus pericula ut, an vidisse aperiam nec, sed ea. ',
-                          textAlign: TextAlign.center,
-                          style: TextStyle(
-                            fontSize: 20,
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
-                const SizedBox(
-                  height: 20,
-                ),
-                const Text(
-                  'Copyright 2023',
-                  textAlign: TextAlign.left,
-                  style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold),
-                ),
-                const SizedBox(
-                  height: 25,
-                ),
-                const Text(
-                  'To apply Smart Driving License, please fill out this forum and sumbit',
-                  textAlign: TextAlign.center,
-                  style: TextStyle(
-                      fontFamily: 'Inter',
-                      fontSize: 20,
-                      fontWeight: FontWeight.bold),
-                ),
-                const SizedBox(
-                  height: 15,
-                ),
-                Image.asset(
-                  'lib/Assets/belowicon.png',
-                  width: 32,
-                  height: 40,
-                )
-              ],
-            ),
-          ),
-
+          _instructions(),
           //Form
-          Padding(
-            padding:
-                const EdgeInsets.only(left: 80, right: 80, top: 30, bottom: 30),
-            child: Container(
-              decoration: BoxDecoration(
-                border: Border.all(
-                  color:
-                      const Color.fromARGB(255, 243, 236, 236), // Border color
-                  width: 3.0, // Border width
-                ),
-                borderRadius: BorderRadius.circular(15), // Border radius
+          _form(id: 'Application Form'),
+          //footer
+          footer
+        ],
+      ),
+    );
+  }
+
+  //appbarActions
+  Widget _appbarActions() {
+    return FittedBox(
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.end,
+        children: [
+          const SizedBox(
+            height: 15,
+          ),
+          Row(
+            children: [
+              TextButton(
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute<void>(
+                        builder: (BuildContext context) => const UserHomePage(),
+                      ),
+                    );
+                  },
+                  child: const Text(
+                    'Home',
+                    style: TextStyle(
+                      color: Colors.black,
+                    ),
+                  )),
+              const SizedBox(
+                width: 20,
               ),
-              child: Padding(
-                padding: const EdgeInsets.all(50),
-                child: Form(
-                    key: DLapplicationformKey,
-                    child: Column(
-                      children: <Widget>[
-                        const Text(
-                          'Apply for Smart Driving License',
-                          style: TextStyle(
-                              fontFamily: 'Inter',
-                              fontSize: 20,
-                              fontWeight: FontWeight.bold),
-                        ),
-                        const SizedBox(
-                          height: 60,
-                        ),
-                        //Full Name
-                        TextFormField(
-                            controller: fullNameController,
-                            validator: (value) {
-                              if (value!.isEmpty) {
-                                return 'Please enter your full Name';
-                              }
-                              return null;
-                            },
-                            decoration: decorations('Full Name')),
-                        const SizedBox(
-                          height: 10,
-                        ),
-                        //Other Names
-                        TextFormField(
-                            controller: otherNamesController,
-                            validator: (value) {
-                              if (value!.isEmpty) {
-                                return 'Please enter your other Names if ave any';
-                              }
-                              return null;
-                            },
-                            decoration: decorations('Other Names')),
-                        const SizedBox(
-                          height: 10,
-                        ),
-                        //NIC
-                        TextFormField(
-                            controller: nicController,
-                            validator: (value) {
-                              if (value!.isEmpty) {
-                                return 'Please enter your NIC number';
-                              }
-                              // Check if the NIC number has either 10 characters with the last character being 'v' or 'V',
-                              // or it consists of 12 consecutive numbers.
-                              if (!(RegExp(r'^\d{9}[vV]$').hasMatch(value) ||
-                                  RegExp(r'^\d{12}$').hasMatch(value))) {
-                                return 'Please enter a valid NIC number. It should either have 10 characters with the last character as "v" or "V", or consist of 12 consecutive numbers.';
-                              }
-                              return null;
-                            },
-                            decoration: decorations('NIC No')),
-                        const SizedBox(
-                          height: 10,
-                        ),
-                        //Date of Birth
-                        TextFormField(
-                            controller: dobController,
-                            onTap: () => selectDateOfBirth(context),
-                            readOnly: true,
-                            decoration: decorations('Date of Birth')),
-                        const SizedBox(
-                          height: 10,
-                        ),
-                        //Gender
-                        DropdownButtonFormField(
-                          decoration: decorations('Gender'),
-                          value: _gender,
-                          items: _genderList
-                              .map((String gender) => DropdownMenuItem(
-                                  value: gender, child: Text(gender)))
-                              .toList(),
-                          onChanged: (String? newGender) {
-                            setState(() {
-                              genderController.text = newGender!;
-                            });
-                          },
-                          validator: (value) {
-                            if (value == '-Choose your Gender-') {
-                              return 'Please choose your Gender';
-                            }
-                            return null;
-                          },
-                        ),
-                        const SizedBox(
-                          height: 10,
-                        ),
-                        //License No
-                        TextFormField(
-                            controller: licenseNoController,
-                            validator: (value) {
-                              if (value!.isEmpty) {
-                                return 'Please enter your License No';
-                              }
-                              return null;
-                            },
-                            decoration: decorations('License No')),
-                        const SizedBox(
-                          height: 10,
-                        ),
-                        //Vehicle Category
+              TextButton(
+                  onPressed: () {},
+                  child: const Text(
+                    'Services',
+                    style: TextStyle(
+                      color: Colors.black,
+                    ),
+                  )),
+              const SizedBox(
+                width: 20,
+              ),
+              TextButton(
+                onPressed: () {},
+                child: const Text(
+                  'About Us',
+                  style: TextStyle(
+                    color: Colors.black,
+                  ),
+                ),
+              ),
+              const SizedBox(
+                width: 20,
+              ),
+              TextButton(
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute<void>(
+                        builder: (BuildContext context) =>
+                            const AdminHomePage(),
+                      ),
+                    );
+                  },
+                  child: const Text(
+                    'Admin',
+                    style: TextStyle(
+                      color: Colors.black,
+                    ),
+                  )),
+              const SizedBox(
+                width: 20,
+              ),
+              Padding(
+                padding: const EdgeInsets.only(
+                  right: 20,
+                  top: 5,
+                ),
+                child: IconButton(
+                    onPressed: () {},
+                    icon: Image.asset(
+                      'lib/Assets/person.png',
+                      width: 40,
+                      height: 40,
+                    )),
+              )
+            ],
+          ),
+          const SizedBox(
+            height: 20,
+          ),
+        ],
+      ),
+    );
+  }
 
-                        //Blood Group
-                        DropdownButtonFormField(
-                          value: _bloodGroup,
-                          items: _bloodGroupList
-                              .map((String newBloodGroup) => DropdownMenuItem(
-                                  value: newBloodGroup,
-                                  child: Text(newBloodGroup)))
-                              .toList(),
-                          onChanged: (String? newBloodGroup) {
-                            setState(() {
-                              bloodGroupController.text = newBloodGroup!;
-                            });
-                          },
-                          validator: (value) {
-                            if (value == '-Choose your Gender-') {
-                              return 'Please choose your Gender';
-                            }
-                            return null;
-                          },
-                          decoration: decorations("Choose your Blood Group"),
-                        ),
-                        const SizedBox(
-                          height: 10,
-                        ),
-                        //Address
-                        TextFormField(
-                            controller: addressController,
-                            validator: (value) {
-                              if (value!.isEmpty) {
-                                return 'Please enter your Personal Address';
-                              }
-                              return null;
-                            },
-                            decoration: decorations('Address')),
-                        const SizedBox(
-                          height: 10,
-                        ),
-                        //Province Dropdown
-                        DropdownButtonFormField(
-                          decoration: decorations('Province'),
-                          value: _province,
-                          items: _provinceList
-                              .map((String province) => DropdownMenuItem(
-                                    value: province,
-                                    child: Text(province),
-                                  ))
-                              .toList(),
-                          validator: (value) {
-                            if (value == '-Choose your Province-') {
-                              return 'Please choose your Province';
-                            }
-                            return null;
-                          },
-                          onChanged: (String? newValue) {
-                            setState(() {
-                              provinceController.text = newValue!;
+  //instructions
+  Widget _instructions() {
+    return ConstrainedBox(
+      constraints: BoxConstraints(
+        minHeight: height * 0.8,
+      ),
+      child: Padding(
+        padding: const EdgeInsets.all(20),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Container(
+              width: width * 0.8,
+              alignment: Alignment.centerLeft,
+              decoration: BoxDecoration(
+                color: const Color.fromARGB(255, 248, 247, 247),
+                borderRadius: BorderRadius.circular(12),
+                border: Border.all(
+                  color: const Color.fromARGB(255, 187, 191, 190),
+                  width: 1,
+                ),
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.grey.shade300,
+                    spreadRadius: 1,
+                    blurRadius: 2,
+                    offset: const Offset(0, 5),
+                  ),
+                ],
+              ),
+              child: const Padding(
+                padding: EdgeInsets.all(20),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text(
+                      ' Please read the following before using the service. ',
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                        fontSize: 20,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    Text(
+                      'Welcome to the online Driving License verification system.Lorem ipsum dolor sit amet, in vim nihil maiorum, vim et postea philosophia mediocritatem. Eu sit postea adolescens intellegam. Pri modus pericula ut, an vidisse aperiam nec, sed ea. animal inciderint. Etiam ceteros repudiandae ex usu, nec diam decore cu. Sea an libris.Loremipsum dolor sit amet, in vim nihil maiorum, vim et postea philosophia mediocritatem. Eu sit postea adolescens intellegam. Pri modus pericula ut, an vidisse aperiam nec, sed ea. ',
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                        fontSize: 20,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+            const Text(
+              ' Copyright 2023 ',
+              textAlign: TextAlign.left,
+              style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold),
+            ),
+            const Text(
+              ' To apply Smart Driving License, please fill out this forum and submit ',
+              textAlign: TextAlign.center,
+              style: TextStyle(
+                  fontFamily: 'Inter',
+                  fontSize: 20,
+                  fontWeight: FontWeight.bold),
+            ),
+            GestureDetector(
+              onTap: () {
+                Future.delayed(Duration.zero, () {
+                  Scrollable.ensureVisible(
+                    _DLformKey.currentContext!,
+                    duration: const Duration(seconds: 1),
+                    curve: Curves.easeInOut,
+                  );
+                });
+              },
+              child: Image.asset(
+                'lib/Assets/belowicon.png',
+                width: 32,
+                height: 40,
+              ),
+            )
+          ],
+        ),
+      ),
+    );
+  }
 
-                              // Update the items in the district dropdown based on the selected province
-                              if (provinceController.text == 'WESTERN') {
-                                _districtList = [
-                                  '-Choose your District-',
-                                  'Gampaha',
-                                  'Colombo',
-                                  'Kaluthara'
-                                ];
-                              } else if (provinceController.text == 'CENTRAL') {
-                                _districtList = [
-                                  '-Choose your District-',
-                                  'Kandy',
-                                  'Matale',
-                                  'Nuwara Eliya'
-                                ];
-                              } else if (provinceController.text ==
-                                  'SOUTHERN') {
-                                _districtList = [
-                                  '-Choose your District-',
-                                  'Galle',
-                                  'Matara',
-                                  'Hambanthota'
-                                ];
-                              } else if (provinceController.text ==
-                                  'SABARAGAMUWA') {
-                                _districtList = [
-                                  '-Choose your District-',
-                                  'Kegalle',
-                                  'Rathnapura'
-                                ];
-                              } else if (provinceController.text == 'EASTERN') {
-                                _districtList = [
-                                  '-Choose your District-',
-                                  'Ampara',
-                                  'Batticaloa',
-                                  'Trincomalee'
-                                ];
-                              } else if (provinceController.text == 'UVA') {
-                                _districtList = [
-                                  '-Choose your District-',
-                                  'Badulla',
-                                  'Monaragala'
-                                ];
-                              } else if (provinceController.text ==
-                                  'NORTH WESTERN') {
-                                _districtList = [
-                                  '-Choose your District-',
-                                  'Kurunegala',
-                                  'Puttalam'
-                                ];
-                              } else if (provinceController.text ==
-                                  'NORTH CENTRAL') {
-                                _districtList = [
-                                  '-Choose your District-',
-                                  'Anuradhapura',
-                                  'Polonnaruwa'
-                                ];
-                              } else if (provinceController.text ==
-                                  'NORTHERN') {
-                                _districtList = [
-                                  '-Choose your District-',
-                                  'Jaffna',
-                                  'Kilinochchi',
-                                  'Mullaitivu',
-                                  'Vavuniya',
-                                  'Mannar'
-                                ];
-                              } else {
-                                _districtList = [
-                                  '-Choose your District-'
-                                ]; // Default value when '-Num-' is selected
-                              }
-                              // Reset the selected district to '-Choose your District-' when changing the province
-                              _district = '-Choose your District-';
-                            });
-                          },
-                        ),
-                        const SizedBox(
-                          height: 10,
-                        ),
+  //form
+  Widget _form({required String id}) {
+    return Padding(
+      key: _DLformKey,
+      padding: const EdgeInsets.only(left: 80, right: 80, top: 30, bottom: 30),
+      child: Container(
+        decoration: BoxDecoration(
+          border: Border.all(
+            color: const Color.fromARGB(255, 243, 236, 236), // Border color
+            width: 3.0, // Border width
+          ),
+          borderRadius: BorderRadius.circular(15), // Border radius
+        ),
+        child: Padding(
+          padding: const EdgeInsets.all(50),
+          child: Form(
+              key: DLapplicationformKey,
+              child: Column(
+                children: <Widget>[
+                  const Text(
+                    'Apply for Smart Driving License',
+                    style: TextStyle(
+                        fontFamily: 'Inter',
+                        fontSize: 20,
+                        fontWeight: FontWeight.bold),
+                  ),
+                  const SizedBox(
+                    height: 60,
+                  ),
+                  //Full Name
+                  TextFormField(
+                      controller: fullNameController,
+                      validator: (value) {
+                        if (value!.isEmpty) {
+                          return 'Please enter your full Name';
+                        }
+                        return null;
+                      },
+                      decoration: decorations('Full Name')),
+                  const SizedBox(
+                    height: 10,
+                  ),
+                  //Other Names
+                  TextFormField(
+                      controller: otherNamesController,
+                      validator: (value) {
+                        if (value!.isEmpty) {
+                          return 'Please enter your other Names if ave any';
+                        }
+                        return null;
+                      },
+                      decoration: decorations('Other Names')),
+                  const SizedBox(
+                    height: 10,
+                  ),
+                  //NIC
+                  TextFormField(
+                      controller: nicController,
+                      validator: (value) {
+                        if (value!.isEmpty) {
+                          return 'Please enter your NIC number';
+                        }
+                        // Check if the NIC number has either 10 characters with the last character being 'v' or 'V',
+                        // or it consists of 12 consecutive numbers.
+                        if (!(RegExp(r'^\d{9}[vV]$').hasMatch(value) ||
+                            RegExp(r'^\d{12}$').hasMatch(value))) {
+                          return 'Please enter a valid NIC number. It should either have 10 characters with the last character as "v" or "V", or consist of 12 consecutive numbers.';
+                        }
+                        return null;
+                      },
+                      decoration: decorations('NIC No')),
+                  const SizedBox(
+                    height: 10,
+                  ),
+                  //Date of Birth
+                  TextFormField(
+                      controller: dobController,
+                      onTap: () => selectDateOfBirth(context),
+                      readOnly: true,
+                      decoration: decorations('Date of Birth')),
+                  const SizedBox(
+                    height: 10,
+                  ),
+                  //Gender
+                  DropdownButtonFormField(
+                    decoration: decorations('Gender'),
+                    value: _gender,
+                    items: _genderList
+                        .map((String gender) => DropdownMenuItem(
+                            value: gender, child: Text(gender)))
+                        .toList(),
+                    onChanged: (String? newGender) {
+                      setState(() {
+                        genderController.text = newGender!;
+                      });
+                    },
+                    validator: (value) {
+                      if (value == '-Choose your Gender-') {
+                        return 'Please choose your Gender';
+                      }
+                      return null;
+                    },
+                  ),
+                  const SizedBox(
+                    height: 10,
+                  ),
+                  //License No
+                  TextFormField(
+                      controller: licenseNoController,
+                      validator: (value) {
+                        if (value!.isEmpty) {
+                          return 'Please enter your License No';
+                        }
+                        return null;
+                      },
+                      decoration: decorations('License No')),
+                  const SizedBox(
+                    height: 10,
+                  ),
+                  //Vehicle Category
 
-                        // District Dropdown
-                        DropdownButtonFormField(
-                          decoration: decorations('District'),
-                          value: _district,
-                          items: _districtList
-                              .map((String district) => DropdownMenuItem(
-                                    value: district,
-                                    child: Text(district),
-                                  ))
-                              .toList(),
-                          validator: (value) {
-                            if (value == '-Choose your District-') {
-                              return 'Please choose your District';
-                            }
-                            return null;
-                          },
-                          onChanged: (String? newDistrict) {
-                            setState(() {
-                              districtController.text = newDistrict!;
-                            });
-                          },
-                        ),
-                        const SizedBox(
-                          height: 10,
-                        ),
-                        //area code
-                        TextFormField(
-                            controller: areaCodeController,
-                            validator: (value) {
-                              if (value!.isEmpty) {
-                                return 'Please enter your Area (work)';
-                              }
-                              return null;
-                            },
-                            decoration: decorations('Area Code')),
-                        const SizedBox(
-                          height: 10,
-                        ),
-                        //Issued Date
-                        TextFormField(
-                            controller: issuedDateController,
-                            onTap: () => selectIssuedDate(context),
-                            readOnly: true,
-                            decoration: decorations('Issued Date')),
-                        const SizedBox(
-                          height: 10,
-                        ),
-                        //Expiry Date
-                        TextFormField(
-                            controller: expiryDateController,
-                            onTap: () => selectExpiryDate(context),
-                            readOnly: true,
-                            decoration: decorations('Expiry Date')),
-                        const SizedBox(
-                          height: 10,
-                        ),
-                        /*Row(
+                  //Blood Group
+                  DropdownButtonFormField(
+                    value: _bloodGroup,
+                    items: _bloodGroupList
+                        .map((String newBloodGroup) => DropdownMenuItem(
+                            value: newBloodGroup, child: Text(newBloodGroup)))
+                        .toList(),
+                    onChanged: (String? newBloodGroup) {
+                      setState(() {
+                        bloodGroupController.text = newBloodGroup!;
+                      });
+                    },
+                    validator: (value) {
+                      if (value == '-Choose your Gender-') {
+                        return 'Please choose your Gender';
+                      }
+                      return null;
+                    },
+                    decoration: decorations("Choose your Blood Group"),
+                  ),
+                  const SizedBox(
+                    height: 10,
+                  ),
+                  //Address
+                  TextFormField(
+                      controller: addressController,
+                      validator: (value) {
+                        if (value!.isEmpty) {
+                          return 'Please enter your Personal Address';
+                        }
+                        return null;
+                      },
+                      decoration: decorations('Address')),
+                  const SizedBox(
+                    height: 10,
+                  ),
+                  //Province Dropdown
+                  DropdownButtonFormField(
+                    decoration: decorations('Province'),
+                    value: _province,
+                    items: _provinceList
+                        .map((String province) => DropdownMenuItem(
+                              value: province,
+                              child: Text(province),
+                            ))
+                        .toList(),
+                    validator: (value) {
+                      if (value == '-Choose your Province-') {
+                        return 'Please choose your Province';
+                      }
+                      return null;
+                    },
+                    onChanged: (String? newValue) {
+                      setState(() {
+                        provinceController.text = newValue!;
+
+                        // Update the items in the district dropdown based on the selected province
+                        if (provinceController.text == 'WESTERN') {
+                          _districtList = [
+                            '-Choose your District-',
+                            'Gampaha',
+                            'Colombo',
+                            'Kaluthara'
+                          ];
+                        } else if (provinceController.text == 'CENTRAL') {
+                          _districtList = [
+                            '-Choose your District-',
+                            'Kandy',
+                            'Matale',
+                            'Nuwara Eliya'
+                          ];
+                        } else if (provinceController.text == 'SOUTHERN') {
+                          _districtList = [
+                            '-Choose your District-',
+                            'Galle',
+                            'Matara',
+                            'Hambanthota'
+                          ];
+                        } else if (provinceController.text == 'SABARAGAMUWA') {
+                          _districtList = [
+                            '-Choose your District-',
+                            'Kegalle',
+                            'Rathnapura'
+                          ];
+                        } else if (provinceController.text == 'EASTERN') {
+                          _districtList = [
+                            '-Choose your District-',
+                            'Ampara',
+                            'Batticaloa',
+                            'Trincomalee'
+                          ];
+                        } else if (provinceController.text == 'UVA') {
+                          _districtList = [
+                            '-Choose your District-',
+                            'Badulla',
+                            'Monaragala'
+                          ];
+                        } else if (provinceController.text == 'NORTH WESTERN') {
+                          _districtList = [
+                            '-Choose your District-',
+                            'Kurunegala',
+                            'Puttalam'
+                          ];
+                        } else if (provinceController.text == 'NORTH CENTRAL') {
+                          _districtList = [
+                            '-Choose your District-',
+                            'Anuradhapura',
+                            'Polonnaruwa'
+                          ];
+                        } else if (provinceController.text == 'NORTHERN') {
+                          _districtList = [
+                            '-Choose your District-',
+                            'Jaffna',
+                            'Kilinochchi',
+                            'Mullaitivu',
+                            'Vavuniya',
+                            'Mannar'
+                          ];
+                        } else {
+                          _districtList = [
+                            '-Choose your District-'
+                          ]; // Default value when '-Num-' is selected
+                        }
+                        // Reset the selected district to '-Choose your District-' when changing the province
+                        _district = '-Choose your District-';
+                      });
+                    },
+                  ),
+                  const SizedBox(
+                    height: 10,
+                  ),
+
+                  // District Dropdown
+                  DropdownButtonFormField(
+                    decoration: decorations('District'),
+                    value: _district,
+                    items: _districtList
+                        .map((String district) => DropdownMenuItem(
+                              value: district,
+                              child: Text(district),
+                            ))
+                        .toList(),
+                    validator: (value) {
+                      if (value == '-Choose your District-') {
+                        return 'Please choose your District';
+                      }
+                      return null;
+                    },
+                    onChanged: (String? newDistrict) {
+                      setState(() {
+                        districtController.text = newDistrict!;
+                      });
+                    },
+                  ),
+                  const SizedBox(
+                    height: 10,
+                  ),
+                  //area code
+                  TextFormField(
+                      controller: areaCodeController,
+                      validator: (value) {
+                        if (value!.isEmpty) {
+                          return 'Please enter your Area (work)';
+                        }
+                        return null;
+                      },
+                      decoration: decorations('Area Code')),
+                  const SizedBox(
+                    height: 10,
+                  ),
+                  //Issued Date
+                  TextFormField(
+                      controller: issuedDateController,
+                      onTap: () => selectIssuedDate(context),
+                      readOnly: true,
+                      decoration: decorations('Issued Date')),
+                  const SizedBox(
+                    height: 10,
+                  ),
+                  //Expiry Date
+                  TextFormField(
+                      controller: expiryDateController,
+                      onTap: () => selectExpiryDate(context),
+                      readOnly: true,
+                      decoration: decorations('Expiry Date')),
+                  const SizedBox(
+                    height: 10,
+                  ),
+                  /*Row(
                           children: [
                             const Text('Choose a profile image'),
                             InkWell(
@@ -771,232 +791,46 @@ class _DLApplicationFormState extends State<DLApplicationForm> {
                           ],
                         ),*/
 
-                        ElevatedButton(
-                            onPressed: _submitForm,
-                            style: ElevatedButton.styleFrom(
-                              maximumSize: Size.fromWidth(w / 4),
-                              foregroundColor:
-                                  const Color.fromARGB(255, 243, 242, 234),
-                              backgroundColor:
-                                  const Color.fromARGB(255, 10, 4, 70),
-                              fixedSize: const Size(800, 50),
-                              textStyle: const TextStyle(
-                                fontSize: 25,
-                                fontWeight: FontWeight.bold,
-                              ),
-                              elevation: 5,
-                              side: const BorderSide(
-                                color: Color.fromARGB(255, 249, 252, 251),
-                                width: 4,
-                              ),
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(20),
-                              ),
-                            ),
-                            child: const Text(
-                              'Submit',
-                              style: TextStyle(fontSize: 20),
-                            ))
-                      ],
-                    )),
-              ),
-            ),
-          ),
-
-          //footer
-          Container(
-            color: const Color.fromARGB(255, 248, 247, 247),
-            child: Padding(
-              padding: const EdgeInsets.all(20.0),
-              child: FittedBox(
-                fit: BoxFit.scaleDown,
-                child: Column(
-                  children: [
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Column(
-                          children: [
-                            Image.asset(
-                              'lib/Assets/logo.png',
-                              width: 150,
-                            ),
-                            const Text(
-                              'A centralized platform for citizens',
-                              style: TextStyle(
-                                fontSize: 15,
-                              ),
-                            ),
-                            const SizedBox(
-                              height: 10,
-                            ),
-                            const Text(
-                              'Lorem ipsum dolor sit amet,\nin vim orum, vim et postea \nphilosophia mediocritatem. \nEu sit postea adolescens intellegam.',
-                              textAlign: TextAlign.center,
-                              style: TextStyle(
-                                fontSize: 15,
-                              ),
-                            ),
-                          ],
+                  ElevatedButton(
+                      onPressed: _submitForm,
+                      style: ElevatedButton.styleFrom(
+                        maximumSize: Size.fromWidth(width / 4),
+                        foregroundColor:
+                            const Color.fromARGB(255, 243, 242, 234),
+                        backgroundColor: const Color.fromARGB(255, 10, 4, 70),
+                        fixedSize: const Size(800, 50),
+                        textStyle: const TextStyle(
+                          fontSize: 25,
+                          fontWeight: FontWeight.bold,
                         ),
-                        //Discover
-                        Column(
-                          children: [
-                            const SizedBox(
-                              height: 50,
-                            ),
-                            const Text(
-                              'Discover',
-                              style: TextStyle(
-                                  fontSize: 20, fontWeight: FontWeight.bold),
-                            ),
-                            TextButton(
-                                onPressed: () {
-                                  _launchURL(
-                                      'https://www.gov.lk/sri-lanka/country-overview?');
-                                },
-                                child: const Text(
-                                  'Country Overview',
-                                  style: TextStyle(fontSize: 15),
-                                )),
-                            TextButton(
-                                onPressed: () {
-                                  _launchURL(
-                                      'https://www.gov.lk/sri-lanka/government?');
-                                },
-                                child: const Text(
-                                  'Government',
-                                  style: TextStyle(fontSize: 15),
-                                )),
-                            TextButton(
-                                onPressed: () {
-                                  _launchURL(
-                                      'https://www.gov.lk/sri-lanka/constitution?');
-                                },
-                                child: const Text(
-                                  'Constitution',
-                                  style: TextStyle(fontSize: 15),
-                                )),
-                            TextButton(
-                                onPressed: () {
-                                  _launchURL(
-                                      'http://hrlibrary.umn.edu/research/srilanka/legalsystem.html#:~:text=Hierarchy%20of%20courts.,interpretation%20of%20the%20case%20law.');
-                                },
-                                child: const Text(
-                                  'Legal System',
-                                  style: TextStyle(fontSize: 15),
-                                )),
-                          ],
+                        elevation: 5,
+                        side: const BorderSide(
+                          color: Color.fromARGB(255, 249, 252, 251),
+                          width: 4,
                         ),
-
-                        //Quick Links
-                        Column(
-                          children: [
-                            const SizedBox(
-                              height: 50,
-                            ),
-                            const Text(
-                              'Quick Links',
-                              style: TextStyle(
-                                  fontSize: 20, fontWeight: FontWeight.bold),
-                            ),
-                            TextButton(
-                                onPressed: () {
-                                  _launchURL(
-                                      'https://www.gov.lk/webdirectory/ministry?');
-                                },
-                                child: const Text(
-                                  'Ministry Websites',
-                                  style: TextStyle(fontSize: 15),
-                                )),
-                            TextButton(
-                                onPressed: () {
-                                  _launchURL(
-                                      'https://www.gov.lk/webdirectory/departments?');
-                                },
-                                child: const Text(
-                                  'Departments Websites',
-                                  style: TextStyle(fontSize: 15),
-                                )),
-                            TextButton(
-                                onPressed: () {
-                                  _launchURL(
-                                      'https://www.gov.lk/webdirectory/statutoryboards?');
-                                },
-                                child: const Text(
-                                  'Statutory Boards',
-                                  style: TextStyle(fontSize: 15),
-                                )),
-                            TextButton(
-                                onPressed: () {
-                                  /* _launchURL('');*/
-                                },
-                                child: const Text(
-                                  'Local Authorities',
-                                  style: TextStyle(fontSize: 15),
-                                )),
-                          ],
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(20),
                         ),
-
-                        //Easy Navigate To
-                        Column(
-                          children: [
-                            const SizedBox(
-                              height: 50,
-                            ),
-                            const Text(
-                              'Easy Navigate To',
-                              style: TextStyle(
-                                  fontSize: 20, fontWeight: FontWeight.bold),
-                            ),
-                            TextButton(
-                                onPressed: () {},
-                                child: const Text(
-                                  'Home',
-                                  style: TextStyle(fontSize: 15),
-                                )),
-                            TextButton(
-                                onPressed: () {},
-                                child: const Text(
-                                  'Services',
-                                  style: TextStyle(fontSize: 15),
-                                )),
-                            TextButton(
-                                onPressed: () {},
-                                child: const Text(
-                                  'About Us',
-                                  style: TextStyle(fontSize: 15),
-                                )),
-                            TextButton(
-                                onPressed: () {},
-                                child: const Text(
-                                  'Register',
-                                  style: TextStyle(fontSize: 15),
-                                )),
-                          ],
-                        ),
-                      ],
-                    ),
-                    const SizedBox(
-                      height: 20,
-                    ),
-                    const Text(
-                      'Copyright 2023, Let’s Gov, government service. All right reserved.',
-                      style: TextStyle(
-                        color: Color.fromARGB(255, 100, 100, 100),
-                        fontSize: 15,
-                        fontFamily: 'Inter',
                       ),
-                    )
-                  ],
-                ),
-              ),
-            ),
-          )
-        ],
+                      child: const Text(
+                        'Submit',
+                        style: TextStyle(fontSize: 20),
+                      ))
+                ],
+              )),
+        ),
       ),
     );
   }
+
+  // Calculate the offset of form
+  double _formOffset() {
+    final RenderBox renderBoxRed =
+        _DLformKey.currentContext!.findRenderObject() as RenderBox;
+    final positionRed = renderBoxRed.localToGlobal(Offset.zero);
+    return positionRed.dy - kToolbarHeight; // Adjusted for app bar height
+  }
+
 }
 
 void _launchURL(String url) async {
