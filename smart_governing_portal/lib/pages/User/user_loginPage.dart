@@ -257,30 +257,7 @@ class _UserLoginPageState extends State<UserLoginPage> {
               const SizedBox(
                 width: 20,
               ),
-              TextButton(
-                  onPressed: () {},
-                  child: const Text(
-                    'Services',
-                    style: TextStyle(
-                      color: Colors.black,
-                    ),
-                  )),
-              const SizedBox(
-                width: 20,
-              ),
-              TextButton(
-                onPressed: () {},
-                child: const Text(
-                  'About Us',
-                  style: TextStyle(
-                    color: Colors.black,
-                  ),
-                ),
-              ),
-              const SizedBox(
-                width: 20,
-              ),
-              TextButton(
+              /*TextButton(
                   onPressed: () {
                     Navigator.push(
                       context,
@@ -298,7 +275,7 @@ class _UserLoginPageState extends State<UserLoginPage> {
                   )),
               const SizedBox(
                 width: 20,
-              ),
+              ),*/
             ],
           ),
           const SizedBox(
@@ -306,7 +283,7 @@ class _UserLoginPageState extends State<UserLoginPage> {
           ),
           Row(
             children: [
-              ElevatedButton(
+              /*ElevatedButton(
                 onPressed: () {
                   Navigator.push(
                     context,
@@ -325,7 +302,7 @@ class _UserLoginPageState extends State<UserLoginPage> {
               ),
               const SizedBox(
                 width: 15,
-              ),
+              ),*/
               ElevatedButton(
                 onPressed: () {
                   Navigator.push(
@@ -340,7 +317,7 @@ class _UserLoginPageState extends State<UserLoginPage> {
                     backgroundColor: MaterialStatePropertyAll(
                         Color.fromARGB(255, 10, 4, 70))),
                 child: const Text(
-                  'Register',
+                  'SignUp',
                   style: TextStyle(color: Color.fromARGB(255, 255, 255, 255)),
                 ),
               ),

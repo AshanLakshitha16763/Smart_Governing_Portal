@@ -40,7 +40,7 @@ class _MyAppState extends State<MyApp> {
     super.initState();
 
     // Simulate a 5-second delay and then update loading state
-    Timer(const Duration(seconds: 5), () {
+    Timer(const Duration(seconds: 1), () {
       setState(() {
         _isLoading = false;
       });

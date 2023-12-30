@@ -21,6 +21,9 @@ class _AfterRegistrationPageState extends State<AfterRegistrationPage> {
   late double width;
   int hoveredIndex = -1;
   late String userName;
+  final ScrollController _scrollController = ScrollController();
+  final GlobalKey _section2Key = GlobalKey();
+  final GlobalKey _section1Key = GlobalKey();
 
   @override
   Widget build(BuildContext context) {
@@ -51,12 +54,12 @@ class _AfterRegistrationPageState extends State<AfterRegistrationPage> {
         );
       } else {
         return Scaffold(
-      appBar: AppBar(
-        backgroundColor: const Color.fromARGB(255, 115, 185, 250),
-      ),
-      drawer: mobileDrawer(width*0.6, context),
-      body: _body(),
-    );
+          appBar: AppBar(
+            backgroundColor: const Color.fromARGB(255, 115, 185, 250),
+          ),
+          drawer: mobileDrawer(width * 0.6, context),
+          body: _body(),
+        );
       }
     });
   }
@@ -74,15 +77,13 @@ class _AfterRegistrationPageState extends State<AfterRegistrationPage> {
             children: [
               TextButton(
                   onPressed: () {
-                    /*
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute<void>(
-                                  builder: (BuildContext context) =>
-                                       FileUploadPage(),
-                                ),
-                              );
-                            */
+                    Future.delayed(Duration.zero, () {
+                      Scrollable.ensureVisible(
+                        _section1Key.currentContext!,
+                        duration: const Duration(seconds: 1),
+                        curve: Curves.easeInOut,
+                      );
+                    });
                   },
                   child: const Text(
                     'Home',
@@ -94,7 +95,15 @@ class _AfterRegistrationPageState extends State<AfterRegistrationPage> {
                 width: 20,
               ),
               TextButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    Future.delayed(Duration.zero, () {
+                      Scrollable.ensureVisible(
+                        _section2Key.currentContext!,
+                        duration: const Duration(seconds: 1),
+                        curve: Curves.easeInOut,
+                      );
+                    });
+                  },
                   child: const Text(
                     'Services',
                     style: TextStyle(
@@ -104,20 +113,9 @@ class _AfterRegistrationPageState extends State<AfterRegistrationPage> {
               const SizedBox(
                 width: 20,
               ),
-              TextButton(
-                onPressed: () {},
-                child: const Text(
-                  'About Us',
-                  style: TextStyle(
-                    color: Colors.black,
-                  ),
-                ),
-              ),
-              const SizedBox(
-                width: 20,
-              ),
-              TextButton(
-                  onPressed: () {
+              IconButton(
+                onPressed: () {
+                  /*
                     Navigator.push(
                       context,
                       MaterialPageRoute<void>(
@@ -125,13 +123,10 @@ class _AfterRegistrationPageState extends State<AfterRegistrationPage> {
                             const AdminLoginPage(),
                       ),
                     );
-                  },
-                  child: const Text(
-                    'Admin',
-                    style: TextStyle(
-                      color: Colors.black,
-                    ),
-                  )),
+                  */
+                },
+                icon: const Icon(Icons.person_outline_rounded),
+              ),
               const SizedBox(
                 width: 20,
               ),
@@ -192,32 +187,36 @@ class _AfterRegistrationPageState extends State<AfterRegistrationPage> {
     );
   }
 
-  Widget _section1() {
+  Widget _section1({required String id}) {
     return ConstrainedBox(
+      key: _section1Key,
       constraints: BoxConstraints(minHeight: height * 0.9),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.spaceAround,
         children: [
-          Column(
-            children: [
-              Text(
-                'Hello, Welocome Back! $userName',
-                style: const TextStyle(
-                  color: Color.fromARGB(255, 10, 4, 70),
-                  fontFamily: 'Inter',
-                  fontSize: 32,
-                  fontWeight: FontWeight.bold,
+          Padding(
+            padding: const EdgeInsets.only(left: 20, right: 20),
+            child: Column(
+              children: [
+                Text(
+                  'Hello, Welocome Back! $userName',
+                  style: const TextStyle(
+                    color: Color.fromARGB(255, 10, 4, 70),
+                    fontFamily: 'Inter',
+                    fontSize: 32,
+                    fontWeight: FontWeight.bold,
+                  ),
                 ),
-              ),
-              const Text(
-                'The Best Service for the Citizens',
-                style: TextStyle(
-                  color: Color.fromARGB(255, 10, 4, 70),
-                  fontFamily: 'Inter',
-                  fontSize: 24,
+                const Text(
+                  'The Best Service for the Citizens',
+                  style: TextStyle(
+                    color: Color.fromARGB(255, 10, 4, 70),
+                    fontFamily: 'Inter',
+                    fontSize: 24,
+                  ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
           Row(
             children: [
@@ -254,20 +253,22 @@ class _AfterRegistrationPageState extends State<AfterRegistrationPage> {
     );
   }
 
-  Widget _section2() {
-    return SizedBox(
+  Widget _section2({required String id}) {
+    return ConstrainedBox(
+      key: _section2Key,
+      constraints: BoxConstraints(minHeight: height * 0.9),
       child: Padding(
         padding: const EdgeInsets.only(left: 20, right: 20, top: 20),
         child: Column(
           children: [
             FittedBox(
-              fit: BoxFit.fitWidth,
+              fit: BoxFit.scaleDown,
               child: Row(
                 children: [
                   Image.asset('lib/Assets/people.png'),
                   const SizedBox(width: 20),
                   const Text(
-                    'Explore Government Services in Sri Lanka....',
+                    'Explore Government Services',
                     style: TextStyle(
                       color: Color.fromARGB(255, 10, 4, 70),
                       fontFamily: 'Inter',
@@ -299,16 +300,35 @@ class _AfterRegistrationPageState extends State<AfterRegistrationPage> {
   }
 
   Widget _body() {
-    return ListView(
-      children: [
-        //Our Services & chat bot
-        _section1(),
-        //GOV Services
-        _section2(),
-        //Footer
-        footer
-      ],
+    return SingleChildScrollView(
+      controller: _scrollController,
+      child: Column(
+        children: [
+          //Our Services & chat bot
+          _section1(id: 'Home_section'),
+          //GOV Services
+          _section2(id: 'services_section'),
+          //Footer
+          footer
+        ],
+      ),
     );
+  }
+
+  // Calculate the offset of _section2
+  double _section1Offset() {
+    final RenderBox renderBoxRed =
+        _section1Key.currentContext!.findRenderObject() as RenderBox;
+    final positionRed = renderBoxRed.localToGlobal(Offset.zero);
+    return positionRed.dy - kToolbarHeight; // Adjusted for app bar height
+  }
+
+  // Calculate the offset of _section2
+  double _section2Offset() {
+    final RenderBox renderBoxRed =
+        _section2Key.currentContext!.findRenderObject() as RenderBox;
+    final positionRed = renderBoxRed.localToGlobal(Offset.zero);
+    return positionRed.dy - kToolbarHeight; // Adjusted for app bar height
   }
 
   // functions for the government services
@@ -467,7 +487,7 @@ class _AfterRegistrationPageState extends State<AfterRegistrationPage> {
     return [
       _OURserviceTile(' Smart National Identity Card Verification System',
           width: 360,
-          height: 180,
+          height: 200,
           tileSize: tileSize,
           index: 0,
           imagePath: 'lib/Assets/ID.png',
@@ -475,7 +495,7 @@ class _AfterRegistrationPageState extends State<AfterRegistrationPage> {
           pageName1: const NICTemplate()),
       _OURserviceTile(' Smart Driving License Verification System',
           width: 360,
-          height: 180,
+          height: 200,
           tileSize: tileSize,
           index: 1,
           imagePath: 'lib/Assets/DL.png',
@@ -493,71 +513,74 @@ class _AfterRegistrationPageState extends State<AfterRegistrationPage> {
       required pageName1,
       required pageName2,
       required imagePath}) {
-    return SizedBox(
-      width: tileSize,
-      height: tileSize * (height / width),
-      child: InkWell(
-        onTap: () async {
-          final userUid = FirebaseAuth.instance.currentUser?.uid ?? '';
-          final docSnapshot = await FirebaseFirestore.instance
-              .collection('NICtest')
-              .doc(userUid)
-              .get();
-
-          if (docSnapshot.exists) {
-            // Navigate to the NIC template page
-            Navigator.push(
-              context,
-              MaterialPageRoute(builder: (context) => pageName1),
-            );
-          } else {
-            // Navigate to the NIC application form page
-            Navigator.push(
-              context,
-              MaterialPageRoute(builder: (context) => pageName2),
-            );
-          }
-        },
-        child: Container(
-          alignment: Alignment.center,
-          decoration: BoxDecoration(
-            color: hoveredIndex == index
-                ? const Color.fromARGB(255, 10, 4, 70)
-                : Colors.white,
-            borderRadius: BorderRadius.circular(12),
-            border: Border.all(
-              color: const Color.fromARGB(255, 187, 191, 190),
-              width: 1,
-            ),
-            boxShadow: [
-              BoxShadow(
-                color: Colors.grey.shade600,
-                spreadRadius: 1,
-                blurRadius: 5,
-                offset: const Offset(0, 5),
+    return ConstrainedBox(
+      constraints: const BoxConstraints(minHeight: 200),
+      child: SizedBox(
+        width: tileSize,
+        height: tileSize * (height / width) + 60,
+        child: InkWell(
+          onTap: () async {
+            final userUid = FirebaseAuth.instance.currentUser?.uid ?? '';
+            final docSnapshot = await FirebaseFirestore.instance
+                .collection('NICtest')
+                .doc(userUid)
+                .get();
+            Future.delayed(const Duration(milliseconds: 20));
+            if (docSnapshot.exists) {
+              // Navigate to the NIC template page
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => pageName1),
+              );
+            } else {
+              // Navigate to the NIC application form page
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => pageName2),
+              );
+            }
+          },
+          child: Container(
+            alignment: Alignment.center,
+            decoration: BoxDecoration(
+              color: hoveredIndex == index
+                  ? const Color.fromARGB(255, 10, 4, 70)
+                  : Colors.white,
+              borderRadius: BorderRadius.circular(12),
+              border: Border.all(
+                color: const Color.fromARGB(255, 187, 191, 190),
+                width: 1,
               ),
-            ],
-          ),
-          child: Padding(
-            padding: const EdgeInsets.all(4.0),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Image.asset(
-                  imagePath,
-                  width: 52,
-                  height: 52,
-                ),
-                Text(
-                  text,
-                  textAlign: TextAlign.center,
-                  style: const TextStyle(
-                    fontFamily: 'Inter',
-                    fontSize: 20,
-                    fontWeight: FontWeight.bold,
-                  ),
+              boxShadow: [
+                BoxShadow(
+                  color: Colors.grey.shade600,
+                  spreadRadius: 1,
+                  blurRadius: 5,
+                  offset: const Offset(0, 5),
                 ),
               ],
+            ),
+            child: Padding(
+              padding: const EdgeInsets.all(4.0),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Image.asset(
+                    imagePath,
+                    width: 52,
+                    height: 52,
+                  ),
+                  Text(
+                    text,
+                    textAlign: TextAlign.center,
+                    style: const TextStyle(
+                      fontFamily: 'Inter',
+                      fontSize: 20,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                ],
+              ),
             ),
           ),
         ),
