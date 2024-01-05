@@ -1,5 +1,5 @@
-import 'dart:js';
 import 'package:flutter/material.dart';
+import 'package:path/path.dart';
 import 'package:smart_governing_portal/pages/Admin/adminLoginPage.dart';
 import 'package:smart_governing_portal/pages/User/user_homePage.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -124,8 +124,6 @@ var navbar = AppBar(
   backgroundColor: const Color.fromARGB(255, 115, 185, 250),
 );
 
-
-
 void _launchURL(String url) async {
   if (await canLaunch(url)) {
     await launch(url);
@@ -135,7 +133,13 @@ void _launchURL(String url) async {
 }
 
 //This is the Footer
-var footer = Container(
+class Footer extends StatelessWidget {
+  const Footer({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      width: double.infinity,
       color: const Color.fromARGB(255, 248, 247, 247),
       child: Padding(
         padding: const EdgeInsets.all(20.0),
@@ -281,19 +285,43 @@ var footer = Container(
                             fontSize: 20, fontWeight: FontWeight.bold),
                       ),
                       TextButton(
-                          onPressed: () {},
+                          onPressed: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute<void>(
+                                builder: (BuildContext context) =>
+                                    const UserHomePage(),
+                              ),
+                            );
+                          },
                           child: const Text(
                             'Home',
                             style: TextStyle(fontSize: 15),
                           )),
                       TextButton(
-                          onPressed: () {},
+                          onPressed: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute<void>(
+                                builder: (BuildContext context) =>
+                                    const UserHomePage(),
+                              ),
+                            );
+                          },
                           child: const Text(
                             'Services',
                             style: TextStyle(fontSize: 15),
                           )),
                       TextButton(
-                          onPressed: () {},
+                          onPressed: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute<void>(
+                                builder: (BuildContext context) =>
+                                    const UserHomePage(),
+                              ),
+                            );
+                          },
                           child: const Text(
                             'About Us',
                             style: TextStyle(fontSize: 15),
@@ -324,133 +352,135 @@ var footer = Container(
         ),
       ),
     );
+  }
+}
+
 
 //
-Widget mobileDrawer(double width,context){
+Widget mobileDrawer(double width, context) {
   return Drawer(
-  width: width,
-  child: ListView(
-    padding: EdgeInsets.zero,
-    children: [
-      const DrawerHeader(
-        decoration: BoxDecoration(
-          color: Color.fromARGB(255, 115, 185, 250),
-          image: DecorationImage(
-            image: AssetImage(
-              'lib/Assets/logo.png',
+    width: width,
+    child: ListView(
+      padding: EdgeInsets.zero,
+      children: [
+        const DrawerHeader(
+          decoration: BoxDecoration(
+            color: Color.fromARGB(255, 115, 185, 250),
+            image: DecorationImage(
+              image: AssetImage(
+                'lib/Assets/logo.png',
+              ),
+              fit: BoxFit.contain,
             ),
-            fit: BoxFit.contain,
+          ),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              SizedBox(height: 10.0),
+            ],
           ),
         ),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            SizedBox(height: 10.0),
-          ],
-        ),
-      ),
-      ListTile(
-        leading: const Icon(
-          Icons.home,
-          color: Colors.blue,
-        ),
-        title: const Text(
-          "Home",
-          style: TextStyle(
-            fontWeight: FontWeight.bold,
-            fontSize: 16,
+        ListTile(
+          leading: const Icon(
+            Icons.home,
+            color: Colors.blue,
           ),
-        ),
-        onTap: () {
-          Navigator.pop(context as BuildContext);
-          Navigator.push(
-            context as BuildContext,
-            MaterialPageRoute<void>(
-              builder: (BuildContext context) => const UserHomePage(),
+          title: const Text(
+            "Home",
+            style: TextStyle(
+              fontWeight: FontWeight.bold,
+              fontSize: 16,
             ),
-          );
-        },
-      ),
-      ListTile(
-        leading: const Icon(
-          Icons.search,
-          color: Colors.blue,
-        ),
-        title: const Text(
-          "Services",
-          style: TextStyle(
-            fontWeight: FontWeight.bold,
-            fontSize: 16,
           ),
+          onTap: () {
+            Navigator.pop(context as BuildContext);
+            Navigator.push(
+              context as BuildContext,
+              MaterialPageRoute<void>(
+                builder: (BuildContext context) => const UserHomePage(),
+              ),
+            );
+          },
         ),
-        onTap: () {
-          Navigator.push(
-            context as BuildContext,
-            MaterialPageRoute<void>(
-              builder: (BuildContext context) => const UserHomePage(),
+        ListTile(
+          leading: const Icon(
+            Icons.search,
+            color: Colors.blue,
+          ),
+          title: const Text(
+            "Services",
+            style: TextStyle(
+              fontWeight: FontWeight.bold,
+              fontSize: 16,
             ),
-          );
-        },
-      ),
-      ListTile(
-        leading: const Icon(
-          Icons.groups,
-          color: Colors.blue,
-        ),
-        title: const Text(
-          "About us",
-          style: TextStyle(
-            fontWeight: FontWeight.bold,
-            fontSize: 16,
           ),
+          onTap: () {
+            Navigator.push(
+              context as BuildContext,
+              MaterialPageRoute<void>(
+                builder: (BuildContext context) => const UserHomePage(),
+              ),
+            );
+          },
         ),
-        onTap: () {},
-      ),
-      ListTile(
-        leading: const Icon(
-          Icons.supervised_user_circle_outlined,
-          color: Colors.blue,
-        ),
-        title: const Text(
-          "User",
-          style: TextStyle(
-            fontWeight: FontWeight.bold,
-            fontSize: 16,
+        ListTile(
+          leading: const Icon(
+            Icons.groups,
+            color: Colors.blue,
           ),
-        ),
-        onTap: () {Navigator.push(
-            context as BuildContext,
-            MaterialPageRoute<void>(
-              builder: (BuildContext context) => const UserHomePage(),
+          title: const Text(
+            "About us",
+            style: TextStyle(
+              fontWeight: FontWeight.bold,
+              fontSize: 16,
             ),
-          );},
-      ),
-      ListTile(
-        leading: const Icon(
-          Icons.admin_panel_settings,
-          color: Colors.blue,
-        ),
-        title: const Text(
-          "Admin",
-          style: TextStyle(
-            fontWeight: FontWeight.bold,
-            fontSize: 16,
           ),
+          onTap: () {},
         ),
-        onTap: () {
-          Navigator.pop(context as BuildContext);
-          Navigator.push(
-            context as BuildContext,
-            MaterialPageRoute<void>(
-              builder: (BuildContext context) => const AdminLoginPage(),
+        ListTile(
+          leading: const Icon(
+            Icons.supervised_user_circle_outlined,
+            color: Colors.blue,
+          ),
+          title: const Text(
+            "User",
+            style: TextStyle(
+              fontWeight: FontWeight.bold,
+              fontSize: 16,
             ),
-          );},
-      ),
-    ],
-  ),
-);
-} 
-
-
-
-
+          ),
+          onTap: () {
+            Navigator.push(
+              context as BuildContext,
+              MaterialPageRoute<void>(
+                builder: (BuildContext context) => const UserHomePage(),
+              ),
+            );
+          },
+        ),
+        ListTile(
+          leading: const Icon(
+            Icons.admin_panel_settings,
+            color: Colors.blue,
+          ),
+          title: const Text(
+            "Admin",
+            style: TextStyle(
+              fontWeight: FontWeight.bold,
+              fontSize: 16,
+            ),
+          ),
+          onTap: () {
+            Navigator.pop(context as BuildContext);
+            Navigator.push(
+              context as BuildContext,
+              MaterialPageRoute<void>(
+                builder: (BuildContext context) => const AdminLoginPage(),
+              ),
+            );
+          },
+        ),
+      ],
+    ),
+  );
+}

@@ -42,6 +42,7 @@ class _NICTemplateState extends State<NICTemplate> {
         ? Center(child: Lottie.asset('lib/Assets/animations/id.json'))
         : Scaffold(
             appBar: AppBar(
+              automaticallyImplyLeading: true,
               centerTitle: true,
               backgroundColor: const Color.fromARGB(255, 115, 185, 250),
               title: const FittedBox(

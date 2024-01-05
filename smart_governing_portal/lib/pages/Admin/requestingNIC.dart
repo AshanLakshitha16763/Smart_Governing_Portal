@@ -1,9 +1,8 @@
+import 'package:extended_image/extended_image.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:intl/intl.dart';
 import 'package:smart_governing_portal/pages/Admin/requestingNicTemplate.dart';
-
-
 
 class RequestingNIC extends StatefulWidget {
   @override
@@ -18,66 +17,121 @@ class _RequestingNICState extends State<RequestingNIC> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Firestore User Data'),
+        centerTitle: true,
+        title: const Text('Firestore User Data',style: TextStyle(color: Colors.white,fontWeight: FontWeight.bold,fontSize: 20),),
+        backgroundColor: const Color.fromARGB(255, 115, 185, 250),
       ),
-      body: StreamBuilder(
-        stream: nicTestCollection.snapshots(),
-        builder: (context, AsyncSnapshot<QuerySnapshot> snapshot) {
-          if (snapshot.connectionState == ConnectionState.waiting) {
-            return const Center(
-              child: CircularProgressIndicator(),
-            );
-          }
-
-          if (snapshot.hasError) {
-            return Center(
-              child: Text('Error: ${snapshot.error}'),
-            );
-          }
-
-          List<DataRow> rows = snapshot.data!.docs.map((doc) {
-            // Check if the 'Name' and 'Time' fields exist in the document
-            String name = doc['Full Name'] ?? 'No Name';
-            String nic = doc['NIC No'] ?? 'No Name';
-            Timestamp timestamp = doc['Time'] ?? Timestamp(0, 0);
-
-            // Format the timestamp as "YYYY-MM-DD hh:mm"
-            String formattedTime =
-                DateFormat('yyyy-MM-dd HH:mm').format(timestamp.toDate());
-
-            return DataRow(
-              cells: [
-                DataCell(Text(nic)),
-                DataCell(Text(name)),
-                DataCell(Text(formattedTime)),
-                DataCell(ElevatedButton(
-                  onPressed: () {
-                    Navigator.push(
-                      context, 
-                      MaterialPageRoute(
-                        builder: (context) => ReqNICTemplate(documentId: doc.id,),
+      body: SingleChildScrollView(
+        child: Center(
+          child: Padding(
+            padding: const EdgeInsets.all(20.0),
+            child: StreamBuilder(
+              stream: nicTestCollection.snapshots(),
+              builder: (context, AsyncSnapshot<QuerySnapshot> snapshot) {
+                if (snapshot.connectionState == ConnectionState.waiting) {
+                  return const Center(
+                    child: CircularProgressIndicator(),
+                  );
+                }
+            
+                if (snapshot.hasError) {
+                  return Center(
+                    child: Text('Error: ${snapshot.error}'),
+                  );
+                }
+            
+                List<TableRow> rows = snapshot.data!.docs.map((doc) {
+                  String name = doc['Full Name'] ?? 'No Name';
+                  String nic = doc['NIC No'] ?? 'No Name';
+                  Timestamp timestamp = doc['Time'] ?? Timestamp(0, 0);
+                  String formattedTime =
+                      DateFormat('yyyy-MM-dd HH:mm').format(timestamp.toDate());
+            
+                  return TableRow(
+                    children: [
+                      TableCell(
+                        child: Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Text(nic),
+                        ),
                       ),
-                    );
+                      TableCell(
+                        child: Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Text(name),
+                        ),
+                      ),
+                      TableCell(
+                        child: Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Text(formattedTime),
+                        ),
+                      ),
+                      TableCell(
+                        child: Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: ElevatedButton(
+                            onPressed: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => ReqNICTemplate(documentId: doc.id,),
+                                ),
+                              );
+                            },
+                            child: const Text("View"),
+                          ),
+                        ),
+                      ),
+                    ],
+                  );
+                }).toList();
+            
+                return Table(
+                  defaultVerticalAlignment: TableCellVerticalAlignment.middle,
+                  border: TableBorder.all(color: const Color.fromARGB(255, 49, 101, 185)),
+                  columnWidths: const <int, TableColumnWidth>{
+                    0: IntrinsicColumnWidth(),
+                    1: IntrinsicColumnWidth(),
+                    2: IntrinsicColumnWidth(),
+                    3: IntrinsicColumnWidth(),
                   },
-                  child: const Text("View"),
-                ))
-              ],
-            );
-          }).toList();
-
-          return SingleChildScrollView(
-            scrollDirection: Axis.vertical,
-            child: DataTable(
-              columns: const [
-                DataColumn(label: Text('NIC')),
-                DataColumn(label: Text('Name')),
-                DataColumn(label: Text('Time')),
-                DataColumn(label: Text('')),
-              ],
-              rows: rows,
+                  children: [
+                    const TableRow(
+                      children: [
+                        TableCell(
+                          child: Padding(
+                            padding: EdgeInsets.all(8.0),
+                            child: Text('NIC',style: TextStyle(color:Color.fromARGB(255, 49, 101, 185),fontSize: 18,fontWeight: FontWeight.w600 ),),
+                          ),
+                        ),
+                        TableCell(
+                          child: Padding(
+                            padding: EdgeInsets.all(8.0),
+                            child: Text('Name',style: TextStyle(color:Color.fromARGB(255, 49, 101, 185),fontSize: 18,fontWeight: FontWeight.w600 ),),
+                          ),
+                        ),
+                        TableCell(
+                          child: Padding(
+                            padding: EdgeInsets.all(8.0),
+                            child: Text('Time',style: TextStyle(color:Color.fromARGB(255, 49, 101, 185),fontSize: 18,fontWeight: FontWeight.w600 ),),
+                          ),
+                        ),
+                        TableCell(
+                          child: Padding(
+                            padding: EdgeInsets.all(8.0),
+                            child: Text(''),
+                          ),
+                        ),
+                      ],
+                    ),
+                    ...rows,
+                  ],
+                );
+              },
             ),
-          );
-        },
+          ),
+        ),
       ),
     );
   }

@@ -237,7 +237,7 @@ class _NICApplicationFormState extends State<NICApplicationForm> {
           //Form
           _form(id: 'Application Form'),
           //footer
-          footer
+          const Footer()
         ],
       ),
     );

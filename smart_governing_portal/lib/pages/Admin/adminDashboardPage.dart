@@ -190,7 +190,7 @@ class _AdminDashboardPageState extends State<AdminDashboardPage> {
             //lists
             _userLists(),
             //footer
-            footer
+            const Footer()
           ],
         ),
     );

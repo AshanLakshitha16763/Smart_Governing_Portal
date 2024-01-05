@@ -309,7 +309,7 @@ class _AfterRegistrationPageState extends State<AfterRegistrationPage> {
           //GOV Services
           _section2(id: 'services_section'),
           //Footer
-          footer
+          const Footer()
         ],
       ),
     );

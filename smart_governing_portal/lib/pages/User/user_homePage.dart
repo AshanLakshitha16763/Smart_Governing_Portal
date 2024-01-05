@@ -2,7 +2,6 @@
 
 import 'dart:async';
 import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
 import 'package:smart_governing_portal/controllers/constants.dart';
 import 'package:smart_governing_portal/pages/Admin/adminLoginPage.dart';
 import 'package:smart_governing_portal/pages/User/SmartDL_applying_form.dart';
@@ -85,7 +84,7 @@ class _UserHomePageState extends State<UserHomePage> {
             _section3(),
 
             //Footer
-            _footer(),
+            const Footer(),
           ],
         ));
   }
@@ -824,199 +823,6 @@ class _UserHomePageState extends State<UserHomePage> {
             ),
             const SizedBox(height: 60),
           ],
-        ),
-      ),
-    );
-  }
-
-  Widget _footer(){
-    return Container(
-      width: width,
-      color: const Color.fromARGB(255, 248, 247, 247),
-      child: Padding(
-        padding: const EdgeInsets.all(20.0),
-        child: FittedBox(
-          fit: BoxFit.scaleDown,
-          child: Column(
-            children: [
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Column(
-                    children: [
-                      Image.asset(
-                        'lib/Assets/logo.png',
-                        width: 150,
-                      ),
-                      const Text(
-                        'A centralized platform for citizens',
-                        style: TextStyle(
-                          fontSize: 15,
-                        ),
-                      ),
-                      const SizedBox(
-                        height: 10,
-                      ),
-                      const Text(
-                        'Lorem ipsum dolor sit amet,\nin vim orum, vim et postea \nphilosophia mediocritatem. \nEu sit postea adolescens intellegam.',
-                        textAlign: TextAlign.center,
-                        style: TextStyle(
-                          fontSize: 15,
-                        ),
-                      ),
-                    ],
-                  ),
-                  //Discover
-                  Column(
-                    children: [
-                      const SizedBox(
-                        height: 50,
-                      ),
-                      const Text(
-                        'Discover',
-                        style: TextStyle(
-                            fontSize: 20, fontWeight: FontWeight.bold),
-                      ),
-                      TextButton(
-                          onPressed: () {
-                            _launchURL(
-                                'https://www.gov.lk/sri-lanka/country-overview?');
-                          },
-                          child: const Text(
-                            'Country Overview',
-                            style: TextStyle(fontSize: 15),
-                          )),
-                      TextButton(
-                          onPressed: () {
-                            _launchURL(
-                                'https://www.gov.lk/sri-lanka/government?');
-                          },
-                          child: const Text(
-                            'Government',
-                            style: TextStyle(fontSize: 15),
-                          )),
-                      TextButton(
-                          onPressed: () {
-                            _launchURL(
-                                'https://www.gov.lk/sri-lanka/constitution?');
-                          },
-                          child: const Text(
-                            'Costitution',
-                            style: TextStyle(fontSize: 15),
-                          )),
-                      TextButton(
-                          onPressed: () {
-                            _launchURL(
-                                'http://hrlibrary.umn.edu/research/srilanka/legalsystem.html#:~:text=Hierarchy%20of%20courts.,interpretation%20of%20the%20case%20law.');
-                          },
-                          child: const Text(
-                            'Legal System',
-                            style: TextStyle(fontSize: 15),
-                          )),
-                    ],
-                  ),
-
-                  //Quick Links
-                  Column(
-                    children: [
-                      const SizedBox(
-                        height: 50,
-                      ),
-                      const Text(
-                        'Quick Links',
-                        style: TextStyle(
-                            fontSize: 20, fontWeight: FontWeight.bold),
-                      ),
-                      TextButton(
-                          onPressed: () {
-                            _launchURL(
-                                'https://www.gov.lk/webdirectory/ministry?');
-                          },
-                          child: const Text(
-                            'Ministry Websites',
-                            style: TextStyle(fontSize: 15),
-                          )),
-                      TextButton(
-                          onPressed: () {
-                            _launchURL(
-                                'https://www.gov.lk/webdirectory/departments?');
-                          },
-                          child: const Text(
-                            'Departments Websites',
-                            style: TextStyle(fontSize: 15),
-                          )),
-                      TextButton(
-                          onPressed: () {
-                            _launchURL(
-                                'https://www.gov.lk/webdirectory/statutoryboards?');
-                          },
-                          child: const Text(
-                            'Statutory Boards',
-                            style: TextStyle(fontSize: 15),
-                          )),
-                      TextButton(
-                          onPressed: () {
-                            /* _launchURL('');*/
-                          },
-                          child: const Text(
-                            'Authorization Websites',
-                            style: TextStyle(fontSize: 15),
-                          )),
-                    ],
-                  ),
-
-                  //Easy Navigate To
-                  Column(
-                    children: [
-                      const SizedBox(
-                        height: 50,
-                      ),
-                      const Text(
-                        'Easy Navigate To',
-                        style: TextStyle(
-                            fontSize: 20, fontWeight: FontWeight.bold),
-                      ),
-                      TextButton(
-                          onPressed: () {},
-                          child: const Text(
-                            'Home',
-                            style: TextStyle(fontSize: 15),
-                          )),
-                      TextButton(
-                          onPressed: () {},
-                          child: const Text(
-                            'Services',
-                            style: TextStyle(fontSize: 15),
-                          )),
-                      TextButton(
-                          onPressed: () {},
-                          child: const Text(
-                            'About Us',
-                            style: TextStyle(fontSize: 15),
-                          )),
-                      TextButton(
-                          onPressed: () {},
-                          child: const Text(
-                            'Register',
-                            style: TextStyle(fontSize: 15),
-                          )),
-                    ],
-                  ),
-                ],
-              ),
-              const SizedBox(
-                height: 20,
-              ),
-              const Text(
-                'Copyright 2023, Let’s Gov, government service. All right reserved.',
-                style: TextStyle(
-                  color: Color.fromARGB(255, 100, 100, 100),
-                  fontSize: 15,
-                  fontFamily: 'Inter',
-                ),
-              )
-            ],
-          ),
         ),
       ),
     );

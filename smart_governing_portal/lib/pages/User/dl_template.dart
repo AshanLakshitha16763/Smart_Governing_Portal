@@ -36,6 +36,7 @@ class _DLTemplateState extends State<DLTemplate> {
         ? Center(child: Lottie.asset('lib/Assets/animations/id.json'))
         : Scaffold(
             appBar: AppBar(
+              automaticallyImplyLeading: true,
               title: const Text('Driving License Template'),
             ),
             body: SingleChildScrollView(
