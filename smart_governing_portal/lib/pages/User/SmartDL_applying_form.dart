@@ -267,7 +267,7 @@ class _DLApplicationFormState extends State<DLApplicationForm> {
           //instructions
           _instructions(),
           //Form
-          _form(id: 'Application Form'),
+          _form(id: 'DL Application Form'),
           //footer
           const Footer()
         ],

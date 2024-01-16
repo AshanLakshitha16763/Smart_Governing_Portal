@@ -1,23 +1,26 @@
-// ignore_for_file: non_constant_identifier_names, file_names
+// ignore_for_file: deprecated_member_use, file_names, non_constant_identifier_names
 
+/*import 'dart:io';
+import 'package:firebase_core/firebase_core.dart';
+import 'package:flutter/foundation.dart';
+import 'package:image_picker/image_picker.dart';*/
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:intl/intl.dart';
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
 import 'package:smart_governing_portal/controllers/constants.dart';
+
 import 'package:smart_governing_portal/pages/Admin/adminFormPage.dart';
+import 'package:smart_governing_portal/pages/User/dl_template.dart';
 import 'package:smart_governing_portal/pages/User/nic_template.dart';
 import 'package:smart_governing_portal/pages/User/user_homePage.dart';
 import 'package:url_launcher/url_launcher.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
-// ignore: unused_import
-import 'package:firebase_storage/firebase_storage.dart';
-// ignore: unused_import
-import 'package:path/path.dart';
 
 class NICApplicationForm extends StatefulWidget {
   const NICApplicationForm({super.key});
 
+  @override
   State<NICApplicationForm> createState() => _NICApplicationFormState();
 }
 
@@ -42,40 +45,10 @@ class _NICApplicationFormState extends State<NICApplicationForm> {
   TextEditingController genderController = TextEditingController();
   final ScrollController _scrollController = ScrollController();
   final GlobalKey _NICformKey = GlobalKey();
+  TextEditingController expiryDateController = TextEditingController();
+  TextEditingController bloodGroupController = TextEditingController();
   //File? _pickedImage;
   //Uint8List webImage = Uint8List(8);
-  // Get the image URL from the picked image
-
-  /*
-  //choose image function
-  Future<void> pickImage() async {
-    if (!kIsWeb) {
-      final ImagePicker picker = ImagePicker();
-      XFile? image = await picker.pickImage(source: ImageSource.gallery);
-      if (image != null) {
-        var selected = File(image.path);
-        setState(() {
-          _pickedImage = selected;
-        });
-      } else {
-        const SnackBar(content: Text('An image hasn\'t been picked'));
-      }
-    } else if (kIsWeb) {
-      final ImagePicker picker = ImagePicker();
-      XFile? image = await picker.pickImage(source: ImageSource.gallery);
-      if (image != null) {
-        var f = await image.readAsBytes();
-        setState(() {
-          webImage = f;
-          _pickedImage = File('a');
-        });
-      } else {
-        const SnackBar(content: Text('An image hasn\'t been picked'));
-      }
-    } else {
-      const SnackBar(content: Text('Something went wrong'));
-    }
-  }*/
 
   // Function to show the date picker for Date of Birth
   Future<void> selectDateOfBirth(BuildContext context) async {
@@ -111,9 +84,28 @@ class _NICApplicationFormState extends State<NICApplicationForm> {
     }
   }
 
+  /*Future<void> selectExpiryDate(BuildContext context) async {
+    final DateTime? picked = await showDatePicker(
+      context: context,
+      initialDate: DateTime.now(), // You can set the initial date here.
+      firstDate: DateTime(2000), // Set the minimum date for the picker.
+      lastDate: DateTime(2030), // Set the maximum date for the picker.
+    );
+
+    if (picked != null && picked != DateTime.now()) {
+      final String formattedDate = DateFormat('dd-MM-yyyy').format(picked);
+      setState(() {
+        expiryDateController.text = formattedDate;
+      });
+    }
+  }*/
+
   String _province = '-Choose your Province-';
   String _district = '-Choose your District-';
   String _gender = '-Choose your Gender-';
+  String _bloodGroup = '-Choose your Blood Group-';
+
+  final List<String> _genderList = ['-Choose your Gender-', 'Male', 'Female'];
 
   final List<String> _provinceList = [
     '-Choose your Province-',
@@ -127,6 +119,7 @@ class _NICApplicationFormState extends State<NICApplicationForm> {
     'NORTH CENTRAL',
     'NORTHERN'
   ];
+
   List<String> _districtList = [
     '-Choose your District-',
     'Galle',
@@ -155,26 +148,13 @@ class _NICApplicationFormState extends State<NICApplicationForm> {
     'Vavuniya',
     'Mannar',
   ];
-  final List<String> _genderList = ['-Choose your Gender-', 'Male', 'Female'];
 
   //form submission method
-  void _submitForm(BuildContext context) async {
+  void _submitForm() async {
     if (NICapplicationformKey.currentState!.validate()) {
-      //get the current user
+      //get the current user's UID
       User? currentUser = FirebaseAuth.instance.currentUser;
-      // All fields are valid, proceed with form submission
 
-      /*Reference storageReference = FirebaseStorage.instance
-        .ref()
-        .child('profile_images')
-        .child(basename(_pickedImage!.path));
-    UploadTask uploadTask = storageReference.putFile(_pickedImage!);
-    TaskSnapshot taskSnapshot = await uploadTask.whenComplete(() => null);
-  
-    // Get the download URL of the uploaded image
-    String imageUrl = await taskSnapshot.ref.getDownloadURL();*/
-
-      // Create a new user
       final user = <String, dynamic>{
         "Full Name": fullNameController.text,
         "Other Names": otherNamesController.text,
@@ -190,12 +170,12 @@ class _NICApplicationFormState extends State<NICApplicationForm> {
         "Issued Date": issuedDateController.text,
         "Doc No": docNoController.text,
         "Time": DateTime.now()
-        //"Profile Image": _pickedImage,
       };
 
-      // Add a new document with users UID
+      // Add a new document with user's UID
       await db.collection("NICtest").doc(currentUser!.uid).set(user);
 
+      // All fields are valid, proceed with form submission
       // Clear the form after successful submission (if needed)
       NICapplicationformKey.currentState!.reset();
 
@@ -223,6 +203,37 @@ class _NICApplicationFormState extends State<NICApplicationForm> {
     }
   }
 
+/*
+  //choose image function
+  Future<void> _pickImage() async {
+    if (!kIsWeb) {
+      final ImagePicker picker = ImagePicker();
+      XFile? image = await picker.pickImage(source: ImageSource.gallery);
+      if (image != null) {
+        var selected = File(image.path);
+        setState(() {
+          _pickedImage = selected;
+        });
+      } else {
+        const SnackBar(content: Text('An image hasn\'t been picked'));
+      }
+    } else if (kIsWeb) {
+      final ImagePicker picker = ImagePicker();
+      XFile? image = await picker.pickImage(source: ImageSource.gallery);
+      if (image != null) {
+        var f = await image.readAsBytes();
+        setState(() {
+          webImage = f;
+          _pickedImage = File('a');
+        });
+      } else {
+        const SnackBar(content: Text('An image hasn\'t been picked'));
+      }
+    } else {
+      const SnackBar(content: Text('Something went wrong'));
+    }
+  }
+*/
   @override
   Widget build(BuildContext context) {
     width = MediaQuery.of(context).size.width;
@@ -235,7 +246,7 @@ class _NICApplicationFormState extends State<NICApplicationForm> {
           //instructions
           _instructions(),
           //Form
-          _form(id: 'Application Form'),
+          _form(id: 'NIC Application Form'),
           //footer
           const Footer()
         ],
@@ -243,7 +254,7 @@ class _NICApplicationFormState extends State<NICApplicationForm> {
     );
   }
 
-  //appbar actions
+  //appbar
   Widget _appbar() {
     return AppBar(
       automaticallyImplyLeading: false,
@@ -489,7 +500,7 @@ class _NICApplicationFormState extends State<NICApplicationForm> {
                       controller: otherNamesController,
                       validator: (value) {
                         if (value!.isEmpty) {
-                          return 'Please enter your other Names if ave any';
+                          return 'Please enter your other Names if have any';
                         }
                         return null;
                       },
@@ -519,7 +530,7 @@ class _NICApplicationFormState extends State<NICApplicationForm> {
                   //Date of Birth
                   TextFormField(
                       controller: dobController,
-                      onTap: () => selectDateOfBirth(context as BuildContext),
+                      onTap: () => selectDateOfBirth(context),
                       readOnly: true,
                       decoration: decorations('Date of Birth')),
                   const SizedBox(
@@ -724,7 +735,7 @@ class _NICApplicationFormState extends State<NICApplicationForm> {
                   //Issued Date
                   TextFormField(
                       controller: issuedDateController,
-                      onTap: () => selectIssuedDate(context as BuildContext),
+                      onTap: () => selectIssuedDate(context),
                       readOnly: true,
                       decoration: decorations('Issued Date')),
                   const SizedBox(
@@ -770,13 +781,7 @@ class _NICApplicationFormState extends State<NICApplicationForm> {
                         ),
 */
                   ElevatedButton(
-                      onPressed: () {
-                        Center(
-                          child: Lottie.asset(
-                              'lib/Assets/animations/id.json'),
-                        );
-                        _submitForm(context as BuildContext);
-                      },
+                      onPressed: _submitForm,
                       style: ElevatedButton.styleFrom(
                         maximumSize: Size.fromWidth(width / 4),
                         foregroundColor:
@@ -817,9 +822,7 @@ class _NICApplicationFormState extends State<NICApplicationForm> {
 }
 
 void _launchURL(String url) async {
-  // ignore: deprecated_member_use
   if (await canLaunch(url)) {
-    // ignore: deprecated_member_use
     await launch(url);
   } else {
     throw 'Could not launch $url';

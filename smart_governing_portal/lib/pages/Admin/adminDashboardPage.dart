@@ -3,6 +3,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:smart_governing_portal/controllers/constants.dart';
+import 'package:smart_governing_portal/pages/Admin/requestingDL.dart';
 import 'package:smart_governing_portal/pages/Admin/requestingNIC.dart';
 import 'package:smart_governing_portal/pages/User/user_homePage.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -213,7 +214,7 @@ class _AdminDashboardPageState extends State<AdminDashboardPage> {
           tileSize: tileSize,
           index: 1,
           imagePath: 'lib/Assets/lists.png',
-          pageName: null),
+          pageName: RequestingDL()),
       _adminDashboardList(' Previous List of Users for Smart NIC',
           width: 380,
           height: 200,

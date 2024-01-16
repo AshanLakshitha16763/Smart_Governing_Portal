@@ -2,11 +2,11 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:smart_governing_portal/controllers/constants.dart';
-import 'package:smart_governing_portal/pages/Admin/adminLoginPage.dart';
 import 'package:smart_governing_portal/pages/User/SmartDL_applying_form.dart';
 import 'package:smart_governing_portal/pages/User/SmartNIC_applyingForm.dart';
 import 'package:smart_governing_portal/pages/User/dl_template.dart';
 import 'package:smart_governing_portal/pages/User/nic_template.dart';
+import 'package:smart_governing_portal/pages/User/user_profile.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class AfterRegistrationPage extends StatefulWidget {
@@ -24,6 +24,7 @@ class _AfterRegistrationPageState extends State<AfterRegistrationPage> {
   final ScrollController _scrollController = ScrollController();
   final GlobalKey _section2Key = GlobalKey();
   final GlobalKey _section1Key = GlobalKey();
+  late String currentUserDocumentId;
 
   @override
   Widget build(BuildContext context) {
@@ -31,6 +32,7 @@ class _AfterRegistrationPageState extends State<AfterRegistrationPage> {
     height = MediaQuery.of(context).size.height;
     User? user = FirebaseAuth.instance.currentUser;
     userName = user?.displayName ?? 'User';
+    currentUserDocumentId = user?.uid ?? '';
     return LayoutBuilder(builder: (context, constraints) {
       if (constraints.maxWidth > 800) {
         return Scaffold(
@@ -115,15 +117,12 @@ class _AfterRegistrationPageState extends State<AfterRegistrationPage> {
               ),
               IconButton(
                 onPressed: () {
-                  /*
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute<void>(
-                        builder: (BuildContext context) =>
-                            const AdminLoginPage(),
-                      ),
-                    );
-                  */
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute<void>(
+                      builder: (BuildContext context) => UserProfile(documentId: currentUserDocumentId,),
+                    ),
+                  );
                 },
                 icon: const Icon(Icons.person_outline_rounded),
               ),
@@ -485,7 +484,7 @@ class _AfterRegistrationPageState extends State<AfterRegistrationPage> {
 
   List<Widget> _OURserviceTiles(double tileSize) {
     return [
-      _OURserviceTile(' Smart National Identity Card Verification System',
+      _OURserviceTileNIC(' Smart National Identity Card Verification System',
           width: 360,
           height: 200,
           tileSize: tileSize,
@@ -493,7 +492,7 @@ class _AfterRegistrationPageState extends State<AfterRegistrationPage> {
           imagePath: 'lib/Assets/ID.png',
           pageName2: const NICApplicationForm(),
           pageName1: const NICTemplate()),
-      _OURserviceTile(' Smart Driving License Verification System',
+      _OURserviceTileDL(' Smart Driving License Verification System',
           width: 360,
           height: 200,
           tileSize: tileSize,
@@ -505,7 +504,7 @@ class _AfterRegistrationPageState extends State<AfterRegistrationPage> {
   }
 
   // ignore: unused_element
-  Widget _OURserviceTile(String text,
+  Widget _OURserviceTileNIC(String text,
       {required double width,
       required double height,
       required double tileSize,
@@ -587,6 +586,90 @@ class _AfterRegistrationPageState extends State<AfterRegistrationPage> {
       ),
     );
   }
+
+  Widget _OURserviceTileDL(String text,
+      {required double width,
+      required double height,
+      required double tileSize,
+      required int index,
+      required pageName1,
+      required pageName2,
+      required imagePath}) {
+    return ConstrainedBox(
+      constraints: const BoxConstraints(minHeight: 200),
+      child: SizedBox(
+        width: tileSize,
+        height: tileSize * (height / width) + 60,
+        child: InkWell(
+          onTap: () async {
+            final userUid = FirebaseAuth.instance.currentUser?.uid ?? '';
+            final docSnapshot = await FirebaseFirestore.instance
+                .collection('DLtest')
+                .doc(userUid)
+                .get();
+            Future.delayed(const Duration(milliseconds: 20));
+            if (docSnapshot.exists) {
+              // Navigate to the NIC template page
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => pageName1),
+              );
+            } else {
+              // Navigate to the NIC application form page
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => pageName2),
+              );
+            }
+          },
+          child: Container(
+            alignment: Alignment.center,
+            decoration: BoxDecoration(
+              color: hoveredIndex == index
+                  ? const Color.fromARGB(255, 10, 4, 70)
+                  : Colors.white,
+              borderRadius: BorderRadius.circular(12),
+              border: Border.all(
+                color: const Color.fromARGB(255, 187, 191, 190),
+                width: 1,
+              ),
+              boxShadow: [
+                BoxShadow(
+                  color: Colors.grey.shade600,
+                  spreadRadius: 1,
+                  blurRadius: 5,
+                  offset: const Offset(0, 5),
+                ),
+              ],
+            ),
+            child: Padding(
+              padding: const EdgeInsets.all(4.0),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Image.asset(
+                    imagePath,
+                    width: 52,
+                    height: 52,
+                  ),
+                  Text(
+                    text,
+                    textAlign: TextAlign.center,
+                    style: const TextStyle(
+                      fontFamily: 'Inter',
+                      fontSize: 20,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+
 
   //Check if thre user has formdata already
   /*void navigateBasedOnUserData() async {

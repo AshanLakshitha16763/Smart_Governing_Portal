@@ -1,16 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:intl/intl.dart';
-import 'package:smart_governing_portal/pages/Admin/requestingNicTemplate.dart';
+import 'package:smart_governing_portal/pages/Admin/requestingDLTemplate.dart';
 
-class RequestingNIC extends StatefulWidget {
+
+class RequestingDL extends StatefulWidget {
   @override
-  _RequestingNICState createState() => _RequestingNICState();
+  _RequestingDLState createState() => _RequestingDLState();
 }
 
-class _RequestingNICState extends State<RequestingNIC> {
-  final CollectionReference nicTestCollection =
-      FirebaseFirestore.instance.collection('NICtest');
+class _RequestingDLState extends State<RequestingDL> {
+  final CollectionReference dlTestCollection =
+      FirebaseFirestore.instance.collection('DLtest');
 
   @override
   Widget build(BuildContext context) {
@@ -25,7 +26,7 @@ class _RequestingNICState extends State<RequestingNIC> {
           child: Padding(
             padding: const EdgeInsets.all(20.0),
             child: StreamBuilder(
-              stream: nicTestCollection.snapshots(),
+              stream: dlTestCollection.snapshots(),
               builder: (context, AsyncSnapshot<QuerySnapshot> snapshot) {
                 if (snapshot.connectionState == ConnectionState.waiting) {
                   return const Center(
@@ -41,7 +42,7 @@ class _RequestingNICState extends State<RequestingNIC> {
             
                 List<TableRow> rows = snapshot.data!.docs.map((doc) {
                   String name = doc['Full Name'] ?? 'No Name';
-                  String nic = doc['NIC No'] ?? 'No Name';
+                  String nic = doc['License No'] ?? 'No Name';
                   Timestamp timestamp = doc['Time'] ?? Timestamp(0, 0);
                   String formattedTime =
                       DateFormat('yyyy-MM-dd HH:mm').format(timestamp.toDate());
@@ -74,7 +75,7 @@ class _RequestingNICState extends State<RequestingNIC> {
                               Navigator.push(
                                 context,
                                 MaterialPageRoute(
-                                  builder: (context) => ReqNICTemplate(documentId: doc.id,),
+                                  builder: (context) => ReqDLTemplate(documentId: doc.id,),
                                 ),
                               );
                             },
@@ -101,7 +102,7 @@ class _RequestingNICState extends State<RequestingNIC> {
                         TableCell(
                           child: Padding(
                             padding: EdgeInsets.all(8.0),
-                            child: Text('NIC',style: TextStyle(color:Color.fromARGB(255, 49, 101, 185),fontSize: 18,fontWeight: FontWeight.w600 ),),
+                            child: Text('License No',style: TextStyle(color:Color.fromARGB(255, 49, 101, 185),fontSize: 18,fontWeight: FontWeight.w600 ),),
                           ),
                         ),
                         TableCell(
