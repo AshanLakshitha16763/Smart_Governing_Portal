@@ -48,7 +48,7 @@ class _AdminRegisterDesktopState extends State<AdminRegisterDesktop> {
                                   context,
                                   MaterialPageRoute<void>(
                                     builder: (BuildContext context) =>
-                                        const HomePage(),
+                                        const UserHomePage(),
                                   ),
                                 );
                               },

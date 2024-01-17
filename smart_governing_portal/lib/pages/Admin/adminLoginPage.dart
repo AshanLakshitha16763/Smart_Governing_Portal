@@ -7,8 +7,8 @@ import 'package:smart_governing_portal/controllers/auth.dart';
 import 'package:smart_governing_portal/controllers/constants.dart';
 import 'package:smart_governing_portal/pages/Admin/adminDashboardPage.dart';
 import 'package:smart_governing_portal/pages/Admin/admin_register_desktop.dart';
-import 'package:smart_governing_portal/pages/User/after_registration_page.dart';
 import 'package:smart_governing_portal/pages/User/user_homePage.dart';
+import 'package:smart_governing_portal/pages/User/user_loginPage.dart';
 
 
 class AdminLoginPage extends StatefulWidget {
@@ -20,7 +20,6 @@ class AdminLoginPage extends StatefulWidget {
 
 class _AdminLoginPageState extends State<AdminLoginPage> {
   final db = FirebaseFirestore.instance;
-  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   final TextEditingController _nameController = TextEditingController();
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
@@ -81,7 +80,7 @@ class _AdminLoginPageState extends State<AdminLoginPage> {
   }
 
   Widget _errorMessage() {
-    return Text(errorMessage == '' ? '' : 'Humm ? $errorMessage');
+    return Text(errorMessage == '' ? '' : 'Humm ? $errorMessage',style: const TextStyle(color: Colors.red),);
   }
 
   Widget _loginForm() {
@@ -294,20 +293,14 @@ class _AdminLoginPageState extends State<AdminLoginPage> {
 
   Widget _appbarActions() {
     return FittedBox(
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.end,
-        children: [
-          const SizedBox(
-            height: 15,
-          ),
-          Row(
+      child: Row(
             children: [
               TextButton(
                   onPressed: () {
                     Navigator.push(
                       context,
                       MaterialPageRoute<void>(
-                        builder: (BuildContext context) => const HomePage(),
+                        builder: (BuildContext context) => const UserHomePage(),
                       ),
                     );
                   },
@@ -321,35 +314,12 @@ class _AdminLoginPageState extends State<AdminLoginPage> {
                 width: 20,
               ),
               TextButton(
-                  onPressed: () {},
-                  child: const Text(
-                    'Services',
-                    style: TextStyle(
-                      color: Colors.black,
-                    ),
-                  )),
-              const SizedBox(
-                width: 20,
-              ),
-              TextButton(
-                onPressed: () {},
-                child: const Text(
-                  'About Us',
-                  style: TextStyle(
-                    color: Colors.black,
-                  ),
-                ),
-              ),
-              const SizedBox(
-                width: 20,
-              ),
-              TextButton(
                   onPressed: () {
                     Navigator.push(
                       context,
                       MaterialPageRoute<void>(
                         builder: (BuildContext context) =>
-                            const AfterRegistrationPage(),
+                            const UserLoginPage(),
                       ),
                     );
                   },
@@ -364,56 +334,6 @@ class _AdminLoginPageState extends State<AdminLoginPage> {
               ),
             ],
           ),
-          const SizedBox(
-            height: 20,
-          ),
-          Row(
-            children: [
-              ElevatedButton(
-                onPressed: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute<void>(
-                      builder: (BuildContext context) => const AdminLoginPage(),
-                    ),
-                  );
-                },
-                style: const ButtonStyle(
-                    backgroundColor: MaterialStatePropertyAll(
-                        Color.fromARGB(255, 255, 255, 255))),
-                child: const Text(
-                  'Login',
-                  style: TextStyle(color: Color.fromARGB(255, 10, 4, 70)),
-                ),
-              ),
-              const SizedBox(
-                width: 15,
-              ),
-              ElevatedButton(
-                onPressed: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute<void>(
-                      builder: (BuildContext context) =>
-                          const AdminRegisterDesktop(),
-                    ),
-                  );
-                },
-                style: const ButtonStyle(
-                    backgroundColor: MaterialStatePropertyAll(
-                        Color.fromARGB(255, 10, 4, 70))),
-                child: const Text(
-                  'Register',
-                  style: TextStyle(color: Color.fromARGB(255, 255, 255, 255)),
-                ),
-              ),
-              const SizedBox(
-                width: 15,
-              ),
-            ],
-          )
-        ],
-      ),
     );
   }
 
@@ -443,7 +363,7 @@ class _AdminLoginPageState extends State<AdminLoginPage> {
                       Expanded(
                         child: Padding(
                           padding: const EdgeInsets.all(8.0),
-                          child: Container(
+                          child: SizedBox(
                             width: (width - 150) / 2,
                             child: _loginForm(),
                           ),
@@ -494,7 +414,7 @@ class _AdminLoginPageState extends State<AdminLoginPage> {
                     children: [
                       Padding(
                         padding: const EdgeInsets.all(8.0),
-                        child: Container(
+                        child: SizedBox(
                           width: width - 16,
                           child: _loginForm(),
                         ),
@@ -561,7 +481,7 @@ class _AdminLoginPageState extends State<AdminLoginPage> {
             appBar: AppBar(
               backgroundColor: const Color.fromARGB(255, 115, 185, 250),
             ),
-            drawer: mobileDrawer(width*0.25),
+            drawer: mobileDrawer(width*0.4,context),
             body: _body());
       }
     });

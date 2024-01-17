@@ -278,7 +278,7 @@ class _UserSignUpPageState extends State<UserSignUpPage> {
                     Navigator.push(
                       context,
                       MaterialPageRoute<void>(
-                        builder: (BuildContext context) => const HomePage(),
+                        builder: (BuildContext context) => const UserHomePage(),
                       ),
                     );
                   },
@@ -291,30 +291,7 @@ class _UserSignUpPageState extends State<UserSignUpPage> {
               const SizedBox(
                 width: 20,
               ),
-              TextButton(
-                  onPressed: () {},
-                  child: const Text(
-                    'Services',
-                    style: TextStyle(
-                      color: Colors.black,
-                    ),
-                  )),
-              const SizedBox(
-                width: 20,
-              ),
-              TextButton(
-                onPressed: () {},
-                child: const Text(
-                  'About Us',
-                  style: TextStyle(
-                    color: Colors.black,
-                  ),
-                ),
-              ),
-              const SizedBox(
-                width: 20,
-              ),
-              TextButton(
+              /*TextButton(
                   onPressed: () {
                     Navigator.push(
                       context,
@@ -332,7 +309,7 @@ class _UserSignUpPageState extends State<UserSignUpPage> {
                   )),
               const SizedBox(
                 width: 20,
-              ),
+              ),*/
             ],
           ),
           const SizedBox(
@@ -360,7 +337,7 @@ class _UserSignUpPageState extends State<UserSignUpPage> {
               const SizedBox(
                 width: 15,
               ),
-              ElevatedButton(
+              /*ElevatedButton(
                 onPressed: () {
                   Navigator.push(
                     context,
@@ -374,13 +351,13 @@ class _UserSignUpPageState extends State<UserSignUpPage> {
                     backgroundColor: MaterialStatePropertyAll(
                         Color.fromARGB(255, 10, 4, 70))),
                 child: const Text(
-                  'Register',
+                  'SignUp',
                   style: TextStyle(color: Color.fromARGB(255, 255, 255, 255)),
                 ),
               ),
               const SizedBox(
                 width: 15,
-              ),
+              ),*/
             ],
           )
         ],
@@ -532,7 +509,7 @@ class _UserSignUpPageState extends State<UserSignUpPage> {
             appBar: AppBar(
               backgroundColor: const Color.fromARGB(255, 115, 185, 250),
             ),
-            drawer: mobileDrawer(width*0.25),
+            drawer: mobileDrawer(width*0.25,context),
             body: _body());
       }
     });

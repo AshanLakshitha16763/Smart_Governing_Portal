@@ -59,7 +59,7 @@ class _WidgetTreeState extends State<WidgetTree> {
           );
         } else {
           // Normal user, navigate to home page
-          return const HomePage();
+          return const UserHomePage();
         }
       },
     );

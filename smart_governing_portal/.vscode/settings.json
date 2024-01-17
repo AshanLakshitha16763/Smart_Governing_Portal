@@ -1,4 +1,5 @@
 {
     "better-comments.highlightPlainText": true,
-    "C_Cpp.errorSquiggles": "disabled"
+    "C_Cpp.errorSquiggles": "disabled",
+    "cmake.sourceDirectory": "D:/Sanuda/Flutter_projects/Smart_Governing_Portal/smart_governing_portal/linux"
 }
