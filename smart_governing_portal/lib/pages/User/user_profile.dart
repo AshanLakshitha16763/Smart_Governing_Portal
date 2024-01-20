@@ -1,18 +1,18 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
-class ReqNICTemplate extends StatefulWidget {
+class UserProfile extends StatefulWidget {
   final String documentId;
-  const ReqNICTemplate({
+  const UserProfile({
     super.key,
     required this.documentId,
   });
 
   @override
-  State<ReqNICTemplate> createState() => _ReqNICTemplateState();
+  State<UserProfile> createState() => _UserProfileState();
 }
 
-class _ReqNICTemplateState extends State<ReqNICTemplate> {
+class _UserProfileState extends State<UserProfile> {
   late Future<DocumentSnapshot<Map<String, dynamic>>> data;
   late double width;
   late double height;

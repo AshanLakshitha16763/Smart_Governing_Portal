@@ -1,29 +1,29 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
-class ReqNICTemplate extends StatefulWidget {
+class ReqDLTemplate extends StatefulWidget {
   final String documentId;
-  const ReqNICTemplate({
+  const ReqDLTemplate({
     super.key,
     required this.documentId,
   });
 
   @override
-  State<ReqNICTemplate> createState() => _ReqNICTemplateState();
+  State<ReqDLTemplate> createState() => _ReqDLTemplateState();
 }
 
-class _ReqNICTemplateState extends State<ReqNICTemplate> {
+class _ReqDLTemplateState extends State<ReqDLTemplate> {
   late Future<DocumentSnapshot<Map<String, dynamic>>> data;
   late double width;
   late double height;
   late String issuedDate;
-  late String nicNo;
+  late String dlNo;
 
   @override
   void initState() {
     super.initState();
     data = FirebaseFirestore.instance
-        .collection('NICtest')
+        .collection('DLtest')
         .doc(widget.documentId)
         .get();
   }
@@ -39,7 +39,7 @@ class _ReqNICTemplateState extends State<ReqNICTemplate> {
           title: const FittedBox(
               fit: BoxFit.scaleDown,
               child: Text(
-                'National ID Card Template',
+                'License Card Template',
                 style:
                     TextStyle(fontWeight: FontWeight.w600, color: Colors.white),
               )),
@@ -97,7 +97,7 @@ class _ReqNICTemplateState extends State<ReqNICTemplate> {
           } else {
             var documentData = snapshot.data!.data()!;
             issuedDate = documentData['Issued Date'] ?? '';
-            nicNo = documentData['NIC No'] ?? '';
+            dlNo = documentData['License No'] ?? '';
             return SingleChildScrollView(
               child: Column(
                 children: [
@@ -125,23 +125,10 @@ class _ReqNICTemplateState extends State<ReqNICTemplate> {
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             crossAxisAlignment: CrossAxisAlignment.center,
                             children: [
-                              Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                children: [
-                                  const Text(
-                                    "Sri Lanka",
-                                    style: TextStyle(
-                                        fontSize: 20,
-                                        fontWeight: FontWeight.bold),
-                                  ),
-                                  Text(
-                                    nicNo,
-                                    style: const TextStyle(
-                                        fontSize: 20,
-                                        fontWeight: FontWeight.bold),
-                                  ),
-                                ],
+                              const Text(
+                                "Driving License",
+                                style: TextStyle(
+                                    fontSize: 20, fontWeight: FontWeight.bold),
                               ),
                               const Row(
                                   mainAxisAlignment:
@@ -164,18 +151,18 @@ class _ReqNICTemplateState extends State<ReqNICTemplate> {
                                 children: [
                                   _buildField('Full Name',
                                       documentData['Full Name'] ?? ''),
-                                  _buildField('Other Names',
-                                      documentData['Other Names'] ?? ''),
+                                  _buildField(
+                                      'NIC No', documentData['NIC'] ?? ''),
+                                  _buildField('License No',
+                                      documentData['License No'] ?? ''),
                                   _buildField(
                                       'Address', documentData['Address'] ?? ''),
-                                  _buildField('Birth Place',
-                                      documentData['Birth Place'] ?? ''),
                                   _buildField('Date of Birth',
                                       documentData['Date of Birth'] ?? ''),
                                   _buildField(
                                       'Gender', documentData['Gender'] ?? ''),
-                                  _buildField('Profession',
-                                      documentData['Profession'] ?? ''),
+                                  _buildField('Blood Group',
+                                      documentData['Blood Group'] ?? ''),
                                   _buildField('Document Number',
                                       documentData['Doc No'] ?? ''),
                                 ],
@@ -221,7 +208,7 @@ class _ReqNICTemplateState extends State<ReqNICTemplate> {
                                             fontWeight: FontWeight.bold),
                                       ),
                                       Text(
-                                        "Registration of Persons",
+                                        "Motor Traffic",
                                         style: TextStyle(
                                             fontSize: 16,
                                             fontWeight: FontWeight.bold),
@@ -241,8 +228,8 @@ class _ReqNICTemplateState extends State<ReqNICTemplate> {
                                 child: const FittedBox(
                                   fit: BoxFit.scaleDown,
                                   child: Text(
-                                    "Registration of Persons Act No.32 of 1968",
-                                    style: TextStyle(fontSize: 16),
+                                    "Department of Motor Traffic - Sri Lanka",
+                                    style: TextStyle(fontSize: 18),
                                   ),
                                 ),
                               ),
@@ -273,18 +260,13 @@ class _ReqNICTemplateState extends State<ReqNICTemplate> {
                               MaterialStateProperty.all(Colors.green),
                         ),
                       ),
-                      const SizedBox(
-                        width: 5,
-                      ),
+                      const SizedBox(width: 5,),
                       ElevatedButton.icon(
                         onPressed: null,
                         icon: const Icon(
                           Icons.close,
                         ),
-                        label: const Text(
-                          "Incorrect",
-                          style: TextStyle(),
-                        ),
+                        label: const Text("Incorrect",style: TextStyle(),),
                         style: ButtonStyle(
                           backgroundColor:
                               MaterialStateProperty.all(Colors.green),

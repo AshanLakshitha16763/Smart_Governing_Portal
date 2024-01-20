@@ -5,7 +5,7 @@ import 'package:kommunicate_flutter/kommunicate_flutter.dart';
 import 'package:smart_governing_portal/controllers/secrets.dart';
 
 class MyHomePage extends StatefulWidget {
-  MyHomePage({Key? key, required this.title}) : super(key: key);
+  const MyHomePage({super.key, required this.title});
 
   final String title;
 
