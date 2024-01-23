@@ -3,6 +3,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
 
+
 class NICTemplate extends StatefulWidget {
   const NICTemplate({Key? key}) : super(key: key);
 
