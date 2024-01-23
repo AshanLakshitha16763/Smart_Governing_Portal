@@ -25,10 +25,10 @@ class _CountrySearchPageState extends State<CountrySearchPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Color.fromARGB(255, 219, 230, 219),
+      backgroundColor: const Color.fromARGB(255, 219, 230, 219),
       appBar: AppBar(
         toolbarHeight: 80,
-        backgroundColor: Color.fromARGB(255, 18, 110, 72),
+        backgroundColor: const Color.fromARGB(255, 18, 110, 72),
         title: const Text('Search Continent', style: TextStyle(fontSize: 23)),
         leading: GestureDetector(
           onTap: () {

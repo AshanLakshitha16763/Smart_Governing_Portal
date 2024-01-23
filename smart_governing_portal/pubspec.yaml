@@ -53,6 +53,7 @@ dependencies:
   shared_preferences: ^2.2.2
   kommunicate_flutter: ^1.7.9
   lottie: ^2.7.0
+  cached_network_image: ^3.3.1
 
 
   

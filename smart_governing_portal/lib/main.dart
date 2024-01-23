@@ -5,6 +5,9 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:lottie/lottie.dart';
 import 'package:smart_governing_portal/controllers/secrets.dart';
 import 'package:smart_governing_portal/controllers/widget_tree.dart';
+import 'package:smart_governing_portal/pages/test/audio.dart';
+import 'package:smart_governing_portal/pages/test/display.dart';
+import 'package:smart_governing_portal/pages/test/test.dart';
 
 
 Future main() async {
@@ -59,7 +62,7 @@ class _MyAppState extends State<MyApp> {
               seedColor: const Color.fromARGB(255, 205, 219, 243)),
           useMaterial3: true,
         ),
-      home: _isLoading ? Center(child: Lottie.asset('lib/Assets/animations/loading.json',frameRate: FrameRate(40)),) : const WidgetTree(),
+      home: /*_isLoading ? Center(child: Lottie.asset('lib/Assets/animations/loading.json',frameRate: FrameRate(40)),) : */const UploadImageToFirebasea(),
     );
   }
 }
