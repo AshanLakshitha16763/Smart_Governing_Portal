@@ -7,7 +7,6 @@ import 'package:smart_governing_portal/controllers/constants.dart';
 import 'package:smart_governing_portal/pages/User/after_registration_page.dart';
 import 'package:smart_governing_portal/pages/User/user_signupPage.dart';
 
-
 class UserLoginPage extends StatefulWidget {
   const UserLoginPage({super.key});
 
@@ -185,9 +184,7 @@ class _UserLoginPageState extends State<UserLoginPage> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             GestureDetector(
-              onTap: () {
-                // Handle Google button tap
-              },
+              onTap: () {},
               child: Image.asset(
                 'lib/Assets/RegisterPages/google.png',
                 width: 30,
@@ -199,9 +196,7 @@ class _UserLoginPageState extends State<UserLoginPage> {
               width: 3,
             ),
             GestureDetector(
-              onTap: () {
-                // Handle Facebook button tap
-              },
+              onTap: () {},
               child: Image.asset(
                 'lib/Assets/RegisterPages/facebook.png',
                 width: 60,
@@ -213,9 +208,7 @@ class _UserLoginPageState extends State<UserLoginPage> {
               width: 1,
             ),
             GestureDetector(
-              onTap: () {
-                // Handle Apple button tap
-              },
+              onTap: () {},
               child: Image.asset(
                 'lib/Assets/RegisterPages/apple.png',
                 width: 40,
@@ -308,8 +301,7 @@ class _UserLoginPageState extends State<UserLoginPage> {
                   Navigator.push(
                     context,
                     MaterialPageRoute<void>(
-                      builder: (BuildContext context) =>
-                          const UserSignUpPage(),
+                      builder: (BuildContext context) => const UserSignUpPage(),
                     ),
                   );
                 },
@@ -370,7 +362,8 @@ class _UserLoginPageState extends State<UserLoginPage> {
                             width: (width - 150) / 2.5,
                             decoration: BoxDecoration(
                               border: Border.all(
-                                color: Color.fromARGB(255, 243, 236, 236), // Border color
+                                color: Color.fromARGB(
+                                    255, 243, 236, 236), // Border color
                                 width: 3.0, // Border width
                               ),
                               borderRadius:
@@ -441,7 +434,6 @@ class _UserLoginPageState extends State<UserLoginPage> {
       ),
     );
   }
-  
 
   @override
   void initState() {
@@ -470,12 +462,12 @@ class _UserLoginPageState extends State<UserLoginPage> {
               backgroundColor: const Color.fromARGB(255, 115, 185, 250),
             ),
             body: _body());
-      } else{
+      } else {
         return Scaffold(
             appBar: AppBar(
               backgroundColor: const Color.fromARGB(255, 115, 185, 250),
             ),
-            drawer: mobileDrawer(width*0.6,context),
+            drawer: mobileDrawer(width * 0.6, context),
             body: _body());
       }
     });
