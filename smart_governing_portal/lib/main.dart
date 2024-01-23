@@ -61,7 +61,7 @@ class _MyAppState extends State<MyApp> {
               seedColor: const Color.fromARGB(255, 205, 219, 243)),
           useMaterial3: true,
         ),
-      home: /*_isLoading ? Center(child: Lottie.asset('lib/Assets/animations/loading.json',frameRate: FrameRate(40)),) : */const UploadImageToFirebasea(),
+      home: _isLoading ? Center(child: Lottie.asset('lib/Assets/animations/loading.json',frameRate: FrameRate(40)),) : const WidgetTree(),
     );
   }
 }
