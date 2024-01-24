@@ -1,15 +1,8 @@
-// ignore_for_file: deprecated_member_use, file_names, non_constant_identifier_names
-
-/*import 'dart:io';
-import 'package:firebase_core/firebase_core.dart';
-import 'package:flutter/foundation.dart';
-import 'package:image_picker/image_picker.dart';*/
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:intl/intl.dart';
 import 'package:flutter/material.dart';
 import 'package:smart_governing_portal/controllers/constants.dart';
-
 import 'package:smart_governing_portal/pages/Admin/adminFormPage.dart';
 import 'package:smart_governing_portal/pages/User/dl_template.dart';
 import 'package:smart_governing_portal/pages/User/user_homePage.dart';
