@@ -504,12 +504,12 @@ class _UserSignUpPageState extends State<UserSignUpPage> {
               backgroundColor: const Color.fromARGB(255, 115, 185, 250),
             ),
             body: _body());
-      } else{
+      } else {
         return Scaffold(
             appBar: AppBar(
               backgroundColor: const Color.fromARGB(255, 115, 185, 250),
             ),
-            drawer: mobileDrawer(width*0.25,context),
+            drawer: mobileDrawer(width * 0.25, context),
             body: _body());
       }
     });
