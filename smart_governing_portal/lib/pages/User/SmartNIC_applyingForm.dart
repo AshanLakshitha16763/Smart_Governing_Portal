@@ -169,6 +169,7 @@ class _NICApplicationFormState extends State<NICApplicationForm> {
         "Area Code": areaCodeController.text,
         "Issued Date": issuedDateController.text,
         "Doc No": docNoController.text,
+        "Validation":"",
         "Time": DateTime.now()
       };
 

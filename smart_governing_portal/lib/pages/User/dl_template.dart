@@ -13,6 +13,10 @@ class DLTemplate extends StatefulWidget {
 class _DLTemplateState extends State<DLTemplate> {
   late Future<DocumentSnapshot<Map<String, dynamic>>> data;
   bool _showAnimation = true;
+  late double width;
+  late double height;
+  late String issuedDate;
+  late String dlNo;
 
   @override
   void initState() {
@@ -37,11 +41,12 @@ class _DLTemplateState extends State<DLTemplate> {
         : Scaffold(
             appBar: AppBar(
               automaticallyImplyLeading: true,
+              centerTitle: true,
+              backgroundColor: const Color.fromARGB(255, 115, 185, 250),
               title: const Text('Driving License Template'),
             ),
-            body: SingleChildScrollView(
-              child: Padding(
-                padding: const EdgeInsets.all(16.0),
+            body: Center(
+              child: SingleChildScrollView(
                 child: FutureBuilder<DocumentSnapshot<Map<String, dynamic>>>(
                   future: data,
                   builder: (context, snapshot) {
@@ -53,39 +58,7 @@ class _DLTemplateState extends State<DLTemplate> {
                       return const Text('Document not found');
                     } else {
                       var documentData = snapshot.data!.data()!;
-                      return Card(
-                        elevation: 5,
-                        child: Padding(
-                          padding: const EdgeInsets.all(16.0),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              const Text(
-                                'Driving License',
-                                style: TextStyle(
-                                    fontSize: 20, fontWeight: FontWeight.bold),
-                              ),
-                              const SizedBox(height: 10),
-                              _buildField('Full Name : ',
-                                  documentData['Full Name'] ?? ''),
-                              _buildField('Other Names : ',
-                                  documentData['Other Names'] ?? ''),
-                              _buildField('Birth Place : ',
-                                  documentData['Birth Place'] ?? ''),
-                              _buildField(
-                                  'Address : ', documentData['Address'] ?? ''),
-                              _buildField('Document Number : ',
-                                  documentData['Doc No'] ?? ''),
-                              _buildField('Date of Birth : ',
-                                  documentData['Date of Birth'] ?? ''),
-                              _buildField('Issued Date : ',
-                                  documentData['Issued Date'] ?? ''),
-                              _buildField(
-                                  'Gender : ', documentData['Gender'] ?? ''),
-                            ],
-                          ),
-                        ),
-                      );
+                      return _body();
                     }
                   },
                 ),
@@ -110,6 +83,222 @@ class _DLTemplateState extends State<DLTemplate> {
             style: const TextStyle(fontSize: 18),
           ),
         ],
+      ),
+    );
+  }
+
+  Widget _body() {
+    width = MediaQuery.of(context).size.width;
+    height = MediaQuery.of(context).size.height;
+    return Center(
+      child: ConstrainedBox(
+        constraints: BoxConstraints(
+          maxWidth: width * 0.6,
+          maxHeight: height * 0.8,
+        ),
+        child: FutureBuilder<DocumentSnapshot<Map<String, dynamic>>>(
+          future: data,
+          builder: (context, snapshot) {
+            if (snapshot.connectionState == ConnectionState.waiting) {
+              return const CircularProgressIndicator();
+            } else if (snapshot.hasError) {
+              return Center(
+                child: Text(
+                  'Error: ${snapshot.error}',
+                  style: const TextStyle(color: Colors.red),
+                ),
+              );
+            } else if (!snapshot.hasData || !snapshot.data!.exists) {
+              return const Center(
+                child: Text(
+                  'Document not found',
+                  style: TextStyle(color: Colors.red),
+                ),
+              );
+            } else {
+              var documentData = snapshot.data!.data()!;
+              issuedDate = documentData['Issued Date'] ?? '';
+              dlNo = documentData['License No'] ?? '';
+              return SingleChildScrollView(
+                child: Column(
+                  children: [
+                    FittedBox(
+                      fit: BoxFit.scaleDown,
+                      child: Container(
+                        constraints: BoxConstraints(
+                          maxWidth: width * 0.8,
+                          minHeight: height * 0.8,
+                        ),
+                        decoration: BoxDecoration(
+                          color: const Color.fromARGB(255, 249, 247, 232),
+                          borderRadius: BorderRadius.circular(10.0),
+                          border: Border.all(
+                            color: Colors.black,
+                            width: 1.0,
+                          ),
+                        ),
+                        child: Padding(
+                          padding: const EdgeInsets.only(
+                              top: 10, left: 20, right: 20, bottom: 5),
+                          child: SingleChildScrollView(
+                            child: Column(
+                              mainAxisSize: MainAxisSize.max,
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: [
+                                const Text(
+                                  "Driving License",
+                                  style: TextStyle(
+                                      fontSize: 20, fontWeight: FontWeight.bold),
+                                ),
+                                const Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      Image(
+                                        image: AssetImage(
+                                            "lib/Assets/government.png"),
+                                        width: 100,
+                                        height: 100,
+                                      ),
+                                      Image(
+                                        image:
+                                            AssetImage("lib/Assets/person.png"),
+                                        width: 100,
+                                        height: 100,
+                                      ),
+                                    ]),
+                                Column(
+                                  children: [
+                                    _buildField('Full Name: ',
+                                        documentData['Full Name'] ?? ''),
+                                    _buildField(
+                                        'NIC No: ', documentData['NIC'] ?? ''),
+                                    _buildField('License No: ',
+                                        documentData['License No'] ?? ''),
+                                    _buildField(
+                                        'Address: ', documentData['Address'] ?? ''),
+                                    _buildField('Date of Birth: ',
+                                        documentData['Date of Birth'] ?? ''),
+                                    _buildField(
+                                        'Gender: ', documentData['Gender'] ?? ''),
+                                    _buildField('Blood Group: ',
+                                        documentData['Blood Group'] ?? ''),
+                                    _buildField('Document Number: ',
+                                        documentData['Doc No'] ?? ''),
+                                  ],
+                                ),
+                                Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    Column(
+                                      children: [
+                                        Text(
+                                          issuedDate,
+                                          style: const TextStyle(
+                                              fontSize: 16,
+                                              decoration:
+                                                  TextDecoration.underline,
+                                              decorationStyle:
+                                                  TextDecorationStyle.dotted),
+                                        ),
+                                        const Text(
+                                          "Date",
+                                          style: TextStyle(
+                                              fontSize: 16,
+                                              fontWeight: FontWeight.bold),
+                                        ),
+                                      ],
+                                    ),
+                                    const Column(
+                                      children: [
+                                        Text(
+                                          ".......................",
+                                          style: TextStyle(
+                                              fontSize: 16,
+                                              decoration:
+                                                  TextDecoration.underline,
+                                              decorationStyle:
+                                                  TextDecorationStyle.dotted),
+                                        ),
+                                        Text(
+                                          "Commissioner General of",
+                                          style: TextStyle(
+                                              fontSize: 16,
+                                              fontWeight: FontWeight.bold),
+                                        ),
+                                        Text(
+                                          "Motor Traffic",
+                                          style: TextStyle(
+                                              fontSize: 16,
+                                              fontWeight: FontWeight.bold),
+                                        ),
+                                      ],
+                                    ),
+                                  ],
+                                ),
+                                Container(
+                                  decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(5.0),
+                                    border: Border.all(
+                                      color: Colors.black,
+                                      width: 1.0,
+                                    ),
+                                  ),
+                                  child: const FittedBox(
+                                    fit: BoxFit.scaleDown,
+                                    child: Text(
+                                      "Department of Motor Traffic - Sri Lanka",
+                                      style: TextStyle(fontSize: 18),
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                    /*Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        ElevatedButton.icon(
+                          onPressed: null,
+                          icon: const Icon(
+                            Icons.check_outlined,
+                          ),
+                          label: const Text("Correct"),
+                          style: ButtonStyle(
+                            backgroundColor:
+                                MaterialStateProperty.all(Colors.green),
+                          ),
+                        ),
+                        const SizedBox(
+                          width: 5,
+                        ),
+                        ElevatedButton.icon(
+                          onPressed: null,
+                          icon: const Icon(
+                            Icons.close,
+                          ),
+                          label: const Text(
+                            "Incorrect",
+                            style: TextStyle(),
+                          ),
+                          style: ButtonStyle(
+                            backgroundColor:
+                                MaterialStateProperty.all(Colors.green),
+                          ),
+                        )
+                      ],
+                    )*/
+                  ],
+                ),
+              );
+            }
+          },
+        ),
       ),
     );
   }

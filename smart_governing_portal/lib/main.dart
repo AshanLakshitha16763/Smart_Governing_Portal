@@ -5,9 +5,6 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:lottie/lottie.dart';
 import 'package:smart_governing_portal/controllers/secrets.dart';
 import 'package:smart_governing_portal/controllers/widget_tree.dart';
-import 'package:smart_governing_portal/pages/test/audio.dart';
-import 'package:smart_governing_portal/pages/test/display.dart';
-import 'package:smart_governing_portal/pages/test/test.dart';
 
 
 Future main() async {
@@ -42,7 +39,7 @@ class _MyAppState extends State<MyApp> {
   void initState() {
     super.initState();
 
-    // Simulate a 5-second delay and then update loading state
+    // Simulate a 4-second delay and then update loading state
     Timer(const Duration(seconds:4), () {
       setState(() {
         _isLoading = false;
