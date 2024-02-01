@@ -467,12 +467,6 @@ class _AutoScrollImagesState extends State<AutoScrollImages> {
     "14.jpg",
     "15.jpg",
     "0.jpg",
-    "14.jpg",
-    "15.jpg",
-    "0.jpg",
-    "14.jpg",
-    "15.jpg",
-    "0.jpg",
   ];
 
   final PageController _controller = PageController();
