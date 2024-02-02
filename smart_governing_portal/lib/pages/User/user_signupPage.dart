@@ -6,6 +6,7 @@ import 'package:smart_governing_portal/pages/Admin/adminLoginPage.dart';
 import 'package:smart_governing_portal/pages/User/after_registration_page.dart';
 import 'package:smart_governing_portal/pages/User/user_homePage.dart';
 import 'package:smart_governing_portal/pages/User/user_loginPage.dart';
+import 'dart:async';
 
 class UserSignUpPage extends StatefulWidget {
   const UserSignUpPage({super.key});
@@ -411,10 +412,7 @@ class _UserSignUpPageState extends State<UserSignUpPage> {
                               borderRadius:
                                   BorderRadius.circular(15), // Border radius
                             ),
-                            child: Image.asset(
-                              'lib/Assets/signup.png',
-                              fit: BoxFit.cover,
-                            ),
+                            child: AutoScrollImages(),
                           ),
                         ),
                       ),
@@ -450,7 +448,7 @@ class _UserSignUpPageState extends State<UserSignUpPage> {
                       Padding(
                         padding: const EdgeInsets.all(8.0),
                         child: Container(
-                          width: width - 16,
+                          width: width - 10,
                           decoration: BoxDecoration(
                             border: Border.all(
                               color: const Color.fromARGB(
@@ -460,10 +458,7 @@ class _UserSignUpPageState extends State<UserSignUpPage> {
                             borderRadius:
                                 BorderRadius.circular(15), // Border radius
                           ),
-                          child: Image.asset(
-                            'lib/Assets/signup.png',
-                            fit: BoxFit.cover,
-                          ),
+                          child: Expanded(child: AutoScrollImages()),
                         ),
                       ),
                     ],
@@ -513,5 +508,69 @@ class _UserSignUpPageState extends State<UserSignUpPage> {
             body: _body());
       }
     });
+  }
+}
+
+//Animation looping
+class AutoScrollImages extends StatefulWidget {
+  const AutoScrollImages({super.key});
+
+  @override
+  _AutoScrollImagesState createState() => _AutoScrollImagesState();
+}
+
+class _AutoScrollImagesState extends State<AutoScrollImages> {
+  final List<String> imageUrls = [
+    "0.jpg",
+    "14.jpg",
+    "15.jpg",
+    "0.jpg",
+  ];
+
+  final PageController _controller = PageController();
+  Timer? _timer;
+
+  @override
+  void initState() {
+    super.initState();
+    _timer = Timer.periodic(const Duration(seconds: 4), (Timer timer) {
+      if (_controller.page == imageUrls.length - 1) {
+        _controller.animateToPage(0,
+            duration: const Duration(milliseconds: 2000),
+            curve: Curves.bounceOut);
+      } else {
+        _controller.nextPage(
+            duration: Duration(milliseconds: 2000), curve: Curves.ease);
+      }
+    });
+  }
+
+  @override
+  void dispose() {
+    _timer?.cancel();
+    _controller.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: [
+        SizedBox(
+          height: 450,
+          width: 500,
+          child: PageView.builder(
+            controller: _controller,
+            itemCount: imageUrls.length,
+            itemBuilder: (BuildContext context, int index) {
+              return Image.asset(
+                "lib/Assets/loop/${imageUrls[index]}",
+                fit: BoxFit.fill,
+              );
+            },
+          ),
+        ),
+      ],
+    );
   }
 }
