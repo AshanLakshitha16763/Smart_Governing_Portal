@@ -18,6 +18,9 @@ class _ReqNICTemplateState extends State<ReqNICTemplate> {
   late double height;
   late String issuedDate;
   late String nicNo;
+  String correctValidation = "valid";
+  String wrongValidation = "invalid";
+  final db = FirebaseFirestore.instance;
 
   @override
   void initState() {
@@ -263,21 +266,40 @@ class _ReqNICTemplateState extends State<ReqNICTemplate> {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       ElevatedButton.icon(
-                        onPressed: null,
+                        onPressed: () {
+                          correcctButtonMsg();
+                        },
                         icon: const Icon(
                           Icons.check_outlined,
                         ),
                         label: const Text("Correct"),
-                        style: ButtonStyle(
-                          backgroundColor:
-                              MaterialStateProperty.all(Colors.green),
+                        style: ElevatedButton.styleFrom(
+                          foregroundColor:
+                              const Color.fromARGB(255, 243, 242, 234),
+                          backgroundColor: const Color.fromARGB(255, 10, 4, 70),
+                          padding: const EdgeInsets.all(20),
+                          fixedSize: const Size(200, 50),
+                          textStyle: const TextStyle(
+                            fontSize: 25,
+                            fontWeight: FontWeight.bold,
+                          ),
+                          elevation: 5,
+                          side: const BorderSide(
+                            color: Color.fromARGB(255, 249, 252, 251),
+                            width: 4,
+                          ),
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(20),
+                          ),
                         ),
                       ),
                       const SizedBox(
                         width: 5,
                       ),
                       ElevatedButton.icon(
-                        onPressed: null,
+                        onPressed: () {
+                          wrongButtonMsg();
+                        },
                         icon: const Icon(
                           Icons.close,
                         ),
@@ -285,10 +307,28 @@ class _ReqNICTemplateState extends State<ReqNICTemplate> {
                           "Incorrect",
                           style: TextStyle(),
                         ),
-                        style: ButtonStyle(
-                          backgroundColor:
-                              MaterialStateProperty.all(Colors.green),
-                        ),
+                        style: ElevatedButton.styleFrom(
+                          foregroundColor:
+                              const Color.fromARGB(255, 243, 242, 234),
+                          backgroundColor: const Color.fromARGB(255, 10, 4, 70),
+                          padding: const EdgeInsets.all(20),
+                          fixedSize: const Size(200, 50),
+                          textStyle: const TextStyle(
+                            fontSize: 25,
+                            fontWeight: FontWeight.bold,
+                          ),
+                          elevation: 5,
+                          side: const BorderSide(
+                            color: Color.fromARGB(255, 249, 252, 251),
+                            width: 4,
+                          ),
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(20),
+                          ),
+                        ), /*ButtonStyle(
+                          backgroundColor: MaterialStateProperty.all(
+                              const Color.fromARGB(255, 10, 4, 70)),
+                        ),*/
                       )
                     ],
                   )
@@ -297,6 +337,116 @@ class _ReqNICTemplateState extends State<ReqNICTemplate> {
             );
           }
         },
+      ),
+    );
+  }
+
+  Future updateDBcorrect() async {
+    try {
+      // Reference to the document in the "NICtest" collection with the current user's UID
+      DocumentReference documentReference = FirebaseFirestore.instance
+          .collection('NICtest')
+          .doc(widget.documentId);
+
+      // Update fields or add new fields
+      await documentReference.update({
+        "Validation": correctValidation,
+        "Authorized Time": DateTime.now()
+        // Add as many fields as needed
+      });
+
+      _showCompletedDialog();
+    } catch (e) {
+      _showIncompeleteDialog();
+    }
+  }
+
+  Future updateDBwrong() async {
+    try {
+      // Reference to the document in the "NICtest" collection with the current user's UID
+      DocumentReference documentReference = FirebaseFirestore.instance
+          .collection('NICtest')
+          .doc(widget.documentId);
+
+      // Update fields or add new fields
+      await documentReference.update({
+        "Validation": wrongValidation,
+        "Authorized Time": DateTime.now()
+        // Add as many fields as needed
+      });
+
+      _showIncompeleteDialog();
+    } catch (e) {
+      _showIncompeleteDialog();
+    }
+  }
+
+  void _showCompletedDialog() {
+    showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: const Text('Form Validaation Complete'),
+        content: const Text('You will receive the QR Code for NIC soon.'),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.pop(context),
+            child: const Text('OK'),
+          ),
+        ],
+      ),
+    );
+  }
+
+  void _showIncompeleteDialog() {
+    showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: const Text('NIC Validaation Incomplete'),
+        content: const Text('Instruct user to do the neccessary changes.'),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.pop(context),
+            child: const Text('OK'),
+          ),
+        ],
+      ),
+    );
+  }
+
+  void correcctButtonMsg() {
+    showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: const Text('Are You Sure?'),
+        content: const Text('Make sure all the details are 100% correct.'),
+        actions: [
+          TextButton(
+            onPressed: () {
+              Navigator.pop(context);
+              updateDBcorrect();
+            },
+            child: const Text('OK'),
+          ),
+        ],
+      ),
+    );
+  }
+
+  void wrongButtonMsg() {
+    showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: const Text('Are You Sure?'),
+        content: const Text('Make sure all the details are 100% correct.'),
+        actions: [
+          TextButton(
+            onPressed: () {
+              Navigator.pop(context);
+              updateDBwrong();
+            },
+            child: const Text('OK'),
+          ),
+        ],
       ),
     );
   }
