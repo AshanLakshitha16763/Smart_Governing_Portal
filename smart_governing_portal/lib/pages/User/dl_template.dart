@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
+import 'package:smart_governing_portal/pages/User/qrimage.dart';
 
 class DLTemplate extends StatefulWidget {
   const DLTemplate({super.key});
@@ -17,11 +18,11 @@ class _DLTemplateState extends State<DLTemplate> {
   late double height;
   late String issuedDate;
   late String dlNo;
+  String userUid = '';
 
   @override
   void initState() {
     super.initState();
-    String userUid = '';
     final user = FirebaseAuth.instance.currentUser;
     if (user != null) {
       userUid = user.uid;
@@ -274,6 +275,17 @@ class _DLTemplateState extends State<DLTemplate> {
                         ),
                       ),
                     ),
+                    ElevatedButton(
+                        onPressed: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute<void>(
+                              builder: (BuildContext context) => QRImage(uid: userUid,),
+                            ),
+                          );
+                        },
+                        child: const Text('NIC QR Code'),
+                      ),
                   ],
                 ),
               );
