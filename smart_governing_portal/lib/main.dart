@@ -6,15 +6,12 @@ import 'package:lottie/lottie.dart';
 import 'package:smart_governing_portal/controllers/chat.dart';
 import 'package:smart_governing_portal/controllers/secrets.dart';
 import 'package:smart_governing_portal/controllers/widget_tree.dart';
-import 'package:smart_governing_portal/pages/test/audio.dart';
-import 'package:smart_governing_portal/pages/test/display.dart';
-import 'package:smart_governing_portal/pages/test/test.dart';
 
 Future main() async {
   WidgetsFlutterBinding.ensureInitialized();
   if (kIsWeb) {
     await Firebase.initializeApp(
-        options: FirebaseOptions(
+        options: const FirebaseOptions(
       apiKey: "AIzaSyAQGH-OoQz5jHZKxMR6t6GXXuQLo82RF6M",
       appId: "1:913759630420:web:9fac7bd0a1c5cec94d69c1",
       messagingSenderId: "913759630420",
@@ -41,8 +38,8 @@ class _MyAppState extends State<MyApp> {
   void initState() {
     super.initState();
 
-    // Simulate a 5-second delay and then update loading state
-    Timer(const Duration(seconds: 4), () {
+    // Simulate a 4-second delay and then update loading state
+    Timer(const Duration(seconds:4), () {
       setState(() {
         _isLoading = false;
       });

@@ -133,7 +133,7 @@ class _UserLoginPageState extends State<UserLoginPage> {
             foregroundColor: const Color.fromARGB(255, 243, 242, 234),
             backgroundColor: const Color.fromARGB(255, 10, 4, 70),
             padding: const EdgeInsets.all(20),
-            fixedSize: const Size(800, 50),
+            fixedSize: const Size(500, 50),
             textStyle: const TextStyle(
               fontSize: 25,
               fontWeight: FontWeight.bold,
@@ -350,13 +350,31 @@ class _UserLoginPageState extends State<UserLoginPage> {
                       Expanded(
                         child: Padding(
                           padding: const EdgeInsets.all(8.0),
-                          child: Container(
+                          child: SizedBox(
                             width: (width - 150) / 2,
                             child: _loginForm(),
                           ),
                         ),
                       ),
-                      AutoScrollImages(),
+                      Expanded(
+                        child: Padding(
+                          padding: const EdgeInsets.all(30),
+                          child: Container(
+                            width: (width - 150) / 2.5,
+                            decoration: BoxDecoration(
+                              border: Border.all(
+                                color: const Color.fromARGB(
+                                    255, 243, 236, 236), // Border color
+                                width: 3.0, // Border width
+                              ),
+                              borderRadius:
+                                  BorderRadius.circular(15), // Border radius
+                            ),
+                            child:
+                                const AutoScrollImages(),
+                          ),
+                        ),
+                      ),
                     ],
                   ),
                 ),
@@ -381,7 +399,7 @@ class _UserLoginPageState extends State<UserLoginPage> {
                     children: [
                       Padding(
                         padding: const EdgeInsets.all(8.0),
-                        child: Container(
+                        child: SizedBox(
                           width: width - 16,
                           child: _loginForm(),
                         ),
@@ -398,7 +416,7 @@ class _UserLoginPageState extends State<UserLoginPage> {
                             borderRadius:
                                 BorderRadius.circular(15), // Border radius
                           ),
-                          child: Expanded(
+                          child: const Expanded(
                             child: AutoScrollImages(), // Animation Image
                           ),
                         ),
@@ -478,11 +496,11 @@ class _AutoScrollImagesState extends State<AutoScrollImages> {
     _timer = Timer.periodic(const Duration(seconds: 4), (Timer timer) {
       if (_controller.page == imageUrls.length - 1) {
         _controller.animateToPage(0,
-            duration: const Duration(milliseconds: 2000),
+            duration: const Duration(milliseconds: 1000),
             curve: Curves.bounceOut);
       } else {
         _controller.nextPage(
-            duration: Duration(milliseconds: 2000), curve: Curves.ease);
+            duration: const Duration(milliseconds: 1000), curve: Curves.ease);
       }
     });
   }

@@ -3,12 +3,12 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:intl/intl.dart';
 import 'package:smart_governing_portal/pages/Admin/requestingDLTemplate.dart';
 
-class RequestingDL extends StatefulWidget {
+class RequestedDL extends StatefulWidget {
   @override
-  _RequestingDLState createState() => _RequestingDLState();
+  _RequestedDLState createState() => _RequestedDLState();
 }
 
-class _RequestingDLState extends State<RequestingDL> {
+class _RequestedDLState extends State<RequestedDL> {
   final CollectionReference dlTestCollection =
       FirebaseFirestore.instance.collection('DLtest');
 
@@ -26,7 +26,7 @@ class _RequestingDLState extends State<RequestingDL> {
             padding: const EdgeInsets.all(20.0),
             child: InteractiveViewer(
               child: StreamBuilder(
-                stream: dlTestCollection.where('Validation', isEqualTo: "").snapshots(),
+                stream: dlTestCollection.where('Validation', whereIn: ["valid","invalid"]).snapshots(),
                 builder: (context, AsyncSnapshot<QuerySnapshot> snapshot) {
                   if (snapshot.connectionState == ConnectionState.waiting) {
                     return const Center(
