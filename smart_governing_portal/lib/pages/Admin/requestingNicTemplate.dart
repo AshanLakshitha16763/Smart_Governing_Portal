@@ -1,5 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:smart_governing_portal/pages/Admin/adminDashboardPage.dart';
+
 
 class ReqNICTemplate extends StatefulWidget {
   final String documentId;
@@ -385,11 +387,19 @@ class _ReqNICTemplateState extends State<ReqNICTemplate> {
     showDialog(
       context: context,
       builder: (context) => AlertDialog(
-        title: const Text('Form Validaation Complete'),
+        title: const Text('Form Validation Complete'),
         content: const Text('You will receive the QR Code for NIC soon.'),
         actions: [
           TextButton(
-            onPressed: () => Navigator.pop(context),
+            onPressed: (){
+            Navigator.pop(context); // Close the dialog
+            Navigator.push(
+              context,
+              MaterialPageRoute<void>(
+                builder: (BuildContext context) => const AdminDashboardPage(), // Navigate to another page
+              ),
+            );
+            },
             child: const Text('OK'),
           ),
         ],
@@ -401,11 +411,19 @@ class _ReqNICTemplateState extends State<ReqNICTemplate> {
     showDialog(
       context: context,
       builder: (context) => AlertDialog(
-        title: const Text('NIC Validaation Incomplete'),
+        title: const Text('NIC Validation Incomplete'),
         content: const Text('Instruct user to do the neccessary changes.'),
         actions: [
           TextButton(
-            onPressed: () => Navigator.pop(context),
+            onPressed: () {
+              Navigator.pop(context);
+              Navigator.push(
+              context,
+              MaterialPageRoute<void>(
+                builder: (BuildContext context) => const AdminDashboardPage(), // Navigate to another page
+              ),
+            );
+            },
             child: const Text('OK'),
           ),
         ],

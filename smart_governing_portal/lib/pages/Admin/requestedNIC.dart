@@ -1,16 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:intl/intl.dart';
-import 'package:smart_governing_portal/pages/Admin/requestingDLTemplate.dart';
+import 'package:smart_governing_portal/pages/Admin/requestingNicTemplate.dart';
 
-class RequestingDL extends StatefulWidget {
+class RequestedNIC extends StatefulWidget {
   @override
-  _RequestingDLState createState() => _RequestingDLState();
+  _RequestedNICState createState() => _RequestedNICState();
 }
 
-class _RequestingDLState extends State<RequestingDL> {
-  final CollectionReference dlTestCollection =
-      FirebaseFirestore.instance.collection('DLtest');
+class _RequestedNICState extends State<RequestedNIC> {
+  final CollectionReference nicTestCollection =
+      FirebaseFirestore.instance.collection('NICtest');
 
   @override
   Widget build(BuildContext context) {
@@ -25,8 +25,9 @@ class _RequestingDLState extends State<RequestingDL> {
           child: Padding(
             padding: const EdgeInsets.all(20.0),
             child: InteractiveViewer(
+              boundaryMargin: const EdgeInsets.all(double.infinity),
               child: StreamBuilder(
-                stream: dlTestCollection.where('Validation', isEqualTo: "").snapshots(),
+                stream: nicTestCollection.where('Validation', whereIn: ['valid','invalid']).snapshots(),
                 builder: (context, AsyncSnapshot<QuerySnapshot> snapshot) {
                   if (snapshot.connectionState == ConnectionState.waiting) {
                     return const Center(
@@ -42,7 +43,7 @@ class _RequestingDLState extends State<RequestingDL> {
               
                   List<TableRow> rows = snapshot.data!.docs.map((doc) {
                     String name = doc['Full Name'] ?? 'No Name';
-                    String nic = doc['License No'] ?? 'No Name';
+                    String nic = doc['NIC No'] ?? 'No Name';
                     Timestamp timestamp = doc['Time'] ?? Timestamp(0, 0);
                     String formattedTime =
                         DateFormat('yyyy-MM-dd HH:mm').format(timestamp.toDate());
@@ -75,7 +76,7 @@ class _RequestingDLState extends State<RequestingDL> {
                                 Navigator.push(
                                   context,
                                   MaterialPageRoute(
-                                    builder: (context) => ReqDLTemplate(documentId: doc.id,),
+                                    builder: (context) => ReqNICTemplate(documentId: doc.id,),
                                   ),
                                 );
                               },
@@ -102,7 +103,7 @@ class _RequestingDLState extends State<RequestingDL> {
                           TableCell(
                             child: Padding(
                               padding: EdgeInsets.all(8.0),
-                              child: Text('License No',style: TextStyle(color:Color.fromARGB(255, 49, 101, 185),fontSize: 18,fontWeight: FontWeight.w600 ),),
+                              child: Text('NIC',style: TextStyle(color:Color.fromARGB(255, 49, 101, 185),fontSize: 18,fontWeight: FontWeight.w600 ),),
                             ),
                           ),
                           TableCell(

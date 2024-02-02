@@ -169,6 +169,7 @@ class _DLApplicationFormState extends State<DLApplicationForm> {
         "Gender": genderController.text,
         "Province": provinceController.text,
         "District": districtController.text,
+        "Validation":"",
         "Time": DateTime.now()
       };
 

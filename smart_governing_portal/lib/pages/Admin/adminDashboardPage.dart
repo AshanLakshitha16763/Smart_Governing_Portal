@@ -3,6 +3,8 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:smart_governing_portal/controllers/constants.dart';
+import 'package:smart_governing_portal/pages/Admin/requestedDL.dart';
+import 'package:smart_governing_portal/pages/Admin/requestedNIC.dart';
 import 'package:smart_governing_portal/pages/Admin/requestingDL.dart';
 import 'package:smart_governing_portal/pages/Admin/requestingNIC.dart';
 import 'package:smart_governing_portal/pages/User/user_homePage.dart';
@@ -221,14 +223,14 @@ class _AdminDashboardPageState extends State<AdminDashboardPage> {
           tileSize: tileSize,
           index: 2,
           imagePath: 'lib/Assets/lists.png',
-          pageName: null),
+          pageName: RequestedNIC()),
       _adminDashboardList(' Previous List of Users for Smart Driving License',
           width: 380,
           height: 200,
           tileSize: tileSize,
           index: 3,
           imagePath: 'lib/Assets/lists.png',
-          pageName: null),
+          pageName: RequestedDL()),
     ];
   }
 

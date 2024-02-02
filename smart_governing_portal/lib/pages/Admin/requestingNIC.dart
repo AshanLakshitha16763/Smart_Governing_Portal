@@ -27,7 +27,7 @@ class _RequestingNICState extends State<RequestingNIC> {
             child: InteractiveViewer(
               boundaryMargin: const EdgeInsets.all(double.infinity),
               child: StreamBuilder(
-                stream: nicTestCollection.snapshots(),
+                stream: nicTestCollection.where('Validation', isEqualTo: "").snapshots(),
                 builder: (context, AsyncSnapshot<QuerySnapshot> snapshot) {
                   if (snapshot.connectionState == ConnectionState.waiting) {
                     return const Center(

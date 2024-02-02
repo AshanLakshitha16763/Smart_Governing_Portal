@@ -6,7 +6,7 @@ import 'package:smart_governing_portal/controllers/auth.dart';
 import 'package:smart_governing_portal/controllers/constants.dart';
 import 'package:smart_governing_portal/pages/User/after_registration_page.dart';
 import 'package:smart_governing_portal/pages/User/user_signupPage.dart';
-
+import 'dart:async';
 
 class UserLoginPage extends StatefulWidget {
   const UserLoginPage({super.key});
@@ -133,7 +133,7 @@ class _UserLoginPageState extends State<UserLoginPage> {
             foregroundColor: const Color.fromARGB(255, 243, 242, 234),
             backgroundColor: const Color.fromARGB(255, 10, 4, 70),
             padding: const EdgeInsets.all(20),
-            fixedSize: const Size(800, 50),
+            fixedSize: const Size(500, 50),
             textStyle: const TextStyle(
               fontSize: 25,
               fontWeight: FontWeight.bold,
@@ -185,9 +185,7 @@ class _UserLoginPageState extends State<UserLoginPage> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             GestureDetector(
-              onTap: () {
-                // Handle Google button tap
-              },
+              onTap: () {},
               child: Image.asset(
                 'lib/Assets/RegisterPages/google.png',
                 width: 30,
@@ -199,9 +197,7 @@ class _UserLoginPageState extends State<UserLoginPage> {
               width: 3,
             ),
             GestureDetector(
-              onTap: () {
-                // Handle Facebook button tap
-              },
+              onTap: () {},
               child: Image.asset(
                 'lib/Assets/RegisterPages/facebook.png',
                 width: 60,
@@ -213,9 +209,7 @@ class _UserLoginPageState extends State<UserLoginPage> {
               width: 1,
             ),
             GestureDetector(
-              onTap: () {
-                // Handle Apple button tap
-              },
+              onTap: () {},
               child: Image.asset(
                 'lib/Assets/RegisterPages/apple.png',
                 width: 40,
@@ -308,8 +302,7 @@ class _UserLoginPageState extends State<UserLoginPage> {
                   Navigator.push(
                     context,
                     MaterialPageRoute<void>(
-                      builder: (BuildContext context) =>
-                          const UserSignUpPage(),
+                      builder: (BuildContext context) => const UserSignUpPage(),
                     ),
                   );
                 },
@@ -357,7 +350,7 @@ class _UserLoginPageState extends State<UserLoginPage> {
                       Expanded(
                         child: Padding(
                           padding: const EdgeInsets.all(8.0),
-                          child: Container(
+                          child: SizedBox(
                             width: (width - 150) / 2,
                             child: _loginForm(),
                           ),
@@ -370,16 +363,15 @@ class _UserLoginPageState extends State<UserLoginPage> {
                             width: (width - 150) / 2.5,
                             decoration: BoxDecoration(
                               border: Border.all(
-                                color: Color.fromARGB(255, 243, 236, 236), // Border color
+                                color: const Color.fromARGB(
+                                    255, 243, 236, 236), // Border color
                                 width: 3.0, // Border width
                               ),
                               borderRadius:
                                   BorderRadius.circular(15), // Border radius
                             ),
-                            child: Image.asset(
-                              'lib/Assets/Login.png',
-                              fit: BoxFit.cover,
-                            ),
+                            child:
+                                const AutoScrollImages(),
                           ),
                         ),
                       ),
@@ -407,7 +399,7 @@ class _UserLoginPageState extends State<UserLoginPage> {
                     children: [
                       Padding(
                         padding: const EdgeInsets.all(8.0),
-                        child: Container(
+                        child: SizedBox(
                           width: width - 16,
                           child: _loginForm(),
                         ),
@@ -418,16 +410,14 @@ class _UserLoginPageState extends State<UserLoginPage> {
                           width: width - 16,
                           decoration: BoxDecoration(
                             border: Border.all(
-                              color: const Color.fromARGB(
-                                  255, 243, 236, 236), // Border color
+                              color: Colors.grey, // Border color
                               width: 3.0, // Border width
                             ),
                             borderRadius:
                                 BorderRadius.circular(15), // Border radius
                           ),
-                          child: Image.asset(
-                            'lib/Assets/Login.png',
-                            fit: BoxFit.cover,
+                          child: const Expanded(
+                            child: AutoScrollImages(), // Animation Image
                           ),
                         ),
                       ),
@@ -441,7 +431,6 @@ class _UserLoginPageState extends State<UserLoginPage> {
       ),
     );
   }
-  
 
   @override
   void initState() {
@@ -470,14 +459,78 @@ class _UserLoginPageState extends State<UserLoginPage> {
               backgroundColor: const Color.fromARGB(255, 115, 185, 250),
             ),
             body: _body());
-      } else{
+      } else {
         return Scaffold(
             appBar: AppBar(
               backgroundColor: const Color.fromARGB(255, 115, 185, 250),
             ),
-            drawer: mobileDrawer(width*0.6,context),
+            drawer: mobileDrawer(width * 0.6, context),
             body: _body());
       }
     });
+  }
+}
+
+//Animation looping
+class AutoScrollImages extends StatefulWidget {
+  const AutoScrollImages({super.key});
+
+  @override
+  _AutoScrollImagesState createState() => _AutoScrollImagesState();
+}
+
+class _AutoScrollImagesState extends State<AutoScrollImages> {
+  final List<String> imageUrls = [
+    "0.jpg",
+    "14.jpg",
+    "15.jpg",
+    "0.jpg",
+  ];
+
+  final PageController _controller = PageController();
+  Timer? _timer;
+
+  @override
+  void initState() {
+    super.initState();
+    _timer = Timer.periodic(const Duration(seconds: 4), (Timer timer) {
+      if (_controller.page == imageUrls.length - 1) {
+        _controller.animateToPage(0,
+            duration: const Duration(milliseconds: 1000),
+            curve: Curves.bounceOut);
+      } else {
+        _controller.nextPage(
+            duration: const Duration(milliseconds: 1000), curve: Curves.ease);
+      }
+    });
+  }
+
+  @override
+  void dispose() {
+    _timer?.cancel();
+    _controller.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: [
+        SizedBox(
+          height: 400,
+          width: 300,
+          child: PageView.builder(
+            controller: _controller,
+            itemCount: imageUrls.length,
+            itemBuilder: (BuildContext context, int index) {
+              return Image.asset(
+                "lib/Assets/loop/${imageUrls[index]}",
+                fit: BoxFit.contain,
+              );
+            },
+          ),
+        ),
+      ],
+    );
   }
 }
