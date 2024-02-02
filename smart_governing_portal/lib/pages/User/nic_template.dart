@@ -86,8 +86,8 @@ class _NICTemplateState extends State<NICTemplate> {
     return Center(
       child: ConstrainedBox(
         constraints: BoxConstraints(
-          maxWidth: width * 0.6,
-          maxHeight: height * 0.5,
+          maxWidth: width * 0.8,
+          maxHeight: height * 0.8,
         ),
         child: FutureBuilder<DocumentSnapshot<Map<String, dynamic>>>(
           future: data,
@@ -122,8 +122,8 @@ class _NICTemplateState extends State<NICTemplate> {
                         children: [
                           Image.asset(
                             "lib/Assets/verified.png",
-                            width: 25,
-                            height: 25,
+                            width: 144,
+                            height: 144,
                           ),
                           const Text(
                             'Your Id is Verified',
@@ -292,8 +292,8 @@ class _NICTemplateState extends State<NICTemplate> {
                         children: [
                           Image.asset(
                             "lib/Assets/clockwise.png",
-                            width: 50,
-                            height: 50,
+                            width: 144,
+                            height: 144,
                           ),
                           const Text(
                             'Waiting',
