@@ -293,11 +293,11 @@ class _NICTemplateState extends State<NICTemplate> {
                         children: [
                           Image.asset(
                             "lib/Assets/clockwise.png",
-                            width: 144,
-                            height: 144,
+                            width: 75,
+                            height: 75,
                           ),
                           const Text(
-                            'Waiting',
+                            ' Waiting for approval...',
                             style: TextStyle(
                                 fontSize: 18, fontWeight: FontWeight.bold),
                           ),

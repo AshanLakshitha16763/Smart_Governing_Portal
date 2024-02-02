@@ -780,7 +780,7 @@ class _UserHomePageState extends State<UserHomePage> {
     );
   }
 
-  //section 2 on the web
+  //section 3 on the web
   Widget _section3() {
     return ConstrainedBox(
       constraints: BoxConstraints(
