@@ -10,7 +10,6 @@ import 'package:smart_governing_portal/pages/Admin/admin_register_desktop.dart';
 import 'package:smart_governing_portal/pages/User/user_homePage.dart';
 import 'package:smart_governing_portal/pages/User/user_loginPage.dart';
 
-
 class AdminLoginPage extends StatefulWidget {
   const AdminLoginPage({super.key});
 
@@ -80,7 +79,10 @@ class _AdminLoginPageState extends State<AdminLoginPage> {
   }
 
   Widget _errorMessage() {
-    return Text(errorMessage == '' ? '' : 'Humm ? $errorMessage',style: const TextStyle(color: Colors.red),);
+    return Text(
+      errorMessage == '' ? '' : 'Humm ? $errorMessage',
+      style: const TextStyle(color: Colors.red),
+    );
   }
 
   Widget _loginForm() {
@@ -294,46 +296,45 @@ class _AdminLoginPageState extends State<AdminLoginPage> {
   Widget _appbarActions() {
     return FittedBox(
       child: Row(
-            children: [
-              TextButton(
-                  onPressed: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute<void>(
-                        builder: (BuildContext context) => const UserHomePage(),
-                      ),
-                    );
-                  },
-                  child: const Text(
-                    'Home',
-                    style: TextStyle(
-                      color: Colors.black,
-                    ),
-                  )),
-              const SizedBox(
-                width: 20,
-              ),
-              TextButton(
-                  onPressed: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute<void>(
-                        builder: (BuildContext context) =>
-                            const UserLoginPage(),
-                      ),
-                    );
-                  },
-                  child: const Text(
-                    'User',
-                    style: TextStyle(
-                      color: Colors.black,
-                    ),
-                  )),
-              const SizedBox(
-                width: 20,
-              ),
-            ],
+        children: [
+          TextButton(
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute<void>(
+                    builder: (BuildContext context) => const UserHomePage(),
+                  ),
+                );
+              },
+              child: const Text(
+                'Home',
+                style: TextStyle(
+                  color: Colors.black,
+                ),
+              )),
+          const SizedBox(
+            width: 20,
           ),
+          TextButton(
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute<void>(
+                    builder: (BuildContext context) => const UserLoginPage(),
+                  ),
+                );
+              },
+              child: const Text(
+                'User',
+                style: TextStyle(
+                  color: Colors.black,
+                ),
+              )),
+          const SizedBox(
+            width: 20,
+          ),
+        ],
+      ),
     );
   }
 
@@ -476,12 +477,12 @@ class _AdminLoginPageState extends State<AdminLoginPage> {
               backgroundColor: const Color.fromARGB(255, 115, 185, 250),
             ),
             body: _body());
-      } else{
+      } else {
         return Scaffold(
             appBar: AppBar(
               backgroundColor: const Color.fromARGB(255, 115, 185, 250),
             ),
-            drawer: mobileDrawer(width*0.4,context),
+            drawer: mobileDrawer(width * 0.4, context),
             body: _body());
       }
     });
