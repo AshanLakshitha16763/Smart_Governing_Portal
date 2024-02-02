@@ -8,6 +8,8 @@ import 'package:smart_governing_portal/pages/User/after_registration_page.dart';
 import 'package:smart_governing_portal/pages/User/user_signupPage.dart';
 import 'dart:async';
 
+
+
 class UserLoginPage extends StatefulWidget {
   const UserLoginPage({super.key});
 
@@ -356,7 +358,31 @@ class _UserLoginPageState extends State<UserLoginPage> {
                           ),
                         ),
                       ),
+
                       AutoScrollImages(),
+
+                      /*Expanded(
+                        child: Padding(
+                          padding: const EdgeInsets.all(30),
+                          child: Container(
+                            width: (width - 150) / 2.5,
+                            decoration: BoxDecoration(
+                              border: Border.all(
+                                color: Color.fromARGB(
+                                    255, 243, 236, 236), // Border color
+                                width: 3.0, // Border width
+                              ),
+                              borderRadius:
+                                  BorderRadius.circular(15), // Border radius
+                            ),
+                            child: Image.asset(
+                              'lib/Assets/Login.png',
+                              fit: BoxFit.cover,
+                            ),
+                          ),
+                        ),
+                      ),*/
+
                     ],
                   ),
                 ),
