@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:smart_governing_portal/pages/Admin/adminLoginPage.dart';
 import 'package:smart_governing_portal/pages/User/after_registration_page.dart';
 import 'package:smart_governing_portal/pages/User/user_homePage.dart';
+import 'dart:async';
 
 class AdminRegisterDesktop extends StatefulWidget {
   const AdminRegisterDesktop({super.key});
@@ -466,12 +467,7 @@ class _AdminRegisterDesktopState extends State<AdminRegisterDesktop> {
                       Expanded(
                         // RIGHT SIDE IMAGE
                         flex: 1,
-                        child: Image.asset(
-                          'lib/Assets/RegisterPages/adminRegister.png',
-                          width: MediaQuery.of(context).size.width - 50,
-                          height: MediaQuery.of(context).size.height - 50,
-                          fit: BoxFit.contain,
-                        ),
+                        child: AutoScrollImages(),
                       ),
                     ],
                   ),
@@ -484,6 +480,70 @@ class _AdminRegisterDesktopState extends State<AdminRegisterDesktop> {
           ],
         ),
       ),
+    );
+  }
+}
+
+//Animation looping
+class AutoScrollImages extends StatefulWidget {
+  const AutoScrollImages({super.key});
+
+  @override
+  _AutoScrollImagesState createState() => _AutoScrollImagesState();
+}
+
+class _AutoScrollImagesState extends State<AutoScrollImages> {
+  final List<String> imageUrls = [
+    "0.jpg",
+    "14.jpg",
+    "15.jpg",
+    "0.jpg",
+  ];
+
+  final PageController _controller = PageController();
+  Timer? _timer;
+
+  @override
+  void initState() {
+    super.initState();
+    _timer = Timer.periodic(const Duration(seconds: 4), (Timer timer) {
+      if (_controller.page == imageUrls.length - 1) {
+        _controller.animateToPage(0,
+            duration: const Duration(milliseconds: 2000),
+            curve: Curves.bounceOut);
+      } else {
+        _controller.nextPage(
+            duration: Duration(milliseconds: 2000), curve: Curves.ease);
+      }
+    });
+  }
+
+  @override
+  void dispose() {
+    _timer?.cancel();
+    _controller.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: [
+        SizedBox(
+          height: 450,
+          width: 500,
+          child: PageView.builder(
+            controller: _controller,
+            itemCount: imageUrls.length,
+            itemBuilder: (BuildContext context, int index) {
+              return Image.asset(
+                "lib/Assets/loop/${imageUrls[index]}",
+                fit: BoxFit.fill,
+              );
+            },
+          ),
+        ),
+      ],
     );
   }
 }
