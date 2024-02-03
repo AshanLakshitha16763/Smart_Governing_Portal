@@ -9,6 +9,7 @@ import 'package:smart_governing_portal/pages/Admin/adminDashboardPage.dart';
 import 'package:smart_governing_portal/pages/Admin/admin_register_desktop.dart';
 import 'package:smart_governing_portal/pages/User/user_homePage.dart';
 import 'package:smart_governing_portal/pages/User/user_loginPage.dart';
+import 'dart:async';
 
 class AdminLoginPage extends StatefulWidget {
   const AdminLoginPage({super.key});
@@ -384,10 +385,7 @@ class _AdminLoginPageState extends State<AdminLoginPage> {
                               borderRadius:
                                   BorderRadius.circular(15), // Border radius
                             ),
-                            child: Image.asset(
-                              'lib/Assets/RegisterPages/adminLogin.jpg',
-                              fit: BoxFit.cover,
-                            ),
+                            child: AutoScrollImages(),
                           ),
                         ),
                       ),
@@ -433,10 +431,7 @@ class _AdminLoginPageState extends State<AdminLoginPage> {
                             borderRadius:
                                 BorderRadius.circular(15), // Border radius
                           ),
-                          child: Image.asset(
-                            'lib/Assets/RegisterPages/adminLogin.jpg',
-                            fit: BoxFit.cover,
-                          ),
+                          child: AutoScrollImages(),
                         ),
                       ),
                     ],
@@ -486,5 +481,69 @@ class _AdminLoginPageState extends State<AdminLoginPage> {
             body: _body());
       }
     });
+  }
+}
+
+//Animation looping
+class AutoScrollImages extends StatefulWidget {
+  const AutoScrollImages({super.key});
+
+  @override
+  _AutoScrollImagesState createState() => _AutoScrollImagesState();
+}
+
+class _AutoScrollImagesState extends State<AutoScrollImages> {
+  final List<String> imageUrls = [
+    "0.jpg",
+    "14.jpg",
+    "15.jpg",
+    "0.jpg",
+  ];
+
+  final PageController _controller = PageController();
+  Timer? _timer;
+
+  @override
+  void initState() {
+    super.initState();
+    _timer = Timer.periodic(const Duration(seconds: 4), (Timer timer) {
+      if (_controller.page == imageUrls.length - 1) {
+        _controller.animateToPage(0,
+            duration: const Duration(milliseconds: 2000),
+            curve: Curves.bounceOut);
+      } else {
+        _controller.nextPage(
+            duration: Duration(milliseconds: 2000), curve: Curves.ease);
+      }
+    });
+  }
+
+  @override
+  void dispose() {
+    _timer?.cancel();
+    _controller.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: [
+        SizedBox(
+          height: 450,
+          width: 500,
+          child: PageView.builder(
+            controller: _controller,
+            itemCount: imageUrls.length,
+            itemBuilder: (BuildContext context, int index) {
+              return Image.asset(
+                "lib/Assets/loop/${imageUrls[index]}",
+                fit: BoxFit.fill,
+              );
+            },
+          ),
+        ),
+      ],
+    );
   }
 }
