@@ -61,7 +61,7 @@ class _UserHomePageState extends State<UserHomePage> {
           appBar: AppBar(
             backgroundColor: const Color.fromARGB(255, 115, 185, 250),
           ),
-          drawer: mobileDrawer(width * 0.6,context),
+          drawer: mobileDrawer(width * 0.6, context),
           body: _body(),
         );
       }
@@ -375,13 +375,14 @@ class _UserHomePageState extends State<UserHomePage> {
           Row(
             children: [
               TextButton(
-                  onPressed: () {Future.delayed(Duration.zero, () {
-                  Scrollable.ensureVisible(
-                    _section1Key.currentContext!,
-                    duration: const Duration(seconds: 1),
-                    curve: Curves.easeInOut,
-                  );
-                });
+                  onPressed: () {
+                    Future.delayed(Duration.zero, () {
+                      Scrollable.ensureVisible(
+                        _section1Key.currentContext!,
+                        duration: const Duration(seconds: 1),
+                        curve: Curves.easeInOut,
+                      );
+                    });
                   },
                   child: const Text(
                     'Home',
@@ -395,12 +396,12 @@ class _UserHomePageState extends State<UserHomePage> {
               TextButton(
                   onPressed: () {
                     Future.delayed(Duration.zero, () {
-                  Scrollable.ensureVisible(
-                    _section2Key.currentContext!,
-                    duration: const Duration(seconds: 1),
-                    curve: Curves.easeInOut,
-                  );
-                });
+                      Scrollable.ensureVisible(
+                        _section2Key.currentContext!,
+                        duration: const Duration(seconds: 1),
+                        curve: Curves.easeInOut,
+                      );
+                    });
                   },
                   child: const Text(
                     'Services',
@@ -827,7 +828,6 @@ class _UserHomePageState extends State<UserHomePage> {
       ),
     );
   }
-
 }
 
 //url launcher
