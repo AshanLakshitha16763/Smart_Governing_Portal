@@ -108,6 +108,10 @@ flutter:
      - lib/Assets/loop/8.jpg
      - lib/Assets/loop/14.jpg
      - lib/Assets/loop/15.jpg
+     - lib/Assets/loop/1.jpg
+     - lib/Assets/loop/3.jpg
+     - lib/Assets/loop/4.jpg
+     - lib/Assets/loop/2.jpg
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware
