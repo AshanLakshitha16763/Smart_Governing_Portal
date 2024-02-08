@@ -57,6 +57,7 @@ dependencies:
   qr_flutter: ^4.1.0
   path_provider: ^2.1.2
   image_gallery_saver: ^2.0.3
+  flip_card: ^0.7.0
 
 
   

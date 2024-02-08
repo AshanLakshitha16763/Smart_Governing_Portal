@@ -48,7 +48,8 @@ class _DLTemplateState extends State<DLTemplate> {
               backgroundColor: const Color.fromARGB(255, 115, 185, 250),
               title: const Text('Driving License Template'),
             ),
-            body: _body()/*Center(
+            body:
+                _body() /*Center(
               child: SingleChildScrollView(
                 child: FutureBuilder<DocumentSnapshot<Map<String, dynamic>>>(
                   future: data,
@@ -67,7 +68,7 @@ class _DLTemplateState extends State<DLTemplate> {
                 ),
               ),
             ),*/
-          );
+            );
   }
 
   Widget _buildField(String label, String value) {
@@ -121,12 +122,12 @@ class _DLTemplateState extends State<DLTemplate> {
               issuedDate = documentData['Issued Date'] ?? '';
               dlNo = documentData['License No'] ?? '';
               var validation = documentData['Validation'] ?? '';
-              if(validation == 'valid'){
+              if (validation == 'valid') {
                 return FittedBox(
-                fit: BoxFit.scaleDown,
-                child: Column(
-                  children: [
-                    Row(
+                  fit: BoxFit.scaleDown,
+                  child: Column(
+                    children: [
+                      Row(
                         children: [
                           Image.asset(
                             "lib/Assets/verified.png",
@@ -140,161 +141,184 @@ class _DLTemplateState extends State<DLTemplate> {
                           ),
                         ],
                       ),
-                    Container(
-                      constraints: BoxConstraints(
-                        maxWidth: width * 0.8,
-                        minHeight: height * 0.8,
-                      ),
-                      decoration: BoxDecoration(
-                        color: const Color.fromARGB(255, 249, 247, 232),
-                        borderRadius: BorderRadius.circular(10.0),
-                        border: Border.all(
-                          color: Colors.black,
-                          width: 1.0,
+                      Container(
+                        constraints: BoxConstraints(
+                          maxWidth: width * 0.8,
+                          minHeight: height * 0.8,
                         ),
-                      ),
-                      child: Padding(
-                        padding: const EdgeInsets.only(
-                            top: 10, left: 20, right: 20, bottom: 5),
-                        child: SingleChildScrollView(
-                          child: Column(
-                            mainAxisSize: MainAxisSize.max,
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            children: [
-                              const Text(
-                                "Driving License",
-                                style: TextStyle(
-                                    fontSize: 20, fontWeight: FontWeight.bold),
-                              ),
-                              const Row(
+                        decoration: BoxDecoration(
+                          color: const Color.fromARGB(255, 249, 247, 232),
+                          borderRadius: BorderRadius.circular(10.0),
+                          border: Border.all(
+                            color: Colors.black,
+                            width: 1.0,
+                          ),
+                        ),
+                        child: Padding(
+                          padding: const EdgeInsets.only(
+                              top: 10, left: 20, right: 20, bottom: 5),
+                          child: SingleChildScrollView(
+                            child: Column(
+                              mainAxisSize: MainAxisSize.max,
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: [
+                                const Text(
+                                  "Driving License",
+                                  style: TextStyle(
+                                      fontSize: 20,
+                                      fontWeight: FontWeight.bold),
+                                ),
+                                const Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      Image(
+                                        image: AssetImage(
+                                            "lib/Assets/government.png"),
+                                        width: 100,
+                                        height: 100,
+                                      ),
+                                      Image(
+                                        image:
+                                            AssetImage("lib/Assets/person.png"),
+                                        width: 100,
+                                        height: 100,
+                                      ),
+                                    ]),
+                                Column(
+                                  children: [
+                                    _buildField('Full Name: ',
+                                        documentData['Full Name'] ?? ''),
+                                    _buildField(
+                                        'NIC No: ', documentData['NIC'] ?? ''),
+                                    _buildField('License No: ',
+                                        documentData['License No'] ?? ''),
+                                    _buildField('Address: ',
+                                        documentData['Address'] ?? ''),
+                                    _buildField('Date of Birth: ',
+                                        documentData['Date of Birth'] ?? ''),
+                                    _buildField('Gender: ',
+                                        documentData['Gender'] ?? ''),
+                                    _buildField('Blood Group: ',
+                                        documentData['Blood Group'] ?? ''),
+                                    _buildField('Document Number: ',
+                                        documentData['Doc No'] ?? ''),
+                                  ],
+                                ),
+                                Row(
                                   mainAxisAlignment:
                                       MainAxisAlignment.spaceBetween,
                                   children: [
-                                    Image(
-                                      image: AssetImage(
-                                          "lib/Assets/government.png"),
-                                      width: 100,
-                                      height: 100,
+                                    Column(
+                                      children: [
+                                        Text(
+                                          issuedDate,
+                                          style: const TextStyle(
+                                              fontSize: 16,
+                                              decoration:
+                                                  TextDecoration.underline,
+                                              decorationStyle:
+                                                  TextDecorationStyle.dotted),
+                                        ),
+                                        const Text(
+                                          "Date",
+                                          style: TextStyle(
+                                              fontSize: 16,
+                                              fontWeight: FontWeight.bold),
+                                        ),
+                                      ],
                                     ),
-                                    Image(
-                                      image:
-                                          AssetImage("lib/Assets/person.png"),
-                                      width: 100,
-                                      height: 100,
+                                    const Column(
+                                      children: [
+                                        Text(
+                                          ".......................",
+                                          style: TextStyle(
+                                              fontSize: 16,
+                                              decoration:
+                                                  TextDecoration.underline,
+                                              decorationStyle:
+                                                  TextDecorationStyle.dotted),
+                                        ),
+                                        Text(
+                                          "Commissioner General of",
+                                          style: TextStyle(
+                                              fontSize: 16,
+                                              fontWeight: FontWeight.bold),
+                                        ),
+                                        Text(
+                                          "Motor Traffic",
+                                          style: TextStyle(
+                                              fontSize: 16,
+                                              fontWeight: FontWeight.bold),
+                                        ),
+                                      ],
                                     ),
-                                  ]),
-                              Column(
-                                children: [
-                                  _buildField('Full Name: ',
-                                      documentData['Full Name'] ?? ''),
-                                  _buildField(
-                                      'NIC No: ', documentData['NIC'] ?? ''),
-                                  _buildField('License No: ',
-                                      documentData['License No'] ?? ''),
-                                  _buildField(
-                                      'Address: ', documentData['Address'] ?? ''),
-                                  _buildField('Date of Birth: ',
-                                      documentData['Date of Birth'] ?? ''),
-                                  _buildField(
-                                      'Gender: ', documentData['Gender'] ?? ''),
-                                  _buildField('Blood Group: ',
-                                      documentData['Blood Group'] ?? ''),
-                                  _buildField('Document Number: ',
-                                      documentData['Doc No'] ?? ''),
-                                ],
-                              ),
-                              Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                children: [
-                                  Column(
-                                    children: [
-                                      Text(
-                                        issuedDate,
-                                        style: const TextStyle(
-                                            fontSize: 16,
-                                            decoration:
-                                                TextDecoration.underline,
-                                            decorationStyle:
-                                                TextDecorationStyle.dotted),
-                                      ),
-                                      const Text(
-                                        "Date",
-                                        style: TextStyle(
-                                            fontSize: 16,
-                                            fontWeight: FontWeight.bold),
-                                      ),
-                                    ],
+                                  ],
+                                ),
+                                Container(
+                                  decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(5.0),
+                                    border: Border.all(
+                                      color: Colors.black,
+                                      width: 1.0,
+                                    ),
                                   ),
-                                  const Column(
-                                    children: [
-                                      Text(
-                                        ".......................",
-                                        style: TextStyle(
-                                            fontSize: 16,
-                                            decoration:
-                                                TextDecoration.underline,
-                                            decorationStyle:
-                                                TextDecorationStyle.dotted),
-                                      ),
-                                      Text(
-                                        "Commissioner General of",
-                                        style: TextStyle(
-                                            fontSize: 16,
-                                            fontWeight: FontWeight.bold),
-                                      ),
-                                      Text(
-                                        "Motor Traffic",
-                                        style: TextStyle(
-                                            fontSize: 16,
-                                            fontWeight: FontWeight.bold),
-                                      ),
-                                    ],
-                                  ),
-                                ],
-                              ),
-                              Container(
-                                decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(5.0),
-                                  border: Border.all(
-                                    color: Colors.black,
-                                    width: 1.0,
+                                  child: const FittedBox(
+                                    fit: BoxFit.scaleDown,
+                                    child: Text(
+                                      "Department of Motor Traffic - Sri Lanka",
+                                      style: TextStyle(fontSize: 18),
+                                    ),
                                   ),
                                 ),
-                                child: const FittedBox(
-                                  fit: BoxFit.scaleDown,
-                                  child: Text(
-                                    "Department of Motor Traffic - Sri Lanka",
-                                    style: TextStyle(fontSize: 18),
-                                  ),
-                                ),
-                              ),
-                            ],
+                              ],
+                            ),
                           ),
                         ),
                       ),
-                    ),
-                    ElevatedButton(
+                      const SizedBox(height: 10,),
+                      ElevatedButton(
                         onPressed: () {
                           Navigator.push(
                             context,
                             MaterialPageRoute<void>(
-                              builder: (BuildContext context) => QRImage(uid: userUid,),
+                              builder: (BuildContext context) => QRImage(
+                                uid: userUid,
+                              ),
                             ),
                           );
                         },
-                        child: const Text('NIC QR Code'),
+                        style: ElevatedButton.styleFrom(
+                          maximumSize: Size.fromWidth(width / 4),
+                          foregroundColor:
+                              const Color.fromARGB(255, 243, 242, 234),
+                          backgroundColor: const Color.fromARGB(255, 10, 4, 70),
+                          fixedSize: const Size(800, 50),
+                          textStyle: const TextStyle(
+                            fontSize: 25,
+                            fontWeight: FontWeight.bold,
+                          ),
+                          elevation: 5,
+                          side: const BorderSide(
+                            color: Color.fromARGB(255, 249, 252, 251),
+                            width: 4,
+                          ),
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(20),
+                          ),
+                        ),
+                        child: const FittedBox(child: Text('DL QR Code')),
                       ),
-                  ],
-                ),
-              );
-              } else{
+                    ],
+                  ),
+                );
+              } else {
                 return FittedBox(
-                fit: BoxFit.scaleDown,
-                child: Column(
-                  children: [
-                    Row(
+                  fit: BoxFit.scaleDown,
+                  child: Column(
+                    children: [
+                      Row(
                         children: [
                           Image.asset(
                             "lib/Assets/clockwise.png",
@@ -309,144 +333,145 @@ class _DLTemplateState extends State<DLTemplate> {
                         ],
                       ),
                       const SizedBox(height: 10),
-                    Container(
-                      constraints: BoxConstraints(
-                        maxWidth: width * 0.8,
-                        minHeight: height * 0.8,
-                      ),
-                      decoration: BoxDecoration(
-                        color: const Color.fromARGB(255, 249, 247, 232),
-                        borderRadius: BorderRadius.circular(10.0),
-                        border: Border.all(
-                          color: Colors.black,
-                          width: 1.0,
+                      Container(
+                        constraints: BoxConstraints(
+                          maxWidth: width * 0.8,
+                          minHeight: height * 0.8,
                         ),
-                      ),
-                      child: Padding(
-                        padding: const EdgeInsets.only(
-                            top: 10, left: 20, right: 20, bottom: 5),
-                        child: SingleChildScrollView(
-                          child: Column(
-                            mainAxisSize: MainAxisSize.max,
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            children: [
-                              const Text(
-                                "Driving License",
-                                style: TextStyle(
-                                    fontSize: 20, fontWeight: FontWeight.bold),
-                              ),
-                              const Row(
+                        decoration: BoxDecoration(
+                          color: const Color.fromARGB(255, 249, 247, 232),
+                          borderRadius: BorderRadius.circular(10.0),
+                          border: Border.all(
+                            color: Colors.black,
+                            width: 1.0,
+                          ),
+                        ),
+                        child: Padding(
+                          padding: const EdgeInsets.only(
+                              top: 10, left: 20, right: 20, bottom: 5),
+                          child: SingleChildScrollView(
+                            child: Column(
+                              mainAxisSize: MainAxisSize.max,
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: [
+                                const Text(
+                                  "Driving License",
+                                  style: TextStyle(
+                                      fontSize: 20,
+                                      fontWeight: FontWeight.bold),
+                                ),
+                                const Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      Image(
+                                        image: AssetImage(
+                                            "lib/Assets/government.png"),
+                                        width: 100,
+                                        height: 100,
+                                      ),
+                                      Image(
+                                        image:
+                                            AssetImage("lib/Assets/person.png"),
+                                        width: 100,
+                                        height: 100,
+                                      ),
+                                    ]),
+                                Column(
+                                  children: [
+                                    _buildField('Full Name: ',
+                                        documentData['Full Name'] ?? ''),
+                                    _buildField(
+                                        'NIC No: ', documentData['NIC'] ?? ''),
+                                    _buildField('License No: ',
+                                        documentData['License No'] ?? ''),
+                                    _buildField('Address: ',
+                                        documentData['Address'] ?? ''),
+                                    _buildField('Date of Birth: ',
+                                        documentData['Date of Birth'] ?? ''),
+                                    _buildField('Gender: ',
+                                        documentData['Gender'] ?? ''),
+                                    _buildField('Blood Group: ',
+                                        documentData['Blood Group'] ?? ''),
+                                    _buildField('Document Number: ',
+                                        documentData['Doc No'] ?? ''),
+                                  ],
+                                ),
+                                Row(
                                   mainAxisAlignment:
                                       MainAxisAlignment.spaceBetween,
                                   children: [
-                                    Image(
-                                      image: AssetImage(
-                                          "lib/Assets/government.png"),
-                                      width: 100,
-                                      height: 100,
+                                    Column(
+                                      children: [
+                                        Text(
+                                          issuedDate,
+                                          style: const TextStyle(
+                                              fontSize: 16,
+                                              decoration:
+                                                  TextDecoration.underline,
+                                              decorationStyle:
+                                                  TextDecorationStyle.dotted),
+                                        ),
+                                        const Text(
+                                          "Date",
+                                          style: TextStyle(
+                                              fontSize: 16,
+                                              fontWeight: FontWeight.bold),
+                                        ),
+                                      ],
                                     ),
-                                    Image(
-                                      image:
-                                          AssetImage("lib/Assets/person.png"),
-                                      width: 100,
-                                      height: 100,
+                                    const Column(
+                                      children: [
+                                        Text(
+                                          ".......................",
+                                          style: TextStyle(
+                                              fontSize: 16,
+                                              decoration:
+                                                  TextDecoration.underline,
+                                              decorationStyle:
+                                                  TextDecorationStyle.dotted),
+                                        ),
+                                        Text(
+                                          "Commissioner General of",
+                                          style: TextStyle(
+                                              fontSize: 16,
+                                              fontWeight: FontWeight.bold),
+                                        ),
+                                        Text(
+                                          "Motor Traffic",
+                                          style: TextStyle(
+                                              fontSize: 16,
+                                              fontWeight: FontWeight.bold),
+                                        ),
+                                      ],
                                     ),
-                                  ]),
-                              Column(
-                                children: [
-                                  _buildField('Full Name: ',
-                                      documentData['Full Name'] ?? ''),
-                                  _buildField(
-                                      'NIC No: ', documentData['NIC'] ?? ''),
-                                  _buildField('License No: ',
-                                      documentData['License No'] ?? ''),
-                                  _buildField(
-                                      'Address: ', documentData['Address'] ?? ''),
-                                  _buildField('Date of Birth: ',
-                                      documentData['Date of Birth'] ?? ''),
-                                  _buildField(
-                                      'Gender: ', documentData['Gender'] ?? ''),
-                                  _buildField('Blood Group: ',
-                                      documentData['Blood Group'] ?? ''),
-                                  _buildField('Document Number: ',
-                                      documentData['Doc No'] ?? ''),
-                                ],
-                              ),
-                              Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                children: [
-                                  Column(
-                                    children: [
-                                      Text(
-                                        issuedDate,
-                                        style: const TextStyle(
-                                            fontSize: 16,
-                                            decoration:
-                                                TextDecoration.underline,
-                                            decorationStyle:
-                                                TextDecorationStyle.dotted),
-                                      ),
-                                      const Text(
-                                        "Date",
-                                        style: TextStyle(
-                                            fontSize: 16,
-                                            fontWeight: FontWeight.bold),
-                                      ),
-                                    ],
+                                  ],
+                                ),
+                                Container(
+                                  decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(5.0),
+                                    border: Border.all(
+                                      color: Colors.black,
+                                      width: 1.0,
+                                    ),
                                   ),
-                                  const Column(
-                                    children: [
-                                      Text(
-                                        ".......................",
-                                        style: TextStyle(
-                                            fontSize: 16,
-                                            decoration:
-                                                TextDecoration.underline,
-                                            decorationStyle:
-                                                TextDecorationStyle.dotted),
-                                      ),
-                                      Text(
-                                        "Commissioner General of",
-                                        style: TextStyle(
-                                            fontSize: 16,
-                                            fontWeight: FontWeight.bold),
-                                      ),
-                                      Text(
-                                        "Motor Traffic",
-                                        style: TextStyle(
-                                            fontSize: 16,
-                                            fontWeight: FontWeight.bold),
-                                      ),
-                                    ],
-                                  ),
-                                ],
-                              ),
-                              Container(
-                                decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(5.0),
-                                  border: Border.all(
-                                    color: Colors.black,
-                                    width: 1.0,
+                                  child: const FittedBox(
+                                    fit: BoxFit.scaleDown,
+                                    child: Text(
+                                      "Department of Motor Traffic - Sri Lanka",
+                                      style: TextStyle(fontSize: 18),
+                                    ),
                                   ),
                                 ),
-                                child: const FittedBox(
-                                  fit: BoxFit.scaleDown,
-                                  child: Text(
-                                    "Department of Motor Traffic - Sri Lanka",
-                                    style: TextStyle(fontSize: 18),
-                                  ),
-                                ),
-                              ),
-                            ],
+                              ],
+                            ),
                           ),
                         ),
                       ),
-                    ),
-                  ],
-                ),
-              );
+                    ],
+                  ),
+                );
               }
             }
           },
