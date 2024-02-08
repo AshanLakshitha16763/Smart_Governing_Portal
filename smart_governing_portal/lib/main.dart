@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:lottie/lottie.dart';
 import 'package:smart_governing_portal/controllers/chat.dart';
-//import 'package:smart_governing_portal/controllers/secrets.dart';
+import 'package:smart_governing_portal/controllers/secrets.dart';
 import 'package:smart_governing_portal/controllers/widget_tree.dart';
 
 Future main() async {
@@ -12,11 +12,11 @@ Future main() async {
   if (kIsWeb) {
     await Firebase.initializeApp(
         options: FirebaseOptions(
-      apiKey: "AIzaSyAQGH-OoQz5jHZKxMR6t6GXXuQLo82RF6M",
-      appId: "1:913759630420:web:9fac7bd0a1c5cec94d69c1",
-      messagingSenderId: "913759630420",
-      projectId: "smart-governing-portal",
-      storageBucket: "smart-governing-portal.appspot.com",
+      apiKey: "",
+      appId: "",
+      messagingSenderId: "",
+      projectId: "",
+      storageBucket: "",
     ));
   }
   await Firebase.initializeApp();
