@@ -70,23 +70,32 @@ class _UserHomePageState extends State<UserHomePage> {
 
   //body of the web page
   Widget _body() {
-    return SingleChildScrollView(
-        controller: _scrollController,
-        child: Column(
-          children: [
-            //first section on the web
-            _section1(id: 'home_section'),
+    return Container(
+      decoration: BoxDecoration(
+        image: DecorationImage(
+          image: AssetImage(
+              "lib/Assets/loop/2.jpg"), // Change the path accordingly
+          fit: BoxFit.fill,
+        ),
+      ),
+      child: SingleChildScrollView(
+          controller: _scrollController,
+          child: Column(
+            children: [
+              //first section on the web
+              _section1(id: 'home_section'),
 
-            //second section on the web(GOV Services)
-            _section2(id: 'services_section'),
+              //second section on the web(GOV Services)
+              _section2(id: 'services_section'),
 
-            //third section of the web(Our Services)
-            _section3(),
+              //third section of the web(Our Services)
+              _section3(),
 
-            //Footer
-            const Footer(),
-          ],
-        ));
+              //Footer
+              const Footer(),
+            ],
+          )),
+    );
   }
 
   // functions for the government services
@@ -573,10 +582,7 @@ class _UserHomePageState extends State<UserHomePage> {
                             ),
                           ],
                         ),
-                        child: Image.asset(
-                          'lib/Assets/homepagepic.png',
-                          fit: BoxFit.scaleDown,
-                        ),
+                        child: AutoScrollImages(),
                       ),
                     ),
                   ),
@@ -836,5 +842,69 @@ void _launchURL(String url) async {
     await launch(url);
   } else {
     throw 'Could not launch $url';
+  }
+}
+
+//Animation looping
+class AutoScrollImages extends StatefulWidget {
+  const AutoScrollImages({super.key});
+
+  @override
+  _AutoScrollImagesState createState() => _AutoScrollImagesState();
+}
+
+class _AutoScrollImagesState extends State<AutoScrollImages> {
+  final List<String> imageUrls = [
+    "1.jpg",
+    "3.jpg",
+    "4.jpg",
+    "1.jpg",
+  ];
+
+  final PageController _controller = PageController();
+  Timer? _timer;
+
+  @override
+  void initState() {
+    super.initState();
+    _timer = Timer.periodic(const Duration(seconds: 4), (Timer timer) {
+      if (_controller.page == imageUrls.length - 1) {
+        _controller.animateToPage(0,
+            duration: const Duration(milliseconds: 2000),
+            curve: Curves.bounceOut);
+      } else {
+        _controller.nextPage(
+            duration: Duration(milliseconds: 2000), curve: Curves.ease);
+      }
+    });
+  }
+
+  @override
+  void dispose() {
+    _timer?.cancel();
+    _controller.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: [
+        SizedBox(
+          height: 450,
+          width: 590,
+          child: PageView.builder(
+            controller: _controller,
+            itemCount: imageUrls.length,
+            itemBuilder: (BuildContext context, int index) {
+              return Image.asset(
+                "lib/Assets/loop/${imageUrls[index]}",
+                fit: BoxFit.fill,
+              );
+            },
+          ),
+        ),
+      ],
+    );
   }
 }
