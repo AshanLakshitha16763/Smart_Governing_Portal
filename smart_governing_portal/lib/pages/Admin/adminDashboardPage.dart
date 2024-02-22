@@ -18,10 +18,37 @@ class AdminDashboardPage extends StatefulWidget {
 }
 
 class _AdminDashboardPageState extends State<AdminDashboardPage> {
+  final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
+  User? get currentUser => _firebaseAuth.currentUser;
   late String userName;
   late double height;
   late double width;
+  final ScrollController _scrollController = ScrollController();
+  final GlobalKey _section1Key = GlobalKey();
   int hoveredIndex = -1;
+
+  Future<void> signOut() async {
+    await _firebaseAuth.signOut();
+  }
+
+  void profile() {
+    showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: const Text('Log Out?'),
+        content: const Text('Make sure all the work is completed.'),
+        actions: [
+          TextButton(
+            onPressed: () {
+              signOut();
+              Navigator.pop(context);
+            },
+            child: const Text('OK'),
+          ),
+        ],
+      ),
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -32,50 +59,57 @@ class _AdminDashboardPageState extends State<AdminDashboardPage> {
     return LayoutBuilder(builder: (context, constraints) {
       if (constraints.maxWidth > 1200) {
         return Scaffold(
-      appBar: AppBar(
-        automaticallyImplyLeading: false,
-        toolbarHeight: 120,
-        centerTitle: true,
-        title: const Text(
-          'Government Admins Only',
-          style: TextStyle(
-              color: Colors.white,
-              fontSize: 24,
-              fontFamily: 'poppins',
-              fontWeight: FontWeight.bold),
-        ),
-        leadingWidth: 180,
-        leading: SizedBox(
-          width: 150,
-          child: Image.asset(
-            'lib/Assets/logo.png',
-            fit: BoxFit.cover,
+          appBar: AppBar(
+            automaticallyImplyLeading: false,
+            toolbarHeight: 120,
+            centerTitle: true,
+            title: const Text(
+              'Government Admins Only',
+              style: TextStyle(
+                  color: Colors.white,
+                  fontSize: 24,
+                  fontFamily: 'poppins',
+                  fontWeight: FontWeight.bold),
+            ),
+            leadingWidth: 180,
+            leading: SizedBox(
+              width: 150,
+              child: Image.asset(
+                'lib/Assets/logo.png',
+                fit: BoxFit.cover,
+              ),
+            ),
+            actions: [_appbarActions()],
+            backgroundColor: const Color.fromARGB(255, 115, 185, 250),
           ),
-        ),
-        actions: [_appbarActions()],
-        backgroundColor: const Color.fromARGB(255, 115, 185, 250),
-      ),
-      body: _body(),
-    );
+          body: _body(),
+        );
       } else {
         return Scaffold(
-      appBar: AppBar(
-        centerTitle: true,
-        title: const Text(
-          'Government Admins Only',
-          style: TextStyle(
-              color: Colors.white,
-              fontSize: 24,
-              fontFamily: 'poppins',
-              fontWeight: FontWeight.bold),
-        ),
-        backgroundColor: const Color.fromARGB(255, 115, 185, 250),
-      ),
-      drawer: mobileDrawer(width*0.6, context),
-      body: _body(),
-    );
+          appBar: AppBar(
+            centerTitle: true,
+            title: const Text(
+              'Government Admins Only',
+              style: TextStyle(
+                  color: Colors.white,
+                  fontSize: 24,
+                  fontFamily: 'poppins',
+                  fontWeight: FontWeight.bold),
+            ),
+            backgroundColor: const Color.fromARGB(255, 115, 185, 250),
+          ),
+          drawer: mobileDrawer(width * 0.6, context),
+          body: _body(),
+        );
       }
     });
+  }
+
+  double _section1Offset() {
+    final RenderBox renderBoxRed =
+        _section1Key.currentContext!.findRenderObject() as RenderBox;
+    final positionRed = renderBoxRed.localToGlobal(Offset.zero);
+    return positionRed.dy - kToolbarHeight; // Adjusted for app bar height
   }
 
   Widget _appbarActions() {
@@ -84,12 +118,13 @@ class _AdminDashboardPageState extends State<AdminDashboardPage> {
         children: [
           TextButton(
               onPressed: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute<void>(
-                    builder: (BuildContext context) => const UserHomePage(),
-                  ),
-                );
+                Future.delayed(Duration.zero, () {
+                  Scrollable.ensureVisible(
+                    _section1Key.currentContext!,
+                    duration: const Duration(seconds: 1),
+                    curve: Curves.easeInOut,
+                  );
+                });
               },
               child: const Text(
                 'Home',
@@ -127,7 +162,9 @@ class _AdminDashboardPageState extends State<AdminDashboardPage> {
               top: 5,
             ),
             child: IconButton(
-                onPressed: () {},
+                onPressed: () {
+                  profile();
+                },
                 icon: Image.asset(
                   'lib/Assets/person.png',
                   width: 40,
@@ -139,8 +176,9 @@ class _AdminDashboardPageState extends State<AdminDashboardPage> {
     );
   }
 
-  Widget _userLists() {
+  Widget _userLists({required String id}) {
     return SizedBox(
+      key: _section1Key,
       child: Padding(
         padding: const EdgeInsets.only(left: 20, right: 20, top: 20),
         child: Column(
@@ -185,17 +223,20 @@ class _AdminDashboardPageState extends State<AdminDashboardPage> {
     );
   }
 
-  Widget _body(){
+  Widget _body() {
     return ConstrainedBox(
-      constraints: BoxConstraints(minHeight: height*0.88),
-      child: ListView(
+      constraints: BoxConstraints(minHeight: height * 0.88),
+      child: SingleChildScrollView(
+        controller: _scrollController,
+        child: Column(
           children: [
             //lists
-            _userLists(),
+            _userLists(id: 'Home_section'),
             //footer
             const Footer()
           ],
         ),
+      ),
     );
   }
 

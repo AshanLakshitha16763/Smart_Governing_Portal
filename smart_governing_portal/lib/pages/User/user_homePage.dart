@@ -2,12 +2,14 @@
 
 import 'dart:async';
 import 'package:flutter/material.dart';
+import 'package:flutter_chat_ui/flutter_chat_ui.dart';
 import 'package:smart_governing_portal/controllers/constants.dart';
 import 'package:smart_governing_portal/pages/Admin/adminLoginPage.dart';
 import 'package:smart_governing_portal/pages/User/SmartDL_applying_form.dart';
 import 'package:smart_governing_portal/pages/User/SmartNIC_applyingForm.dart';
 import 'package:smart_governing_portal/pages/User/user_loginPage.dart';
 import 'package:smart_governing_portal/pages/User/user_signupPage.dart';
+import 'package:smart_governing_portal/pages/chat/chat_hopmepage.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -71,7 +73,7 @@ class _UserHomePageState extends State<UserHomePage> {
   //body of the web page
   Widget _body() {
     return Container(
-      decoration: BoxDecoration(
+      decoration: const BoxDecoration(
         image: DecorationImage(
           image: AssetImage(
               "lib/Assets/loop/2.jpg"), // Change the path accordingly
@@ -555,7 +557,7 @@ class _UserHomePageState extends State<UserHomePage> {
               ),
               Column(
                 children: [
-                  SizedBox(
+                  /*SizedBox(
                     width: width * 0.5,
                     child: Padding(
                       padding: const EdgeInsets.only(
@@ -588,39 +590,12 @@ class _UserHomePageState extends State<UserHomePage> {
                   ),
                   const SizedBox(
                     height: 20,
-                  ),
-                  Container(
-                    alignment: Alignment.center,
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(12),
-                      border: Border.all(
-                        color: const Color.fromARGB(255, 187, 191, 190),
-                        width: 1,
-                      ),
-                      boxShadow: const [
-                        BoxShadow(
-                          color: Color.fromARGB(
-                            255,
-                            187,
-                            191,
-                            190,
-                          ),
-                          spreadRadius: 1,
-                          blurRadius: 5,
-                          offset: Offset(0, 5),
-                        ),
-                      ],
-                    ),
-                    child: const Text(
-                      'Chatbot',
-                      textAlign: TextAlign.center,
-                      style: TextStyle(
-                        fontFamily: 'Inter',
-                        fontSize: 20,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                  ),
+                  ),*/
+                  TextButton(
+                      onPressed: () {
+                        chatbot();
+                      },
+                      child: const Text("Chatbot"))
                 ],
               ), // chatbot here
             ],
@@ -834,6 +809,29 @@ class _UserHomePageState extends State<UserHomePage> {
       ),
     );
   }
+
+  Future chatbot() {
+    return showDialog(
+        context: context,
+        builder: (context) {
+          return SizedBox(
+            child: AlertDialog(
+              title: const Text('Chatbot'),
+              content: SizedBox(
+                  width: width * 0.5,
+                  height: height * 0.7,
+                  child: const ChatHomePage()),
+              actions: [
+                TextButton(
+                    onPressed: () {
+                      Navigator.pop(context);
+                    },
+                    child: const Text('Close'))
+              ],
+            ),
+          );
+        });
+  }
 }
 
 //url launcher
@@ -874,7 +872,7 @@ class _AutoScrollImagesState extends State<AutoScrollImages> {
             curve: Curves.bounceOut);
       } else {
         _controller.nextPage(
-            duration: Duration(milliseconds: 2000), curve: Curves.ease);
+            duration: const Duration(milliseconds: 2000), curve: Curves.ease);
       }
     });
   }

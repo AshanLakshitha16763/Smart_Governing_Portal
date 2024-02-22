@@ -4,6 +4,9 @@ import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:lottie/lottie.dart';
 import 'package:smart_governing_portal/controllers/widget_tree.dart';
+import 'package:smart_governing_portal/pages/chat/chat_hopmepage.dart';
+import 'package:smart_governing_portal/pages/chat/gemini.dart';
+import 'package:smart_governing_portal/pages/test/charts.dart';
 
 Future main() async {
   WidgetsFlutterBinding.ensureInitialized();

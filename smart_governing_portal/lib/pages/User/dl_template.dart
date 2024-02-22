@@ -49,25 +49,7 @@ class _DLTemplateState extends State<DLTemplate> {
               title: const Text('Driving License Template'),
             ),
             body:
-                _body() /*Center(
-              child: SingleChildScrollView(
-                child: FutureBuilder<DocumentSnapshot<Map<String, dynamic>>>(
-                  future: data,
-                  builder: (context, snapshot) {
-                    if (snapshot.connectionState == ConnectionState.waiting) {
-                      return const CircularProgressIndicator();
-                    } else if (snapshot.hasError) {
-                      return Text('Error: ${snapshot.error}');
-                    } else if (!snapshot.hasData || !snapshot.data!.exists) {
-                      return const Text('Document not found');
-                    } else {
-                      var documentData = snapshot.data!.data()!;
-                      return _body();
-                    }
-                  },
-                ),
-              ),
-            ),*/
+                _body()
             );
   }
 

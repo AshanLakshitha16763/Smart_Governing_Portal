@@ -538,7 +538,7 @@ class _AutoScrollImagesState extends State<AutoScrollImages> {
             itemBuilder: (BuildContext context, int index) {
               return Image.asset(
                 "lib/Assets/loop/${imageUrls[index]}",
-                fit: BoxFit.contain,
+                fit: BoxFit.fitHeight,
               );
             },
           ),
