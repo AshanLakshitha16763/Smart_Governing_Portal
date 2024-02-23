@@ -2,12 +2,14 @@
 
 import 'dart:async';
 import 'package:flutter/material.dart';
+import 'package:flutter_chat_ui/flutter_chat_ui.dart';
 import 'package:smart_governing_portal/controllers/constants.dart';
 import 'package:smart_governing_portal/pages/Admin/adminLoginPage.dart';
 import 'package:smart_governing_portal/pages/User/SmartDL_applying_form.dart';
 import 'package:smart_governing_portal/pages/User/SmartNIC_applyingForm.dart';
 import 'package:smart_governing_portal/pages/User/user_loginPage.dart';
 import 'package:smart_governing_portal/pages/User/user_signupPage.dart';
+import 'package:smart_governing_portal/pages/chat/chat_hopmepage.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -40,6 +42,12 @@ class _UserHomePageState extends State<UserHomePage> {
     return LayoutBuilder(builder: (context, constraints) {
       if (constraints.maxWidth > 800) {
         return Scaffold(
+          floatingActionButton: IconButton(
+            onPressed: () {
+              chatbot();
+            },
+            icon: const Icon(Icons.chat,size: 50,color: Color.fromARGB(255, 10, 4, 70),),
+          ),
           appBar: AppBar(
             automaticallyImplyLeading: false,
             toolbarHeight: 120,
@@ -58,6 +66,12 @@ class _UserHomePageState extends State<UserHomePage> {
         );
       } else {
         return Scaffold(
+          floatingActionButton: IconButton(
+            onPressed: () {
+              chatbot();
+            },
+            icon: const Icon(Icons.chat,size: 50,color: Color.fromARGB(255, 10, 4, 70),),
+          ),
           appBar: AppBar(
             backgroundColor: const Color.fromARGB(255, 115, 185, 250),
           ),
@@ -76,13 +90,13 @@ class _UserHomePageState extends State<UserHomePage> {
           children: [
             //first section on the web
             _section1(id: 'home_section'),
-
+    
             //second section on the web(GOV Services)
             _section2(id: 'services_section'),
-
+    
             //third section of the web(Our Services)
             _section3(),
-
+    
             //Footer
             const Footer(),
           ],
@@ -515,211 +529,185 @@ class _UserHomePageState extends State<UserHomePage> {
 
   //section 1 on the web
   Widget _section1({required String id}) {
-    return LayoutBuilder(builder: (context, constraints) {
-      if (constraints.maxWidth > 800) {
-        return ConstrainedBox(
-          key: _section1Key,
-          constraints: BoxConstraints(
-            minHeight: height * 0.88,
-          ),
-          child: Row(
-            children: [
-              SizedBox(
-                width: width * 0.5,
-                child: const Align(
-                  alignment: Alignment.center,
-                  child: Padding(
-                    padding: EdgeInsets.only(left: 20, right: 20, top: 100),
-                    child: FittedBox(
-                      child: Text(
-                        "WELCOME TO \nLET'S GOV",
-                        style: TextStyle(
-                          fontFamily: 'Mitr',
-                          fontWeight: FontWeight.w800,
-                          fontSize: 80,
-                          color: Color.fromARGB(255, 10, 4, 70),
-                        ),
-                      ),
-                    ),
-                  ),
-                ),
-              ),
-              Column(
-                children: [
-                  SizedBox(
-                    width: width * 0.5,
-                    child: Padding(
-                      padding: const EdgeInsets.only(
-                          right: 40, left: 40, top: 40, bottom: 20),
-                      child: Container(
-                        decoration: BoxDecoration(
-                          color: Colors.white,
-                          borderRadius: BorderRadius.circular(12),
-                          border: Border.all(
-                            color: const Color.fromARGB(255, 187, 191, 190),
-                            width: 1,
-                          ),
-                          boxShadow: const [
-                            BoxShadow(
-                              color: Color.fromARGB(
-                                255,
-                                187,
-                                191,
-                                190,
-                              ),
-                              spreadRadius: 1,
-                              blurRadius: 5,
-                              offset: Offset(0, 5),
-                            ),
-                          ],
-                        ),
-                        child: Image.asset(
-                          'lib/Assets/homepagepic.png',
-                          fit: BoxFit.scaleDown,
-                        ),
-                      ),
-                    ),
-                  ),
-                  const SizedBox(
-                    height: 20,
-                  ),
-                  Container(
+    return Container(
+      decoration: const BoxDecoration(
+        image: DecorationImage(
+          image: AssetImage(
+              "lib/Assets/loop/2.jpg"), // Change the path accordingly
+          fit: BoxFit.fill,
+        ),
+      ),
+      child: LayoutBuilder(builder: (context, constraints) {
+        if (constraints.maxWidth > 800) {
+          return ConstrainedBox(
+            key: _section1Key,
+            constraints: BoxConstraints(
+              minHeight: height * 0.88,
+            ),
+            child: Row(
+              children: [
+                SizedBox(
+                  width: width * 0.5,
+                  child: const Align(
                     alignment: Alignment.center,
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(12),
-                      border: Border.all(
-                        color: const Color.fromARGB(255, 187, 191, 190),
-                        width: 1,
-                      ),
-                      boxShadow: const [
-                        BoxShadow(
-                          color: Color.fromARGB(
-                            255,
-                            187,
-                            191,
-                            190,
+                    child: Padding(
+                      padding: EdgeInsets.only(left: 20, right: 20, top: 100),
+                      child: FittedBox(
+                        child: Text(
+                          "WELCOME TO \nLET'S GOV",
+                          style: TextStyle(
+                            fontFamily: 'Mitr',
+                            fontWeight: FontWeight.w800,
+                            fontSize: 80,
+                            color: Color.fromARGB(255, 10, 4, 70),
                           ),
-                          spreadRadius: 1,
-                          blurRadius: 5,
-                          offset: Offset(0, 5),
-                        ),
-                      ],
-                    ),
-                    child: const Text(
-                      'Chatbot',
-                      textAlign: TextAlign.center,
-                      style: TextStyle(
-                        fontFamily: 'Inter',
-                        fontSize: 20,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                  ),
-                ],
-              ), // chatbot here
-            ],
-          ),
-        );
-      } else {
-        return ConstrainedBox(
-          constraints: BoxConstraints(
-            minHeight: height,
-          ),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.spaceAround,
-            children: [
-              SizedBox(
-                width: width * 0.8,
-                child: const Align(
-                  alignment: Alignment.center,
-                  child: Padding(
-                    padding: EdgeInsets.only(left: 20, right: 20, top: 100),
-                    child: FittedBox(
-                      fit: BoxFit.contain,
-                      child: Text(
-                        "WELCOME TO \nLET'S GOV",
-                        style: TextStyle(
-                          fontFamily: 'Mitr',
-                          fontWeight: FontWeight.w800,
-                          fontSize: 80,
-                          color: Color.fromARGB(255, 10, 4, 70),
                         ),
                       ),
                     ),
                   ),
                 ),
-              ),
-              SizedBox(
-                width: width * 0.8,
-                child: Padding(
-                  padding: const EdgeInsets.only(
-                      right: 40, left: 40, top: 40, bottom: 20),
-                  child: Container(
-                    decoration: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.circular(12),
-                      border: Border.all(
-                        color: const Color.fromARGB(255, 187, 191, 190),
-                        width: 1,
-                      ),
-                      boxShadow: const [
-                        BoxShadow(
-                          color: Color.fromARGB(
-                            255,
-                            187,
-                            191,
-                            190,
+                Column(
+                  children: [
+                    SizedBox(
+                      width: width * 0.5,
+                      child: Padding(
+                        padding: const EdgeInsets.only(
+                            right: 40, left: 40, top: 40, bottom: 20),
+                        child: Container(
+                          decoration: BoxDecoration(
+                            color: Colors.white,
+                            borderRadius: BorderRadius.circular(12),
+                            border: Border.all(
+                              color: const Color.fromARGB(255, 187, 191, 190),
+                              width: 1,
+                            ),
+                            boxShadow: const [
+                              BoxShadow(
+                                color: Color.fromARGB(
+                                  255,
+                                  187,
+                                  191,
+                                  190,
+                                ),
+                                spreadRadius: 1,
+                                blurRadius: 5,
+                                offset: Offset(0, 5),
+                              ),
+                            ],
                           ),
-                          spreadRadius: 1,
-                          blurRadius: 5,
-                          offset: Offset(0, 5),
+                          child: AutoScrollImages(),
                         ),
-                      ],
-                    ),
-                    child: Image.asset(
-                      'lib/Assets/homepagepic.png',
-                      fit: BoxFit.scaleDown,
-                    ),
-                  ),
-                ),
-              ),
-              Container(
-                alignment: Alignment.center,
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(12),
-                  border: Border.all(
-                    color: const Color.fromARGB(255, 187, 191, 190),
-                    width: 1,
-                  ),
-                  boxShadow: const [
-                    BoxShadow(
-                      color: Color.fromARGB(
-                        255,
-                        187,
-                        191,
-                        190,
                       ),
-                      spreadRadius: 1,
-                      blurRadius: 5,
-                      offset: Offset(0, 5),
+                    ),
+                    const SizedBox(
+                      height: 20,
                     ),
                   ],
-                ),
-                child: const Text(
-                  'Chatbot',
-                  textAlign: TextAlign.center,
-                  style: TextStyle(
-                    fontFamily: 'Inter',
-                    fontSize: 20,
-                    fontWeight: FontWeight.bold,
+                ), // chatbot here
+              ],
+            ),
+          );
+        } else {
+          return ConstrainedBox(
+            constraints: BoxConstraints(
+              minHeight: height,
+            ),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              children: [
+                SizedBox(
+                  width: width * 0.8,
+                  child: const Align(
+                    alignment: Alignment.center,
+                    child: Padding(
+                      padding: EdgeInsets.only(left: 20, right: 20, top: 100),
+                      child: FittedBox(
+                        fit: BoxFit.contain,
+                        child: Text(
+                          "WELCOME TO \nLET'S GOV",
+                          style: TextStyle(
+                            fontFamily: 'Mitr',
+                            fontWeight: FontWeight.w800,
+                            fontSize: 80,
+                            color: Color.fromARGB(255, 10, 4, 70),
+                          ),
+                        ),
+                      ),
+                    ),
                   ),
                 ),
-              ), // chatbot here
-            ],
-          ),
-        );
-      }
-    });
+                SizedBox(
+                  width: width * 0.8,
+                  child: Padding(
+                    padding: const EdgeInsets.only(
+                        right: 40, left: 40, top: 40, bottom: 20),
+                    child: Container(
+                      decoration: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.circular(12),
+                        border: Border.all(
+                          color: const Color.fromARGB(255, 187, 191, 190),
+                          width: 1,
+                        ),
+                        boxShadow: const [
+                          BoxShadow(
+                            color: Color.fromARGB(
+                              255,
+                              187,
+                              191,
+                              190,
+                            ),
+                            spreadRadius: 1,
+                            blurRadius: 5,
+                            offset: Offset(0, 5),
+                          ),
+                        ],
+                      ),
+                      child: Image.asset(
+                        'lib/Assets/homepagepic.png',
+                        fit: BoxFit.scaleDown,
+                      ),
+                    ),
+                  ),
+                ),
+                Container(
+                  alignment: Alignment.center,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(12),
+                    border: Border.all(
+                      color: const Color.fromARGB(255, 187, 191, 190),
+                      width: 1,
+                    ),
+                    boxShadow: const [
+                      BoxShadow(
+                        color: Color.fromARGB(
+                          255,
+                          187,
+                          191,
+                          190,
+                        ),
+                        spreadRadius: 1,
+                        blurRadius: 5,
+                        offset: Offset(0, 5),
+                      ),
+                    ],
+                  ),
+                  child: const Text(
+                    'Chatbot',
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                      fontFamily: 'Inter',
+                      fontSize: 20,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                ), // chatbot here
+              ],
+            ),
+          );
+        }
+      }),
+    );
   }
 
   //section 2 on the web
@@ -828,6 +816,29 @@ class _UserHomePageState extends State<UserHomePage> {
       ),
     );
   }
+
+  Future chatbot() {
+    return showDialog(
+        context: context,
+        builder: (context) {
+          return SizedBox(
+            child: AlertDialog(
+              title: const Text('Smart Bot'),
+              content: SizedBox(
+                  width: width * 0.5,
+                  height: height * 0.7,
+                  child: const ChatHomePage()),
+              actions: [
+                TextButton(
+                    onPressed: () {
+                      Navigator.pop(context);
+                    },
+                    child: const Text('Close'))
+              ],
+            ),
+          );
+        });
+  }
 }
 
 //url launcher
@@ -836,5 +847,69 @@ void _launchURL(String url) async {
     await launch(url);
   } else {
     throw 'Could not launch $url';
+  }
+}
+
+//Animation looping
+class AutoScrollImages extends StatefulWidget {
+  const AutoScrollImages({super.key});
+
+  @override
+  _AutoScrollImagesState createState() => _AutoScrollImagesState();
+}
+
+class _AutoScrollImagesState extends State<AutoScrollImages> {
+  final List<String> imageUrls = [
+    "1.jpg",
+    "3.jpg",
+    "4.jpg",
+    "1.jpg",
+  ];
+
+  final PageController _controller = PageController();
+  Timer? _timer;
+
+  @override
+  void initState() {
+    super.initState();
+    _timer = Timer.periodic(const Duration(seconds: 4), (Timer timer) {
+      if (_controller.page == imageUrls.length - 1) {
+        _controller.animateToPage(0,
+            duration: const Duration(milliseconds: 2000),
+            curve: Curves.bounceOut);
+      } else {
+        _controller.nextPage(
+            duration: const Duration(milliseconds: 2000), curve: Curves.ease);
+      }
+    });
+  }
+
+  @override
+  void dispose() {
+    _timer?.cancel();
+    _controller.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: [
+        SizedBox(
+          height: 450,
+          width: 590,
+          child: PageView.builder(
+            controller: _controller,
+            itemCount: imageUrls.length,
+            itemBuilder: (BuildContext context, int index) {
+              return Image.asset(
+                "lib/Assets/loop/${imageUrls[index]}",
+                fit: BoxFit.fill,
+              );
+            },
+          ),
+        ),
+      ],
+    );
   }
 }

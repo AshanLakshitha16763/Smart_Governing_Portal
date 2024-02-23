@@ -385,7 +385,7 @@ class _AdminLoginPageState extends State<AdminLoginPage> {
                               borderRadius:
                                   BorderRadius.circular(15), // Border radius
                             ),
-                            child: AutoScrollImages(),
+                            child: const AutoScrollImages(),
                           ),
                         ),
                       ),
@@ -431,7 +431,7 @@ class _AdminLoginPageState extends State<AdminLoginPage> {
                             borderRadius:
                                 BorderRadius.circular(15), // Border radius
                           ),
-                          child: AutoScrollImages(),
+                          child: const AutoScrollImages(),
                         ),
                       ),
                     ],
@@ -513,7 +513,7 @@ class _AutoScrollImagesState extends State<AutoScrollImages> {
             curve: Curves.bounceOut);
       } else {
         _controller.nextPage(
-            duration: Duration(milliseconds: 2000), curve: Curves.ease);
+            duration: const Duration(milliseconds: 2000), curve: Curves.ease);
       }
     });
   }
@@ -538,7 +538,7 @@ class _AutoScrollImagesState extends State<AutoScrollImages> {
             itemBuilder: (BuildContext context, int index) {
               return Image.asset(
                 "lib/Assets/loop/${imageUrls[index]}",
-                fit: BoxFit.fill,
+                fit: BoxFit.fitHeight,
               );
             },
           ),

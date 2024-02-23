@@ -17,7 +17,7 @@ class _RequestingNICState extends State<RequestingNIC> {
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
-        title: const Text('Firestore User Data',style: TextStyle(color: Colors.white,fontWeight: FontWeight.bold,fontSize: 20),),
+        title: const Text('Requesting NIC Verification',style: TextStyle(color: Colors.white,fontWeight: FontWeight.bold,fontSize: 20),),
         backgroundColor: const Color.fromARGB(255, 115, 185, 250),
       ),
       body: SingleChildScrollView(

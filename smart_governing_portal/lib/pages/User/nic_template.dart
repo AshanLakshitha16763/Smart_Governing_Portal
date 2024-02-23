@@ -282,6 +282,7 @@ class _NICTemplateState extends State<NICTemplate> {
                           ),
                         ),
                       ),
+                      const SizedBox(height: 10,),
                       ElevatedButton(
                         onPressed: () {
                           Navigator.push(
@@ -291,7 +292,26 @@ class _NICTemplateState extends State<NICTemplate> {
                             ),
                           );
                         },
-                        child: const Text('NIC QR Code'),
+                        style: ElevatedButton.styleFrom(
+                        maximumSize: Size.fromWidth(width / 4),
+                        foregroundColor:
+                            const Color.fromARGB(255, 243, 242, 234),
+                        backgroundColor: const Color.fromARGB(255, 10, 4, 70),
+                        fixedSize: const Size(800, 50),
+                        textStyle: const TextStyle(
+                          fontSize: 25,
+                          fontWeight: FontWeight.bold,
+                        ),
+                        elevation: 5,
+                        side: const BorderSide(
+                          color: Color.fromARGB(255, 249, 252, 251),
+                          width: 4,
+                        ),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(20),
+                        ),
+                      ),
+                        child: const FittedBox(child: Text('NIC QR Code')),
                       ),
                     ],
                   ),
