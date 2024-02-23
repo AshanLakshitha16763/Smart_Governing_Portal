@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:intl/intl.dart';
+import 'package:smart_governing_portal/pages/Admin/requestedDLTemplate.dart';
 import 'package:smart_governing_portal/pages/Admin/requestingDLTemplate.dart';
 
 class RequestedDL extends StatefulWidget {
@@ -17,7 +18,7 @@ class _RequestedDLState extends State<RequestedDL> {
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
-        title: const Text('Firestore User Data',style: TextStyle(color: Colors.white,fontWeight: FontWeight.bold,fontSize: 20),),
+        title: const Text('Requested DL List',style: TextStyle(color: Colors.white,fontWeight: FontWeight.bold,fontSize: 20),),
         backgroundColor: const Color.fromARGB(255, 115, 185, 250),
       ),
       body: SingleChildScrollView(
@@ -75,7 +76,7 @@ class _RequestedDLState extends State<RequestedDL> {
                                 Navigator.push(
                                   context,
                                   MaterialPageRoute(
-                                    builder: (context) => ReqDLTemplate(documentId: doc.id,),
+                                    builder: (context) => RequestedDLTemplate(documentId: doc.id,),
                                   ),
                                 );
                               },

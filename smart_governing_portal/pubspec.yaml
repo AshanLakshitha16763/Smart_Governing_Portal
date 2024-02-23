@@ -57,6 +57,12 @@ dependencies:
   qr_flutter: ^4.1.0
   path_provider: ^2.1.2
   image_gallery_saver: ^2.0.3
+  flip_card: ^0.7.0
+  flutter_chat_types: ^3.6.2
+  flutter_chat_ui: ^1.6.12
+  web_socket_channel: ^2.4.0
+  fl_chart: ^0.66.2
+  flutter_markdown: ^0.6.19
 
 
   
@@ -89,6 +95,7 @@ flutter:
      - lib/Assets/serve.png
      - lib/Assets/ID.png
      - lib/Assets/DL.png
+     - lib/Assets/12t.jpg
      - lib/Assets/Passport.png
      - lib/Assets/Inquiry.png
      - lib/Assets/belowicon.png
@@ -113,6 +120,10 @@ flutter:
      - lib/Assets/loop/8.jpg
      - lib/Assets/loop/14.jpg
      - lib/Assets/loop/15.jpg
+     - lib/Assets/loop/1.jpg
+     - lib/Assets/loop/3.jpg
+     - lib/Assets/loop/4.jpg
+     - lib/Assets/loop/2.jpg
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware

@@ -6,6 +6,7 @@ import 'package:smart_governing_portal/controllers/constants.dart';
 import 'package:smart_governing_portal/pages/Admin/adminFormPage.dart';
 import 'package:smart_governing_portal/pages/User/dl_template.dart';
 import 'package:smart_governing_portal/pages/User/user_homePage.dart';
+import 'package:smart_governing_portal/pages/chat/chat_hopmepage.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class DLApplicationForm extends StatefulWidget {
@@ -169,7 +170,7 @@ class _DLApplicationFormState extends State<DLApplicationForm> {
         "Gender": genderController.text,
         "Province": provinceController.text,
         "District": districtController.text,
-        "Validation":"",
+        "Validation": "",
         "Time": DateTime.now()
       };
 
@@ -235,11 +236,45 @@ class _DLApplicationFormState extends State<DLApplicationForm> {
     }
   }
 */
+
+  Future chatbot() {
+    return showDialog(
+        context: context,
+        builder: (context) {
+          return SizedBox(
+            child: AlertDialog(
+              title: const Text('Smart Bot'),
+              content: SizedBox(
+                  width: width * 0.5,
+                  height: height * 0.7,
+                  child: const ChatHomePage()),
+              actions: [
+                TextButton(
+                    onPressed: () {
+                      Navigator.pop(context);
+                    },
+                    child: const Text('Close'))
+              ],
+            ),
+          );
+        });
+  }
+
   @override
   Widget build(BuildContext context) {
     width = MediaQuery.of(context).size.width;
     height = MediaQuery.of(context).size.height;
     return Scaffold(
+      floatingActionButton: IconButton(
+        onPressed: () {
+          chatbot();
+        },
+        icon: const Icon(
+          Icons.chat,
+          size: 50,
+          color: Color.fromARGB(255, 10, 4, 70),
+        ),
+      ),
       body: ListView(
         children: [
           //navbar
@@ -346,7 +381,12 @@ class _DLApplicationFormState extends State<DLApplicationForm> {
                   top: 5,
                 ),
                 child: IconButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      Navigator.push(context,
+                          MaterialPageRoute(builder: (context) {
+                        return const UserHomePage();
+                      }));
+                    },
                     icon: Image.asset(
                       'lib/Assets/person.png',
                       width: 40,
@@ -824,7 +864,6 @@ class _DLApplicationFormState extends State<DLApplicationForm> {
     final positionRed = renderBoxRed.localToGlobal(Offset.zero);
     return positionRed.dy - kToolbarHeight; // Adjusted for app bar height
   }
-
 }
 
 void _launchURL(String url) async {

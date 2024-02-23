@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:intl/intl.dart';
+import 'package:smart_governing_portal/pages/Admin/requestedNicTemplate.dart';
 import 'package:smart_governing_portal/pages/Admin/requestingNicTemplate.dart';
 
 class RequestedNIC extends StatefulWidget {
@@ -18,7 +19,7 @@ class _RequestedNICState extends State<RequestedNIC> {
       appBar: AppBar(
         centerTitle: true,
         title: const Text(
-          'Firestore User Data',
+          'Requested NIC List',
           style: TextStyle(
               color: Colors.white, fontWeight: FontWeight.bold, fontSize: 20),
         ),
@@ -95,7 +96,7 @@ class _RequestedNICState extends State<RequestedNIC> {
                                 Navigator.push(
                                   context,
                                   MaterialPageRoute(
-                                    builder: (context) => ReqNICTemplate(
+                                    builder: (context) => RequestedNICTemplate(
                                       documentId: doc.id,
                                     ),
                                   ),

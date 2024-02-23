@@ -8,6 +8,7 @@ import 'package:smart_governing_portal/pages/Admin/requestedNIC.dart';
 import 'package:smart_governing_portal/pages/Admin/requestingDL.dart';
 import 'package:smart_governing_portal/pages/Admin/requestingNIC.dart';
 import 'package:smart_governing_portal/pages/User/user_homePage.dart';
+import 'package:smart_governing_portal/pages/chat/chat_hopmepage.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class AdminDashboardPage extends StatefulWidget {
@@ -18,10 +19,63 @@ class AdminDashboardPage extends StatefulWidget {
 }
 
 class _AdminDashboardPageState extends State<AdminDashboardPage> {
+  final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
+  User? get currentUser => _firebaseAuth.currentUser;
   late String userName;
   late double height;
   late double width;
+  final ScrollController _scrollController = ScrollController();
+  final GlobalKey _section1Key = GlobalKey();
   int hoveredIndex = -1;
+
+  Future<void> signOut() async {
+    await _firebaseAuth.signOut();
+  }
+
+  void profile() {
+    showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: const Text('Log Out?'),
+        content: const Text('Make sure all the work is completed.'),
+        actions: [
+          TextButton(
+            onPressed: () {
+              signOut();
+              Navigator.pop(context);
+              Navigator.push(context, MaterialPageRoute(builder: (context) {
+                return const UserHomePage();
+              }));
+            },
+            child: const Text('OK'),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Future chatbot() {
+    return showDialog(
+        context: context,
+        builder: (context) {
+          return SizedBox(
+            child: AlertDialog(
+              title: const Text('Smart Bot'),
+              content: SizedBox(
+                  width: width * 0.5,
+                  height: height * 0.7,
+                  child: const ChatHomePage()),
+              actions: [
+                TextButton(
+                    onPressed: () {
+                      Navigator.pop(context);
+                    },
+                    child: const Text('Close'))
+              ],
+            ),
+          );
+        });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -32,50 +86,77 @@ class _AdminDashboardPageState extends State<AdminDashboardPage> {
     return LayoutBuilder(builder: (context, constraints) {
       if (constraints.maxWidth > 1200) {
         return Scaffold(
-      appBar: AppBar(
-        automaticallyImplyLeading: false,
-        toolbarHeight: 120,
-        centerTitle: true,
-        title: const Text(
-          'Government Admins Only',
-          style: TextStyle(
-              color: Colors.white,
-              fontSize: 24,
-              fontFamily: 'poppins',
-              fontWeight: FontWeight.bold),
-        ),
-        leadingWidth: 180,
-        leading: SizedBox(
-          width: 150,
-          child: Image.asset(
-            'lib/Assets/logo.png',
-            fit: BoxFit.cover,
+          floatingActionButton: IconButton(
+            onPressed: () {
+              chatbot();
+            },
+            icon: const Icon(
+              Icons.chat,
+              size: 50,
+              color: Color.fromARGB(255, 10, 4, 70),
+            ),
           ),
-        ),
-        actions: [_appbarActions()],
-        backgroundColor: const Color.fromARGB(255, 115, 185, 250),
-      ),
-      body: _body(),
-    );
+          appBar: AppBar(
+            automaticallyImplyLeading: false,
+            toolbarHeight: 120,
+            centerTitle: true,
+            title: const Text(
+              'Government Admins Only',
+              style: TextStyle(
+                  color: Colors.white,
+                  fontSize: 24,
+                  fontFamily: 'poppins',
+                  fontWeight: FontWeight.bold),
+            ),
+            leadingWidth: 180,
+            leading: SizedBox(
+              width: 150,
+              child: Image.asset(
+                'lib/Assets/logo.png',
+                fit: BoxFit.cover,
+              ),
+            ),
+            actions: [_appbarActions()],
+            backgroundColor: const Color.fromARGB(255, 115, 185, 250),
+          ),
+          body: _body(),
+        );
       } else {
         return Scaffold(
-      appBar: AppBar(
-        centerTitle: true,
-        title: const Text(
-          'Government Admins Only',
-          style: TextStyle(
-              color: Colors.white,
-              fontSize: 24,
-              fontFamily: 'poppins',
-              fontWeight: FontWeight.bold),
-        ),
-        backgroundColor: const Color.fromARGB(255, 115, 185, 250),
-      ),
-      drawer: mobileDrawer(width*0.6, context),
-      body: _body(),
-    );
+          floatingActionButton: IconButton(
+            onPressed: () {
+              chatbot();
+            },
+            icon: const Icon(
+              Icons.chat,
+              size: 50,
+              color: Color.fromARGB(255, 10, 4, 70),
+            ),
+          ),
+          appBar: AppBar(
+            centerTitle: true,
+            title: const Text(
+              'Government Admins Only',
+              style: TextStyle(
+                  color: Colors.white,
+                  fontSize: 24,
+                  fontFamily: 'poppins',
+                  fontWeight: FontWeight.bold),
+            ),
+            backgroundColor: const Color.fromARGB(255, 115, 185, 250),
+          ),
+          drawer: mobileDrawer(width * 0.6, context),
+          body: _body(),
+        );
       }
     });
+  }
+
+  double _section1Offset() {
+    final RenderBox renderBoxRed =
+        _section1Key.currentContext!.findRenderObject() as RenderBox;
+    final positionRed = renderBoxRed.localToGlobal(Offset.zero);
+    return positionRed.dy - kToolbarHeight; // Adjusted for app bar height
   }
 
   Widget _appbarActions() {
@@ -84,12 +165,13 @@ class _AdminDashboardPageState extends State<AdminDashboardPage> {
         children: [
           TextButton(
               onPressed: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute<void>(
-                    builder: (BuildContext context) => const UserHomePage(),
-                  ),
-                );
+                Future.delayed(Duration.zero, () {
+                  Scrollable.ensureVisible(
+                    _section1Key.currentContext!,
+                    duration: const Duration(seconds: 1),
+                    curve: Curves.easeInOut,
+                  );
+                });
               },
               child: const Text(
                 'Home',
@@ -127,7 +209,9 @@ class _AdminDashboardPageState extends State<AdminDashboardPage> {
               top: 5,
             ),
             child: IconButton(
-                onPressed: () {},
+                onPressed: () {
+                  profile();
+                },
                 icon: Image.asset(
                   'lib/Assets/person.png',
                   width: 40,
@@ -139,8 +223,9 @@ class _AdminDashboardPageState extends State<AdminDashboardPage> {
     );
   }
 
-  Widget _userLists() {
+  Widget _userLists({required String id}) {
     return SizedBox(
+      key: _section1Key,
       child: Padding(
         padding: const EdgeInsets.only(left: 20, right: 20, top: 20),
         child: Column(
@@ -185,17 +270,20 @@ class _AdminDashboardPageState extends State<AdminDashboardPage> {
     );
   }
 
-  Widget _body(){
+  Widget _body() {
     return ConstrainedBox(
-      constraints: BoxConstraints(minHeight: height*0.88),
-      child: ListView(
+      constraints: BoxConstraints(minHeight: height * 0.88),
+      child: SingleChildScrollView(
+        controller: _scrollController,
+        child: Column(
           children: [
             //lists
-            _userLists(),
+            _userLists(id: 'Home_section'),
             //footer
             const Footer()
           ],
         ),
+      ),
     );
   }
 

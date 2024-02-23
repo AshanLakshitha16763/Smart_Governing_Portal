@@ -6,7 +6,7 @@ import 'package:smart_governing_portal/pages/User/SmartDL_applying_form.dart';
 import 'package:smart_governing_portal/pages/User/SmartNIC_applyingForm.dart';
 import 'package:smart_governing_portal/pages/User/dl_template.dart';
 import 'package:smart_governing_portal/pages/User/nic_template.dart';
-import 'package:smart_governing_portal/pages/User/user_profile.dart';
+import 'package:smart_governing_portal/pages/User/user_homePage.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class AfterRegistrationPage extends StatefulWidget {
@@ -17,6 +17,8 @@ class AfterRegistrationPage extends StatefulWidget {
 }
 
 class _AfterRegistrationPageState extends State<AfterRegistrationPage> {
+  final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
+  User? get currentUser => _firebaseAuth.currentUser;
   late double height;
   late double width;
   int hoveredIndex = -1;
@@ -25,6 +27,33 @@ class _AfterRegistrationPageState extends State<AfterRegistrationPage> {
   final GlobalKey _section2Key = GlobalKey();
   final GlobalKey _section1Key = GlobalKey();
   late String currentUserDocumentId;
+  
+
+  Future<void> signOut() async {
+    await _firebaseAuth.signOut();
+  }
+
+  void profile() {
+    showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: const Text('Log Out?'),
+        content: const Text('Make sure all the work is completed.'),
+        actions: [
+          TextButton(
+            onPressed: () {
+              signOut();
+              Navigator.pop(context);
+              Navigator.push(context, MaterialPageRoute(builder: (context) {
+                return const UserHomePage();
+              }));
+            },
+            child: const Text('OK'),
+          ),
+        ],
+      ),
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -117,12 +146,7 @@ class _AfterRegistrationPageState extends State<AfterRegistrationPage> {
               ),
               IconButton(
                 onPressed: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute<void>(
-                      builder: (BuildContext context) => UserProfile(documentId: currentUserDocumentId,),
-                    ),
-                  );
+                  profile();
                 },
                 icon: const Icon(Icons.person_outline_rounded),
               ),
@@ -314,7 +338,7 @@ class _AfterRegistrationPageState extends State<AfterRegistrationPage> {
     );
   }
 
-  // Calculate the offset of _section2
+  // Calculate the offset of _section1
   double _section1Offset() {
     final RenderBox renderBoxRed =
         _section1Key.currentContext!.findRenderObject() as RenderBox;
@@ -669,7 +693,6 @@ class _AfterRegistrationPageState extends State<AfterRegistrationPage> {
       ),
     );
   }
-
 
   //Check if thre user has formdata already
   /*void navigateBasedOnUserData() async {
