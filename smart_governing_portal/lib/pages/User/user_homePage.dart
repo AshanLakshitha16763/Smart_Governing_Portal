@@ -42,6 +42,12 @@ class _UserHomePageState extends State<UserHomePage> {
     return LayoutBuilder(builder: (context, constraints) {
       if (constraints.maxWidth > 800) {
         return Scaffold(
+          floatingActionButton: IconButton(
+            onPressed: () {
+              chatbot();
+            },
+            icon: const Icon(Icons.chat,size: 50,color: Color.fromARGB(255, 10, 4, 70),),
+          ),
           appBar: AppBar(
             automaticallyImplyLeading: false,
             toolbarHeight: 120,
@@ -60,6 +66,12 @@ class _UserHomePageState extends State<UserHomePage> {
         );
       } else {
         return Scaffold(
+          floatingActionButton: IconButton(
+            onPressed: () {
+              chatbot();
+            },
+            icon: const Icon(Icons.chat,size: 50,color: Color.fromARGB(255, 10, 4, 70),),
+          ),
           appBar: AppBar(
             backgroundColor: const Color.fromARGB(255, 115, 185, 250),
           ),
@@ -72,32 +84,23 @@ class _UserHomePageState extends State<UserHomePage> {
 
   //body of the web page
   Widget _body() {
-    return Container(
-      decoration: const BoxDecoration(
-        image: DecorationImage(
-          image: AssetImage(
-              "lib/Assets/loop/2.jpg"), // Change the path accordingly
-          fit: BoxFit.fill,
-        ),
-      ),
-      child: SingleChildScrollView(
-          controller: _scrollController,
-          child: Column(
-            children: [
-              //first section on the web
-              _section1(id: 'home_section'),
-
-              //second section on the web(GOV Services)
-              _section2(id: 'services_section'),
-
-              //third section of the web(Our Services)
-              _section3(),
-
-              //Footer
-              const Footer(),
-            ],
-          )),
-    );
+    return SingleChildScrollView(
+        controller: _scrollController,
+        child: Column(
+          children: [
+            //first section on the web
+            _section1(id: 'home_section'),
+    
+            //second section on the web(GOV Services)
+            _section2(id: 'services_section'),
+    
+            //third section of the web(Our Services)
+            _section3(),
+    
+            //Footer
+            const Footer(),
+          ],
+        ));
   }
 
   // functions for the government services
@@ -526,181 +529,185 @@ class _UserHomePageState extends State<UserHomePage> {
 
   //section 1 on the web
   Widget _section1({required String id}) {
-    return LayoutBuilder(builder: (context, constraints) {
-      if (constraints.maxWidth > 800) {
-        return ConstrainedBox(
-          key: _section1Key,
-          constraints: BoxConstraints(
-            minHeight: height * 0.88,
-          ),
-          child: Row(
-            children: [
-              SizedBox(
-                width: width * 0.5,
-                child: const Align(
-                  alignment: Alignment.center,
-                  child: Padding(
-                    padding: EdgeInsets.only(left: 20, right: 20, top: 100),
-                    child: FittedBox(
-                      child: Text(
-                        "WELCOME TO \nLET'S GOV",
-                        style: TextStyle(
-                          fontFamily: 'Mitr',
-                          fontWeight: FontWeight.w800,
-                          fontSize: 80,
-                          color: Color.fromARGB(255, 10, 4, 70),
-                        ),
-                      ),
-                    ),
-                  ),
-                ),
-              ),
-              Column(
-                children: [
-                  /*SizedBox(
-                    width: width * 0.5,
+    return Container(
+      decoration: const BoxDecoration(
+        image: DecorationImage(
+          image: AssetImage(
+              "lib/Assets/loop/2.jpg"), // Change the path accordingly
+          fit: BoxFit.fill,
+        ),
+      ),
+      child: LayoutBuilder(builder: (context, constraints) {
+        if (constraints.maxWidth > 800) {
+          return ConstrainedBox(
+            key: _section1Key,
+            constraints: BoxConstraints(
+              minHeight: height * 0.88,
+            ),
+            child: Row(
+              children: [
+                SizedBox(
+                  width: width * 0.5,
+                  child: const Align(
+                    alignment: Alignment.center,
                     child: Padding(
-                      padding: const EdgeInsets.only(
-                          right: 40, left: 40, top: 40, bottom: 20),
-                      child: Container(
-                        decoration: BoxDecoration(
-                          color: Colors.white,
-                          borderRadius: BorderRadius.circular(12),
-                          border: Border.all(
-                            color: const Color.fromARGB(255, 187, 191, 190),
-                            width: 1,
+                      padding: EdgeInsets.only(left: 20, right: 20, top: 100),
+                      child: FittedBox(
+                        child: Text(
+                          "WELCOME TO \nLET'S GOV",
+                          style: TextStyle(
+                            fontFamily: 'Mitr',
+                            fontWeight: FontWeight.w800,
+                            fontSize: 80,
+                            color: Color.fromARGB(255, 10, 4, 70),
                           ),
-                          boxShadow: const [
-                            BoxShadow(
-                              color: Color.fromARGB(
-                                255,
-                                187,
-                                191,
-                                190,
-                              ),
-                              spreadRadius: 1,
-                              blurRadius: 5,
-                              offset: Offset(0, 5),
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+                Column(
+                  children: [
+                    SizedBox(
+                      width: width * 0.5,
+                      child: Padding(
+                        padding: const EdgeInsets.only(
+                            right: 40, left: 40, top: 40, bottom: 20),
+                        child: Container(
+                          decoration: BoxDecoration(
+                            color: Colors.white,
+                            borderRadius: BorderRadius.circular(12),
+                            border: Border.all(
+                              color: const Color.fromARGB(255, 187, 191, 190),
+                              width: 1,
                             ),
-                          ],
-                        ),
-                        child: AutoScrollImages(),
-                      ),
-                    ),
-                  ),
-                  const SizedBox(
-                    height: 20,
-                  ),*/
-                  TextButton(
-                      onPressed: () {
-                        chatbot();
-                      },
-                      child: const Text("Chatbot"))
-                ],
-              ), // chatbot here
-            ],
-          ),
-        );
-      } else {
-        return ConstrainedBox(
-          constraints: BoxConstraints(
-            minHeight: height,
-          ),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.spaceAround,
-            children: [
-              SizedBox(
-                width: width * 0.8,
-                child: const Align(
-                  alignment: Alignment.center,
-                  child: Padding(
-                    padding: EdgeInsets.only(left: 20, right: 20, top: 100),
-                    child: FittedBox(
-                      fit: BoxFit.contain,
-                      child: Text(
-                        "WELCOME TO \nLET'S GOV",
-                        style: TextStyle(
-                          fontFamily: 'Mitr',
-                          fontWeight: FontWeight.w800,
-                          fontSize: 80,
-                          color: Color.fromARGB(255, 10, 4, 70),
-                        ),
-                      ),
-                    ),
-                  ),
-                ),
-              ),
-              SizedBox(
-                width: width * 0.8,
-                child: Padding(
-                  padding: const EdgeInsets.only(
-                      right: 40, left: 40, top: 40, bottom: 20),
-                  child: Container(
-                    decoration: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.circular(12),
-                      border: Border.all(
-                        color: const Color.fromARGB(255, 187, 191, 190),
-                        width: 1,
-                      ),
-                      boxShadow: const [
-                        BoxShadow(
-                          color: Color.fromARGB(
-                            255,
-                            187,
-                            191,
-                            190,
+                            boxShadow: const [
+                              BoxShadow(
+                                color: Color.fromARGB(
+                                  255,
+                                  187,
+                                  191,
+                                  190,
+                                ),
+                                spreadRadius: 1,
+                                blurRadius: 5,
+                                offset: Offset(0, 5),
+                              ),
+                            ],
                           ),
-                          spreadRadius: 1,
-                          blurRadius: 5,
-                          offset: Offset(0, 5),
+                          child: AutoScrollImages(),
                         ),
-                      ],
-                    ),
-                    child: Image.asset(
-                      'lib/Assets/homepagepic.png',
-                      fit: BoxFit.scaleDown,
-                    ),
-                  ),
-                ),
-              ),
-              Container(
-                alignment: Alignment.center,
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(12),
-                  border: Border.all(
-                    color: const Color.fromARGB(255, 187, 191, 190),
-                    width: 1,
-                  ),
-                  boxShadow: const [
-                    BoxShadow(
-                      color: Color.fromARGB(
-                        255,
-                        187,
-                        191,
-                        190,
                       ),
-                      spreadRadius: 1,
-                      blurRadius: 5,
-                      offset: Offset(0, 5),
+                    ),
+                    const SizedBox(
+                      height: 20,
                     ),
                   ],
-                ),
-                child: const Text(
-                  'Chatbot',
-                  textAlign: TextAlign.center,
-                  style: TextStyle(
-                    fontFamily: 'Inter',
-                    fontSize: 20,
-                    fontWeight: FontWeight.bold,
+                ), // chatbot here
+              ],
+            ),
+          );
+        } else {
+          return ConstrainedBox(
+            constraints: BoxConstraints(
+              minHeight: height,
+            ),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              children: [
+                SizedBox(
+                  width: width * 0.8,
+                  child: const Align(
+                    alignment: Alignment.center,
+                    child: Padding(
+                      padding: EdgeInsets.only(left: 20, right: 20, top: 100),
+                      child: FittedBox(
+                        fit: BoxFit.contain,
+                        child: Text(
+                          "WELCOME TO \nLET'S GOV",
+                          style: TextStyle(
+                            fontFamily: 'Mitr',
+                            fontWeight: FontWeight.w800,
+                            fontSize: 80,
+                            color: Color.fromARGB(255, 10, 4, 70),
+                          ),
+                        ),
+                      ),
+                    ),
                   ),
                 ),
-              ), // chatbot here
-            ],
-          ),
-        );
-      }
-    });
+                SizedBox(
+                  width: width * 0.8,
+                  child: Padding(
+                    padding: const EdgeInsets.only(
+                        right: 40, left: 40, top: 40, bottom: 20),
+                    child: Container(
+                      decoration: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.circular(12),
+                        border: Border.all(
+                          color: const Color.fromARGB(255, 187, 191, 190),
+                          width: 1,
+                        ),
+                        boxShadow: const [
+                          BoxShadow(
+                            color: Color.fromARGB(
+                              255,
+                              187,
+                              191,
+                              190,
+                            ),
+                            spreadRadius: 1,
+                            blurRadius: 5,
+                            offset: Offset(0, 5),
+                          ),
+                        ],
+                      ),
+                      child: Image.asset(
+                        'lib/Assets/homepagepic.png',
+                        fit: BoxFit.scaleDown,
+                      ),
+                    ),
+                  ),
+                ),
+                Container(
+                  alignment: Alignment.center,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(12),
+                    border: Border.all(
+                      color: const Color.fromARGB(255, 187, 191, 190),
+                      width: 1,
+                    ),
+                    boxShadow: const [
+                      BoxShadow(
+                        color: Color.fromARGB(
+                          255,
+                          187,
+                          191,
+                          190,
+                        ),
+                        spreadRadius: 1,
+                        blurRadius: 5,
+                        offset: Offset(0, 5),
+                      ),
+                    ],
+                  ),
+                  child: const Text(
+                    'Chatbot',
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                      fontFamily: 'Inter',
+                      fontSize: 20,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                ), // chatbot here
+              ],
+            ),
+          );
+        }
+      }),
+    );
   }
 
   //section 2 on the web
@@ -816,7 +823,7 @@ class _UserHomePageState extends State<UserHomePage> {
         builder: (context) {
           return SizedBox(
             child: AlertDialog(
-              title: const Text('Chatbot'),
+              title: const Text('Smart Bot'),
               content: SizedBox(
                   width: width * 0.5,
                   height: height * 0.7,

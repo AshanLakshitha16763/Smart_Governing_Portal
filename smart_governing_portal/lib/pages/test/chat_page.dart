@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_chat_ui/flutter_chat_ui.dart';
 import 'package:image_picker/image_picker.dart';
@@ -30,7 +32,7 @@ class _ChatPageState extends State<ChatPage> {
     return Scaffold(
       body: Chat(
         messages: chatManager.messages,
-        onAttachmentPressed: _handleImageSelection,
+        onAttachmentPressed: _handleImageSelection, 
         onSendPressed: _handleSendPressed,
         showUserAvatars: false,
         showUserNames: true,
@@ -70,30 +72,28 @@ class _ChatPageState extends State<ChatPage> {
   }
 
   void _handleImageSelection() async {
-    final result = await ImagePicker().pickImage(
-      imageQuality: 70,
-      maxWidth: 1440,
-      source: ImageSource.gallery,
+  final result = await ImagePicker().pickImage(
+    imageQuality: 70,
+    maxWidth: 1440,
+    source: ImageSource.gallery,
+  );
+
+  if (result != null) {
+    final bytes = await result.readAsBytes();
+    final image = await decodeImageFromList(bytes);
+
+    final message = types.ImageMessage(
+      author: chatManager.user,
+      createdAt: DateTime.now().millisecondsSinceEpoch,
+      height: image.height.toDouble(),
+      id: const Uuid().v4(),
+      name: result.name,
+      size: bytes.length,
+      uri: 'data:image/jpeg;base64,${base64Encode(bytes)}', // Use base64 string instead of the file path
+      width: image.width.toDouble(),
     );
 
-    if (result != null) {
-      final bytes = await result.readAsBytes();
-      final image = await decodeImageFromList(bytes);
-
-      final message = types.ImageMessage(
-        author: chatManager.user,
-        createdAt: DateTime
-            .now()
-            .millisecondsSinceEpoch,
-        height: image.height.toDouble(),
-        id: const Uuid().v4(),
-        name: result.name,
-        size: bytes.length,
-        uri: result.path,
-        width: image.width.toDouble(),
-      );
-
-      chatManager.addMessage(message);
-    }
+    chatManager.addMessage(message);
   }
+}
 }

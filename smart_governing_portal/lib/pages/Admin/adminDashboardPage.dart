@@ -8,6 +8,7 @@ import 'package:smart_governing_portal/pages/Admin/requestedNIC.dart';
 import 'package:smart_governing_portal/pages/Admin/requestingDL.dart';
 import 'package:smart_governing_portal/pages/Admin/requestingNIC.dart';
 import 'package:smart_governing_portal/pages/User/user_homePage.dart';
+import 'package:smart_governing_portal/pages/chat/chat_hopmepage.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class AdminDashboardPage extends StatefulWidget {
@@ -42,12 +43,38 @@ class _AdminDashboardPageState extends State<AdminDashboardPage> {
             onPressed: () {
               signOut();
               Navigator.pop(context);
+              Navigator.push(context, MaterialPageRoute(builder: (context) {
+                return const UserHomePage();
+              }));
             },
             child: const Text('OK'),
           ),
         ],
       ),
     );
+  }
+
+  Future chatbot() {
+    return showDialog(
+        context: context,
+        builder: (context) {
+          return SizedBox(
+            child: AlertDialog(
+              title: const Text('Smart Bot'),
+              content: SizedBox(
+                  width: width * 0.5,
+                  height: height * 0.7,
+                  child: const ChatHomePage()),
+              actions: [
+                TextButton(
+                    onPressed: () {
+                      Navigator.pop(context);
+                    },
+                    child: const Text('Close'))
+              ],
+            ),
+          );
+        });
   }
 
   @override
@@ -59,6 +86,16 @@ class _AdminDashboardPageState extends State<AdminDashboardPage> {
     return LayoutBuilder(builder: (context, constraints) {
       if (constraints.maxWidth > 1200) {
         return Scaffold(
+          floatingActionButton: IconButton(
+            onPressed: () {
+              chatbot();
+            },
+            icon: const Icon(
+              Icons.chat,
+              size: 50,
+              color: Color.fromARGB(255, 10, 4, 70),
+            ),
+          ),
           appBar: AppBar(
             automaticallyImplyLeading: false,
             toolbarHeight: 120,
@@ -86,6 +123,16 @@ class _AdminDashboardPageState extends State<AdminDashboardPage> {
         );
       } else {
         return Scaffold(
+          floatingActionButton: IconButton(
+            onPressed: () {
+              chatbot();
+            },
+            icon: const Icon(
+              Icons.chat,
+              size: 50,
+              color: Color.fromARGB(255, 10, 4, 70),
+            ),
+          ),
           appBar: AppBar(
             centerTitle: true,
             title: const Text(

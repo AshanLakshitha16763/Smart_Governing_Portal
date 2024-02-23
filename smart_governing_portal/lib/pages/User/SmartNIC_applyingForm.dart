@@ -13,6 +13,7 @@ import 'package:smart_governing_portal/controllers/constants.dart';
 import 'package:smart_governing_portal/pages/Admin/adminFormPage.dart';
 import 'package:smart_governing_portal/pages/User/nic_template.dart';
 import 'package:smart_governing_portal/pages/User/user_homePage.dart';
+import 'package:smart_governing_portal/pages/chat/chat_hopmepage.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class NICApplicationForm extends StatefulWidget {
@@ -233,11 +234,43 @@ class _NICApplicationFormState extends State<NICApplicationForm> {
     }
   }
 */
+
+
+  Future chatbot() {
+    return showDialog(
+        context: context,
+        builder: (context) {
+          return SizedBox(
+            child: AlertDialog(
+              title: const Text('Smart Bot'),
+              content: SizedBox(
+                  width: width * 0.5,
+                  height: height * 0.7,
+                  child: const ChatHomePage()),
+              actions: [
+                TextButton(
+                    onPressed: () {
+                      Navigator.pop(context);
+                    },
+                    child: const Text('Close'))
+              ],
+            ),
+          );
+        });
+  }
+
+  
   @override
   Widget build(BuildContext context) {
     width = MediaQuery.of(context).size.width;
     height = MediaQuery.of(context).size.height;
     return Scaffold(
+      floatingActionButton: IconButton(
+            onPressed: () {
+              chatbot();
+            },
+            icon: const Icon(Icons.chat,size: 50,color: Color.fromARGB(255, 10, 4, 70),),
+          ),
       body: ListView(
         children: [
           //navbar

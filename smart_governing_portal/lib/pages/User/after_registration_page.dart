@@ -6,6 +6,7 @@ import 'package:smart_governing_portal/pages/User/SmartDL_applying_form.dart';
 import 'package:smart_governing_portal/pages/User/SmartNIC_applyingForm.dart';
 import 'package:smart_governing_portal/pages/User/dl_template.dart';
 import 'package:smart_governing_portal/pages/User/nic_template.dart';
+import 'package:smart_governing_portal/pages/User/user_homePage.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class AfterRegistrationPage extends StatefulWidget {
@@ -43,6 +44,9 @@ class _AfterRegistrationPageState extends State<AfterRegistrationPage> {
             onPressed: () {
               signOut();
               Navigator.pop(context);
+              Navigator.push(context, MaterialPageRoute(builder: (context) {
+                return const UserHomePage();
+              }));
             },
             child: const Text('OK'),
           ),

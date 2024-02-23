@@ -1,6 +1,6 @@
 import 'dart:io';
-import 'package:flutter_markdown/flutter_markdown.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_markdown/flutter_markdown.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:smart_governing_portal/controllers/secrets.dart';
 import 'package:smart_governing_portal/pages/chat/gemini.dart';
@@ -27,12 +27,11 @@ class _ChatHomePageState extends State<ChatHomePage> {
               bottom: const TabBar(
                 tabs: [
                   Tab(text: "Text Only"),
-                  Tab(text: "Text with Image"),
                 ],
               ),
             ),
             body: const TabBarView(
-              children: [TextOnly(), TextWithImage()],
+              children: [TextOnly(),],
             )));
   }
 }
@@ -115,7 +114,7 @@ class _TextOnlyState extends State<TextOnly> {
                   child: Text(textChat[index]["role"].substring(0, 1)),
                 ),
                 title: Text(textChat[index]["role"]),
-                subtitle:Text(textChat[index]["text"]),
+                subtitle:MarkdownBody(data: textChat[index]["text"],),
               );
             },
           ),
