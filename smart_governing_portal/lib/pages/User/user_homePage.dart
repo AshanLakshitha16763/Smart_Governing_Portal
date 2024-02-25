@@ -742,8 +742,8 @@ class _UserHomePageState extends State<UserHomePage> {
             const Padding(
               padding: EdgeInsets.all(40.0),
               child: Text(
-                'Explore What We Serve YouLorem ipsum dolor sit amet, in vim nihil maiorum, vim et postea philosophia mediocritatem. Eu sit postea adolescens intellegam. Pri modus pericula ut, an vidisse aperiam nec, sed ea. animal inciderint. Etiam ceteros repudiandae ex usu, nec diam decore cu. Sea an libris.Lorem ipsum dolor sit amet',
-                textAlign: TextAlign.justify,
+                'Let’s gov - is a centralized hub redefining citizen-government interaction. This platform simplifies access to government services, facilitates easy ID verification, and delivers personalized recommendations, creating a more efficient and user-friendly experience for citizens. Embracing technology, it transforms governance into a connected, responsive, and streamlined process.',
+                textAlign: TextAlign.start,
                 style: TextStyle(
                   color: Colors.black,
                   fontSize: 20,

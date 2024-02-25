@@ -440,8 +440,8 @@ class _NICApplicationFormState extends State<NICApplicationForm> {
                       ),
                     ),
                     Text(
-                      'Welcome to the online National Identity Card verification system.Lorem ipsum dolor sit amet, in vim nihil maiorum, vim et postea philosophia mediocritatem. Eu sit postea adolescens intellegam. Pri modus pericula ut, an vidisse aperiam nec, sed ea. animal inciderint. Etiam ceteros repudiandae ex usu, nec diam decore cu. Sea an libris.Loremipsum dolor sit amet, in vim nihil maiorum, vim et postea philosophia mediocritatem. Eu sit postea adolescens intellegam. Pri modus pericula ut, an vidisse aperiam nec, sed ea. ',
-                      textAlign: TextAlign.center,
+                      'Welcome to the online National Identity Card verification system.\nHere are some instructions you should consider before filling the form: \nMake sure all the fields are 100% correct before submitting the form. This is important because the information on your national ID card is used to verify your identity. Any errors could delay or prevent you from getting the services you need. \nDouble-check your personal information. This includes your full name, other names, address, birth place, date of birth, gender, profession, and document number. \nIf you are unsure about any of the information, please contact the Department of Registration of Persons. You can find their contact information on the website or by calling their hotline.',
+                      textAlign: TextAlign.start,
                       style: TextStyle(
                         fontSize: 20,
                       ),

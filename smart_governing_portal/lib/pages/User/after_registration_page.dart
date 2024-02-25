@@ -222,7 +222,7 @@ class _AfterRegistrationPageState extends State<AfterRegistrationPage> {
             child: Column(
               children: [
                 Text(
-                  'Hello, Welocome Back! $userName',
+                  'Hello, Welcome Back! $userName',
                   style: const TextStyle(
                     color: Color.fromARGB(255, 10, 4, 70),
                     fontFamily: 'Inter',

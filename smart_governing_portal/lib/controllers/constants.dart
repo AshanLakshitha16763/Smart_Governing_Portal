@@ -166,7 +166,7 @@ class Footer extends StatelessWidget {
                         height: 10,
                       ),
                       const Text(
-                        'Lorem ipsum dolor sit amet,\nin vim orum, vim et postea \nphilosophia mediocritatem. \nEu sit postea adolescens intellegam.',
+                        'Let’s gov is a centralized hub \nredefining citizen-government interaction. \nThis platform simplifies access \nto government services',
                         textAlign: TextAlign.center,
                         style: TextStyle(
                           fontSize: 15,
