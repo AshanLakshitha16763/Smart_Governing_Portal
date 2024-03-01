@@ -534,7 +534,7 @@ class _UserHomePageState extends State<UserHomePage> {
         image: DecorationImage(
           image: AssetImage(
               "lib/Assets/loop/2.jpg"), // Change the path accordingly
-          fit: BoxFit.fill,
+          fit: BoxFit.fitHeight,
         ),
       ),
       child: LayoutBuilder(builder: (context, constraints) {

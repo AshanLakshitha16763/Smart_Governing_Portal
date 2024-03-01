@@ -212,7 +212,7 @@ class _UserSignUpPageState extends State<UserSignUpPage> {
                 'lib/Assets/RegisterPages/google.png',
                 width: 30,
                 height: 30,
-                fit: BoxFit.contain,
+                fit: BoxFit.fitHeight,
               ),
             ),
             const SizedBox(
