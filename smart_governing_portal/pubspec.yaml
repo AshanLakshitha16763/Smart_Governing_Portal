@@ -52,7 +52,7 @@ dependencies:
   image_picker_web: ^3.1.1
   shared_preferences: ^2.2.2
   kommunicate_flutter: ^1.7.9
-  lottie: ^2.7.0
+  lottie: ^3.1.0
   cached_network_image: ^3.3.1
   qr_flutter: ^4.1.0
   path_provider: ^2.1.2
@@ -124,6 +124,7 @@ flutter:
      - lib/Assets/loop/3.jpg
      - lib/Assets/loop/4.jpg
      - lib/Assets/loop/2.jpg
+     - lib/Assets/animations/homeanimation.json
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware
