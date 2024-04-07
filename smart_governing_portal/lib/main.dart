@@ -63,7 +63,7 @@ class _MyAppState extends State<MyApp> {
       home: _isLoading
           ? Center(
               child: Lottie.asset('lib/Assets/animations/loading.json',
-                  frameRate: FrameRate(40)),
+                  frameRate: const FrameRate(40)),
             )
           : const WidgetTree(),
     );

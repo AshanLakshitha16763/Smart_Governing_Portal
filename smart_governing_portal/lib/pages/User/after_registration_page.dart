@@ -7,6 +7,7 @@ import 'package:smart_governing_portal/pages/User/SmartNIC_applyingForm.dart';
 import 'package:smart_governing_portal/pages/User/dl_template.dart';
 import 'package:smart_governing_portal/pages/User/nic_template.dart';
 import 'package:smart_governing_portal/pages/User/user_homePage.dart';
+import 'package:smart_governing_portal/pages/chat/chat_hopmepage.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class AfterRegistrationPage extends StatefulWidget {
@@ -148,7 +149,11 @@ class _AfterRegistrationPageState extends State<AfterRegistrationPage> {
                 onPressed: () {
                   profile();
                 },
-                icon: const Icon(Icons.person_outline_rounded),
+                icon: Image.asset(
+                  'lib/Assets/person.png',
+                  width: 40,
+                  height: 40,
+                ),
               ),
               const SizedBox(
                 width: 20,
@@ -242,10 +247,11 @@ class _AfterRegistrationPageState extends State<AfterRegistrationPage> {
             ),
           ),
           Row(
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: [
               SizedBox(
                 child: SizedBox(
-                  width: width / 2,
+                  width: width / 2.5,
                   child: SizedBox(
                     child: Padding(
                       padding:
@@ -268,7 +274,14 @@ class _AfterRegistrationPageState extends State<AfterRegistrationPage> {
                   ),
                 ),
               ),
-              Container(),
+              Container(
+                decoration: BoxDecoration(
+                  border: Border.all(color: Colors.black12),
+                  borderRadius: BorderRadius.circular(10)),
+                width: width * 0.5,
+                height: height * 0.7,
+                child: const ChatHomePage(),
+              ),
             ],
           ),
         ],
@@ -337,7 +350,8 @@ class _AfterRegistrationPageState extends State<AfterRegistrationPage> {
       ),
     );
   }
-
+  
+  
   // Calculate the offset of _section1
   double _section1Offset() {
     final RenderBox renderBoxRed =

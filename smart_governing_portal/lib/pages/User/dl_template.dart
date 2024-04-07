@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:lottie/lottie.dart';
 import 'package:smart_governing_portal/pages/User/qrimage.dart';
 
@@ -46,7 +47,8 @@ class _DLTemplateState extends State<DLTemplate> {
               automaticallyImplyLeading: true,
               centerTitle: true,
               backgroundColor: const Color.fromARGB(255, 115, 185, 250),
-              title: const Text('Driving License Template'),
+              title: const Text('Driving License Template',style: TextStyle(
+                        fontWeight: FontWeight.w600, color: Colors.white),),
             ),
             body:
                 _body()
@@ -64,9 +66,11 @@ class _DLTemplateState extends State<DLTemplate> {
             style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
           ),
           const SizedBox(height: 5),
-          Text(
-            value,
-            style: const TextStyle(fontSize: 18),
+          Expanded(
+            child: Text(
+              value,
+              style: const TextStyle(fontSize: 18),
+            ),
           ),
         ],
       ),

@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:intl/intl.dart';
 import 'package:smart_governing_portal/pages/Admin/requestedDLTemplate.dart';
-import 'package:smart_governing_portal/pages/Admin/requestingDLTemplate.dart';
+
 
 class RequestedDL extends StatefulWidget {
   @override

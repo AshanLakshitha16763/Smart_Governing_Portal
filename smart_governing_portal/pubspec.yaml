@@ -95,6 +95,10 @@ flutter:
      - lib/Assets/serve.png
      - lib/Assets/ID.png
      - lib/Assets/DL.png
+     - lib/Assets/smNIC.png
+     - lib/Assets/doneNIC.png
+     - lib/Assets/smDL.png
+     - lib/Assets/doneDL.png
      - lib/Assets/12t.jpg
      - lib/Assets/Passport.png
      - lib/Assets/Inquiry.png
