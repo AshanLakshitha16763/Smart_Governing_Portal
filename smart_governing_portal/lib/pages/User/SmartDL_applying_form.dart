@@ -4,6 +4,8 @@ import 'package:intl/intl.dart';
 import 'package:flutter/material.dart';
 import 'package:smart_governing_portal/controllers/constants.dart';
 import 'package:smart_governing_portal/pages/Admin/adminFormPage.dart';
+import 'package:smart_governing_portal/pages/User/aboutUsPage.dart';
+import 'package:smart_governing_portal/pages/User/after_registration_page.dart';
 import 'package:smart_governing_portal/pages/User/dl_template.dart';
 import 'package:smart_governing_portal/pages/User/user_homePage.dart';
 import 'package:smart_governing_portal/pages/chat/chat_hopmepage.dart';
@@ -320,7 +322,7 @@ class _DLApplicationFormState extends State<DLApplicationForm> {
                     Navigator.push(
                       context,
                       MaterialPageRoute<void>(
-                        builder: (BuildContext context) => const UserHomePage(),
+                        builder: (BuildContext context) => const AfterRegistrationPage(),
                       ),
                     );
                   },
@@ -345,7 +347,14 @@ class _DLApplicationFormState extends State<DLApplicationForm> {
                 width: 20,
               ),
               TextButton(
-                onPressed: () {},
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute<void>(
+                      builder: (BuildContext context) => const AboutUsPage(),
+                    ),
+                  );
+                },
                 child: const Text(
                   'About Us',
                   style: TextStyle(

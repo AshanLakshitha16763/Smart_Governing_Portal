@@ -119,6 +119,7 @@ flutter:
      - lib/Assets/animations/loading.json
      - lib/Assets/animations/id.json
      - lib/Assets/verified.png
+     - lib/Assets/aboutus.png
      - lib/Assets/clockwise.png
      - lib/Assets/loop/0.jpg
      - lib/Assets/loop/8.jpg
@@ -128,7 +129,7 @@ flutter:
      - lib/Assets/loop/3.jpg
      - lib/Assets/loop/4.jpg
      - lib/Assets/loop/2.jpg
-     - lib/Assets/animations/homeanimation.json
+     - lib/Assets/animations/homepage_animation.json
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware

@@ -11,6 +11,8 @@ import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
 import 'package:smart_governing_portal/controllers/constants.dart';
 import 'package:smart_governing_portal/pages/Admin/adminFormPage.dart';
+import 'package:smart_governing_portal/pages/User/aboutUsPage.dart';
+import 'package:smart_governing_portal/pages/User/after_registration_page.dart';
 import 'package:smart_governing_portal/pages/User/nic_template.dart';
 import 'package:smart_governing_portal/pages/User/user_homePage.dart';
 import 'package:smart_governing_portal/pages/chat/chat_hopmepage.dart';
@@ -168,7 +170,7 @@ class _NICApplicationFormState extends State<NICApplicationForm> {
         "Area Code": areaCodeController.text,
         "Issued Date": issuedDateController.text,
         "Doc No": docNoController.text,
-        "Validation":"",
+        "Validation": "",
         "Time": DateTime.now()
       };
 
@@ -235,7 +237,6 @@ class _NICApplicationFormState extends State<NICApplicationForm> {
   }
 */
 
-
   Future chatbot() {
     return showDialog(
         context: context,
@@ -259,18 +260,21 @@ class _NICApplicationFormState extends State<NICApplicationForm> {
         });
   }
 
-  
   @override
   Widget build(BuildContext context) {
     width = MediaQuery.of(context).size.width;
     height = MediaQuery.of(context).size.height;
     return Scaffold(
       floatingActionButton: IconButton(
-            onPressed: () {
-              chatbot();
-            },
-            icon: const Icon(Icons.chat,size: 50,color: Color.fromARGB(255, 10, 4, 70),),
-          ),
+        onPressed: () {
+          chatbot();
+        },
+        icon: const Icon(
+          Icons.chat,
+          size: 50,
+          color: Color.fromARGB(255, 10, 4, 70),
+        ),
+      ),
       body: ListView(
         children: [
           //navbar
@@ -315,7 +319,7 @@ class _NICApplicationFormState extends State<NICApplicationForm> {
                           context as BuildContext,
                           MaterialPageRoute<void>(
                             builder: (BuildContext context) =>
-                                const UserHomePage(),
+                                const AfterRegistrationPage(),
                           ),
                         );
                       },
@@ -340,7 +344,15 @@ class _NICApplicationFormState extends State<NICApplicationForm> {
                     width: 20,
                   ),
                   TextButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute<void>(
+                          builder: (BuildContext context) =>
+                              const AboutUsPage(),
+                        ),
+                      );
+                    },
                     child: const Text(
                       'About Us',
                       style: TextStyle(

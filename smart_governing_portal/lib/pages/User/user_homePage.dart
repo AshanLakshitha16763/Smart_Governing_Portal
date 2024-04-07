@@ -7,6 +7,7 @@ import 'package:smart_governing_portal/controllers/constants.dart';
 import 'package:smart_governing_portal/pages/Admin/adminLoginPage.dart';
 import 'package:smart_governing_portal/pages/User/SmartDL_applying_form.dart';
 import 'package:smart_governing_portal/pages/User/SmartNIC_applyingForm.dart';
+import 'package:smart_governing_portal/pages/User/aboutUsPage.dart';
 import 'package:smart_governing_portal/pages/User/user_loginPage.dart';
 import 'package:smart_governing_portal/pages/User/user_signupPage.dart';
 import 'package:smart_governing_portal/pages/chat/chat_hopmepage.dart';
@@ -47,7 +48,11 @@ class _UserHomePageState extends State<UserHomePage> {
             onPressed: () {
               chatbot();
             },
-            icon: const Icon(Icons.chat,size: 50,color: Color.fromARGB(255, 10, 4, 70),),
+            icon: const Icon(
+              Icons.chat,
+              size: 50,
+              color: Color.fromARGB(255, 10, 4, 70),
+            ),
           ),
           appBar: AppBar(
             automaticallyImplyLeading: false,
@@ -71,7 +76,11 @@ class _UserHomePageState extends State<UserHomePage> {
             onPressed: () {
               chatbot();
             },
-            icon: const Icon(Icons.chat,size: 50,color: Color.fromARGB(255, 10, 4, 70),),
+            icon: const Icon(
+              Icons.chat,
+              size: 50,
+              color: Color.fromARGB(255, 10, 4, 70),
+            ),
           ),
           appBar: AppBar(
             backgroundColor: const Color.fromARGB(255, 115, 185, 250),
@@ -91,13 +100,13 @@ class _UserHomePageState extends State<UserHomePage> {
           children: [
             //first section on the web
             _section1(id: 'home_section'),
-            
+
             //second section on the web(GOV Services)
             _section2(id: 'services_section'),
-            
+
             //third section of the web(Our Services)
             _section3(),
-            
+
             //Footer
             const Footer(),
           ],
@@ -328,9 +337,9 @@ class _UserHomePageState extends State<UserHomePage> {
               color: const Color.fromARGB(255, 187, 191, 190),
               width: 1,
             ),
-            boxShadow:const [
+            boxShadow: const [
               BoxShadow(
-                color:  Color.fromARGB(255, 187, 191, 190),
+                color: Color.fromARGB(255, 187, 191, 190),
                 spreadRadius: 1,
                 blurRadius: 5,
                 offset: Offset(0, 5),
@@ -428,7 +437,14 @@ class _UserHomePageState extends State<UserHomePage> {
                 width: 20,
               ),
               TextButton(
-                onPressed: () {},
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute<void>(
+                      builder: (BuildContext context) => const AboutUsPage(),
+                    ),
+                  );
+                },
                 child: const Text(
                   'About Us',
                   style: TextStyle(
@@ -554,14 +570,38 @@ class _UserHomePageState extends State<UserHomePage> {
                     child: Padding(
                       padding: EdgeInsets.only(left: 20, right: 20, top: 100),
                       child: FittedBox(
-                        child: Text(
-                          "WELCOME TO \nLET'S GOV",
-                          style: TextStyle(
-                            fontFamily: 'Mitr',
-                            fontWeight: FontWeight.w800,
-                            fontSize: 80,
-                            color: Color.fromARGB(255, 10, 4, 70),
-                          ),
+                        child: Column(
+                          children: [
+                            Text(
+                              "WELCOME",
+                              style: TextStyle(
+                                fontFamily: 'Mitr',
+                                fontWeight: FontWeight.w800,
+                                fontSize: 80,
+                                color: Color.fromARGB(255, 10, 4, 70),
+                              ),
+                            ),
+                            Center(
+                              child: Text(
+                                "TO",
+                                style: TextStyle(
+                                  fontFamily: 'Mitr',
+                                  fontWeight: FontWeight.w800,
+                                  fontSize: 80,
+                                  color: Color.fromARGB(255, 10, 4, 70),
+                                ),
+                              ),
+                            ),
+                            Text(
+                              "LET'S GOV",
+                              style: TextStyle(
+                                fontFamily: 'Mitr',
+                                fontWeight: FontWeight.w800,
+                                fontSize: 80,
+                                color: Color.fromARGB(255, 1, 59, 101),
+                              ),
+                            ),
+                          ],
                         ),
                       ),
                     ),
@@ -596,7 +636,8 @@ class _UserHomePageState extends State<UserHomePage> {
                               ),
                             ],
                           ),
-                          child: AutoScrollImages(),
+                          child: Lottie.asset(
+                              "lib/Assets/animations/homepage_animation.json") /*AutoScrollImages()*/,
                         ),
                       ),
                     ),
