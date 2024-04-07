@@ -80,7 +80,7 @@ class _AdminDashboardPageState extends State<AdminDashboardPage> {
   @override
   Widget build(BuildContext context) {
     User? user = FirebaseAuth.instance.currentUser;
-    userName = user?.displayName ?? 'User';
+    userName = user?.displayName ?? 'Officer';
     width = MediaQuery.of(context).size.width;
     height = MediaQuery.of(context).size.height;
     return LayoutBuilder(builder: (context, constraints) {
@@ -295,7 +295,7 @@ class _AdminDashboardPageState extends State<AdminDashboardPage> {
           height: 200,
           tileSize: tileSize,
           index: 0,
-          imagePath: 'lib/Assets/lists.png',
+          imagePath: 'lib/Assets/smNIC.png',
           pageName: RequestingNIC()),
       _adminDashboardList(
           ' The List of Users that Requesting Smart Driving License',
@@ -303,21 +303,21 @@ class _AdminDashboardPageState extends State<AdminDashboardPage> {
           height: 200,
           tileSize: tileSize,
           index: 1,
-          imagePath: 'lib/Assets/lists.png',
+          imagePath: 'lib/Assets/smDL.png',
           pageName: RequestingDL()),
       _adminDashboardList(' Previous List of Users for Smart NIC',
           width: 380,
           height: 200,
           tileSize: tileSize,
           index: 2,
-          imagePath: 'lib/Assets/lists.png',
+          imagePath: 'lib/Assets/doneNIC.png',
           pageName: RequestedNIC()),
       _adminDashboardList(' Previous List of Users for Smart Driving License',
           width: 380,
           height: 200,
           tileSize: tileSize,
           index: 3,
-          imagePath: 'lib/Assets/lists.png',
+          imagePath: 'lib/Assets/doneDL.png',
           pageName: RequestedDL()),
     ];
   }
@@ -369,8 +369,8 @@ class _AdminDashboardPageState extends State<AdminDashboardPage> {
               children: [
                 Image.asset(
                   imagePath,
-                  width: 35,
-                  height: 35,
+                  width: 50,
+                  height: 50,
                 ),
                 const SizedBox(
                   height: 10,

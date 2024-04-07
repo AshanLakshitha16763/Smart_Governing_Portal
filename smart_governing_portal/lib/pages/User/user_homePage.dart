@@ -2,7 +2,7 @@
 
 import 'dart:async';
 import 'package:flutter/material.dart';
-import 'package:flutter_chat_ui/flutter_chat_ui.dart';
+import 'package:lottie/lottie.dart';
 import 'package:smart_governing_portal/controllers/constants.dart';
 import 'package:smart_governing_portal/pages/Admin/adminLoginPage.dart';
 import 'package:smart_governing_portal/pages/User/SmartDL_applying_form.dart';
@@ -24,6 +24,7 @@ class _UserHomePageState extends State<UserHomePage> {
   late double width;
   late double height;
   int hoveredIndex = -1;
+  int hoveredIndexOur = -1;
   bool _isLoggedIn = false;
   final ScrollController _scrollController = ScrollController();
   final GlobalKey _section2Key = GlobalKey();
@@ -90,13 +91,13 @@ class _UserHomePageState extends State<UserHomePage> {
           children: [
             //first section on the web
             _section1(id: 'home_section'),
-    
+            
             //second section on the web(GOV Services)
             _section2(id: 'services_section'),
-    
+            
             //third section of the web(Our Services)
             _section3(),
-    
+            
             //Footer
             const Footer(),
           ],
@@ -216,12 +217,12 @@ class _UserHomePageState extends State<UserHomePage> {
                 color: const Color.fromARGB(255, 187, 191, 190),
                 width: 1,
               ),
-              boxShadow: [
+              boxShadow: const [
                 BoxShadow(
-                  color: Colors.grey.shade600,
+                  color: Color.fromARGB(255, 187, 191, 190),
                   spreadRadius: 1,
                   blurRadius: 5,
-                  offset: const Offset(0, 5),
+                  offset: Offset(0, 5),
                 ),
               ],
             ),
@@ -319,7 +320,7 @@ class _UserHomePageState extends State<UserHomePage> {
         child: Container(
           alignment: Alignment.center,
           decoration: BoxDecoration(
-            color: hoveredIndex == index
+            color: hoveredIndexOur == index
                 ? const Color.fromARGB(255, 10, 4, 70)
                 : Colors.white,
             borderRadius: BorderRadius.circular(12),
@@ -327,12 +328,12 @@ class _UserHomePageState extends State<UserHomePage> {
               color: const Color.fromARGB(255, 187, 191, 190),
               width: 1,
             ),
-            boxShadow: [
+            boxShadow:const [
               BoxShadow(
-                color: Colors.grey.shade600,
+                color:  Color.fromARGB(255, 187, 191, 190),
                 spreadRadius: 1,
                 blurRadius: 5,
-                offset: const Offset(0, 5),
+                offset: Offset(0, 5),
               ),
             ],
           ),
@@ -530,13 +531,13 @@ class _UserHomePageState extends State<UserHomePage> {
   //section 1 on the web
   Widget _section1({required String id}) {
     return Container(
-      decoration: const BoxDecoration(
+      /*decoration: const BoxDecoration(
         image: DecorationImage(
           image: AssetImage(
               "lib/Assets/loop/2.jpg"), // Change the path accordingly
-          fit: BoxFit.fill,
+          fit: BoxFit.fitHeight,
         ),
-      ),
+      ),*/
       child: LayoutBuilder(builder: (context, constraints) {
         if (constraints.maxWidth > 800) {
           return ConstrainedBox(
@@ -742,8 +743,8 @@ class _UserHomePageState extends State<UserHomePage> {
             const Padding(
               padding: EdgeInsets.all(40.0),
               child: Text(
-                'Explore What We Serve YouLorem ipsum dolor sit amet, in vim nihil maiorum, vim et postea philosophia mediocritatem. Eu sit postea adolescens intellegam. Pri modus pericula ut, an vidisse aperiam nec, sed ea. animal inciderint. Etiam ceteros repudiandae ex usu, nec diam decore cu. Sea an libris.Lorem ipsum dolor sit amet',
-                textAlign: TextAlign.justify,
+                'Let’s gov - is a centralized hub redefining citizen-government interaction. This platform simplifies access to government services, facilitates easy ID verification, and delivers personalized recommendations, creating a more efficient and user-friendly experience for citizens. Embracing technology, it transforms governance into a connected, responsive, and streamlined process.',
+                textAlign: TextAlign.start,
                 style: TextStyle(
                   color: Colors.black,
                   fontSize: 20,

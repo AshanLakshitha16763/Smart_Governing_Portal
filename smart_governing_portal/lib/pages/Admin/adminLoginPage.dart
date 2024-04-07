@@ -26,13 +26,13 @@ class _AdminLoginPageState extends State<AdminLoginPage> {
   String? errorMessage = '';
   late double width;
   late double height;
-
-  Future signInWithEmailAndPassword(BuildContext context) async {
+  
+  Future signInWithEmailAndPassword(BuildContext context, String nameController) async {
     // Get the currently signed-in user
     User? user = FirebaseAuth.instance.currentUser;
 
     // Update the user's display name
-    await user?.updateDisplayName(_nameController.text);
+    await user?.updateDisplayName(nameController);
 
     try {
       await Auth().signInWithEmailAndPassword(
@@ -196,7 +196,7 @@ class _AdminLoginPageState extends State<AdminLoginPage> {
           child: _errorMessage(),
         ),
         ElevatedButton(
-          onPressed: () => signInWithEmailAndPassword(context),
+          onPressed: () => signInWithEmailAndPassword(context, _nameController.text),
           style: ElevatedButton.styleFrom(
             foregroundColor: const Color.fromARGB(255, 243, 242, 234),
             backgroundColor: const Color.fromARGB(255, 10, 4, 70),

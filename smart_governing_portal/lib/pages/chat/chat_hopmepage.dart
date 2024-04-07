@@ -22,7 +22,7 @@ class _ChatHomePageState extends State<ChatHomePage> {
         length: 2,
         child: Scaffold(
             appBar: AppBar(
-              title: const Text("Smart Governing Portal"),
+              title: const Text("Smart Governing Portal Assistant"),
               centerTitle: true,
               bottom: const TabBar(
                 tabs: [

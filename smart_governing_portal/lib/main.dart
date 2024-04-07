@@ -3,6 +3,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:lottie/lottie.dart';
+import 'package:smart_governing_portal/controllers/secrets.dart';
 import 'package:smart_governing_portal/controllers/widget_tree.dart';
 import 'package:smart_governing_portal/pages/chat/chat_hopmepage.dart';
 import 'package:smart_governing_portal/pages/chat/gemini.dart';
@@ -12,12 +13,12 @@ Future main() async {
   WidgetsFlutterBinding.ensureInitialized();
   if (kIsWeb) {
     await Firebase.initializeApp(
-        options: const FirebaseOptions(
-      apiKey: "AIzaSyAQGH-OoQz5jHZKxMR6t6GXXuQLo82RF6M",
-      appId: "1:913759630420:web:9fac7bd0a1c5cec94d69c1",
-      messagingSenderId: "913759630420",
-      projectId: "smart-governing-portal",
-      storageBucket: "smart-governing-portal.appspot.com",
+        options: FirebaseOptions(
+      apiKey: apikey,
+      appId: appid,
+      messagingSenderId: messagingsenderid,
+      projectId: projectid,
+      storageBucket: storagebucket,
     ));
   }
   await Firebase.initializeApp();
@@ -62,7 +63,7 @@ class _MyAppState extends State<MyApp> {
       home: _isLoading
           ? Center(
               child: Lottie.asset('lib/Assets/animations/loading.json',
-                  frameRate: FrameRate(40)),
+                  frameRate: const FrameRate(40)),
             )
           : const WidgetTree(),
     );

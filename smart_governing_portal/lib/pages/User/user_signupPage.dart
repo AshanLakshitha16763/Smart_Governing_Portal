@@ -212,7 +212,7 @@ class _UserSignUpPageState extends State<UserSignUpPage> {
                 'lib/Assets/RegisterPages/google.png',
                 width: 30,
                 height: 30,
-                fit: BoxFit.contain,
+                fit: BoxFit.fitHeight,
               ),
             ),
             const SizedBox(
@@ -565,7 +565,7 @@ class _AutoScrollImagesState extends State<AutoScrollImages> {
             itemBuilder: (BuildContext context, int index) {
               return Image.asset(
                 "lib/Assets/loop/${imageUrls[index]}",
-                fit: BoxFit.fill,
+                fit: BoxFit.fitHeight,
               );
             },
           ),
