@@ -37,9 +37,13 @@ To get started with the Smart Governing Portal, follow these steps:
 We welcome contributions from the community! If you'd like to contribute to the Smart Governing Portal project, please follow these guidelines:
 
 Fork the repository
+
 Create a new branch: git checkout -b feature/new-feature
+
 Make your changes and commit them: git commit -m "Add new feature"
+
 Push to your branch: git push origin feature/new-feature
+
 Submit a pull request
 
 
